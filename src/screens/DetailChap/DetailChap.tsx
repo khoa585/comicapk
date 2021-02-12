@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { View, StyleSheet, Text, StatusBar, ActivityIndicator, Animated, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, StatusBar, Easing, Animated, ScrollView } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { getDetialComic, getListChapter } from './../../api/comic';
 import * as screen from './../../constants/ScreenTypes';
@@ -18,7 +18,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Background from './Background';
 import TitleChapter from './TitleChapter';
 import { ChapterItem } from '../../api/interface/chapter.interface';
-
+import Fontisto from 'react-native-vector-icons/Fontisto';
 export type RootStackParamList = {
     DETIAL_COMIC_SCREEN: { item: 'item', id: 'id' };
 };
@@ -56,14 +56,29 @@ const DetailChap: FunctionComponent = () => {
     const [page, setPage] = React.useState<string>('1');
     const [loading, setLoading] = React.useState<boolean>(true);
     const [data, setData] = React.useState<DetailChapProps | null>(null);
-
+    const ScaleAnim = React.useRef<any>(new Animated.Value(0)).current;
     const _setLoading = (e: boolean) => {
         setLoading(e)
     }
     const _setPage = (e: string) => {
         setPage(e)
     }
+    const fadeIn = () => {
 
+        const a1 = Animated.timing(ScaleAnim, {
+            toValue: 1,
+            duration: 1000,
+            useNativeDriver: false,
+            easing: Easing.bounce
+        })
+        const a13 = Animated.timing(ScaleAnim, {
+            toValue: 0,
+            duration: 100,
+            useNativeDriver: false,
+            easing: Easing.bounce
+        })
+        Animated.sequence([a1, a13]).start()
+    }
     React.useEffect(() => {
         (async () => {
             _setLoading(true)
@@ -88,11 +103,32 @@ const DetailChap: FunctionComponent = () => {
                     stickyHeaderIndices={[3]}
                 >
                     <Background {...{ item }} ></Background>
-                    <DetailComic {...{ item }}></DetailComic>
+                    <DetailComic {...{fadeIn, item }}></DetailComic>
                     <DescriptComic {...{ item }}></DescriptComic>
                     <TitleChapter {...{ data, page, loading, _setPage }}></TitleChapter>
                     <TabScene {...{ _id: id, data, loading }}></TabScene>
                 </ScrollView>
+
+                {/* <View style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor:'red',
+                }}> */}
+                    <Animated.View style={[styles.love, {
+                        transform: [{
+                            scale: ScaleAnim.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: [0, 1],
+
+                            })
+                        }]
+                    }]}>
+
+                        <Fontisto style={styles.icon_} name="heart" size={80} color="#fff" />
+
+                    </Animated.View>
+                {/* </View> */}
+
             </View>
         </>
     )
@@ -103,7 +139,7 @@ export default React.memo(DetailChap);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFF',
+        backgroundColor: '#080808',
     },
     loading: {
         flex: 1,
@@ -111,6 +147,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
     },
+
+    love: {
+        position: 'absolute',  
+        top:'20%',
+        left:'40%',
+    },
+    icon_: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 2,
+    }
 })
 
 

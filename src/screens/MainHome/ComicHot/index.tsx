@@ -39,7 +39,7 @@ const ComicHot: FunctionComponent<ComicHotProps> = ({ listComic, loading, childr
                 {
                     loading ?
                         <View style={styles.loading}>
-                            <ActivityIndicator size="large" color="#000" />
+                            <ActivityIndicator size="large" color="#fff" />
                         </View> :
                         (
                             <FlatList
@@ -90,10 +90,11 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-
+        color:'#000'
     },
     seenAll: {
         fontSize: 13,
-        marginRight: 20
+        marginRight: 20,
+        color:'#000'
     }
 })

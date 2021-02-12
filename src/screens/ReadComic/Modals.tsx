@@ -160,12 +160,12 @@ const Modals = ({ _setisSkew, modalVisible, _setModalVisible, isEnabled, _toggle
     const [isTurn, setTurn] = React.useState<number>(0);
     const [valueBrightness, setValueBrightness] = React.useState<number>(0)
     const _OnchangeBrightness = async (e) => {
-        let hasPerm = await ScreenBrightness.hasPermission();
-        if (!hasPerm) {
-            ScreenBrightness.requestPermission();
-            return;
-        }
-        ScreenBrightness.setBrightness(e * 0.2);
+        // let hasPerm = await ScreenBrightness.hasPermission();
+        // if (!hasPerm) {
+        //     ScreenBrightness.requestPermission();
+        //     return;
+        // }
+        // ScreenBrightness.setBrightness(e * 0.2);
         // ScreenBrightness.getBrightness().then(brightness => {
 
         //     console.log('brightness', brightness);
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
         height: '100%',
         flexDirection: 'column',
         justifyContent: 'space-around',
-        paddingVertical: 10,
+        paddingVertical: 30,
         paddingHorizontal: 20
     },
     iconTurn: {

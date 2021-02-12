@@ -11,30 +11,16 @@ import { formatViews } from '../../common/stringHelper'
 import { ItemComicProps } from '../MainHome/MainHome'
 
 type DetailComicProps = {
+    fadeIn:any
     item: ItemComicProps | any
 }
-const DetailComic: FunctionComponent<DetailComicProps> = ({ item }) => {
+const DetailComic: FunctionComponent<DetailComicProps> = ({fadeIn,item }) => {
 
     const navigation = useNavigation();
     const [isDown, setDown] = React.useState<boolean>(false);
-    const ScaleAnim = React.useRef<any>(new Animated.Value(0)).current;
-    const gradColors = isDown ? ['#4da7db', '#D8090D'] : ['#D8090D', '#e85356'];
-    const fadeIn = () => {
 
-        const a1 = Animated.timing(ScaleAnim, {
-            toValue: 1,
-            duration: 1000,
-            useNativeDriver: false,
-            easing: Easing.bounce
-        })
-        const a13 = Animated.timing(ScaleAnim, {
-            toValue: 0,
-            duration: 100,
-            useNativeDriver: false,
-            easing: Easing.bounce
-        })
-        Animated.sequence([a1, a13]).start()
-    }
+    const gradColors = isDown ? ['#4da7db', '#D8090D'] : ['#D8090D', '#e85356'];
+  
     return (
         <View style={styles.conatiner}>
             <View style={styles.containerComic}>
@@ -100,21 +86,7 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ item }) => {
                 </View>
 
             </View>
-            <View style={{justifyContent:'center',alignItems:'center'}}>
-                <Animated.View style={[styles.love, {
-                    transform: [{
-                        scale: ScaleAnim.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [0, 1],
-
-                        })
-                    }]
-                }]}>
-
-                    <Fontisto style={styles.icon_} name="heart" size={80} color="#fff" />
-
-                </Animated.View>
-            </View>
+       
         </View>
     )
 }

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { Image, StyleSheet, View, TouchableOpacity, Text, Platform } from "react-native";
+import { Image, StyleSheet, View, TouchableOpacity, TextInput, Platform } from "react-native";
 
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import * as screen from '../../constants/ScreenTypes'
@@ -14,41 +14,45 @@ const Header: FunctionComponent = () => {
         <>
             <View style={styles.container}>
                 <View style={styles.wrapperIcon}>
-                    <View style={[styles.bgimage,
-                        Platform.OS === 'ios' && styles.shadowOs,
-                        Platform.OS === 'android' && styles.shadowAndroid
-                        ]}>
-                        <Image source={logo} style={styles.logo}></Image>
-                    </View>
-                    <Text style={styles.title}>Manga Vip</Text>
+   
+                    <EvilIcons name="search" size={30} color="#000" />
+                    
                 </View>
                 <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.icon}
                     onPress={() => navigation.navigate(screen.SEARCH_SCREEN)}
                 >
-                    <EvilIcons name="search" size={30} color="#000" />
+                    <EvilIcons name="bell" size={35} color="#000" />
                 </TouchableOpacity>
             </View>
         </>
     );
 }
-export default React.memo(Header,isEqual)
+export default React.memo(Header, isEqual)
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 20,
-        marginTop: STATUS_BAR_HEIGHT
+        width:'100%',
+        // marginTop: STATUS_BAR_HEIGHT,
+        position:'absolute',
+        top:'0%',
+        zIndex:999
     },
     wrapperIcon: {
         alignContent: "center",
         flexDirection: 'row',
         alignItems: 'center',
+
+        backgroundColor:'#fff',
+        padding:10,
+        borderRadius:8
     },
     bgimage: {
-        backgroundColor:'#fff',
+        backgroundColor: '#fff',
         width: 50,
         height: 50,
         borderRadius: 50,
@@ -56,7 +60,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    shadowOs:{
+    shadowOs: {
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -71,7 +75,7 @@ const styles = StyleSheet.create({
         shadowColor: '#fff',
         shadowOpacity: 1.0,
         shadowRadius: 18,
-        elevation:2
+        elevation: 2
     },
 
     logo: {
@@ -85,13 +89,15 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         textAlign: "center",
-        color:'#fff'
+        color: '#fff'
     },
-    icon:{
-        justifyContent:'center',
-        aspectRatio:1,
-        padding:2,
-        backgroundColor:'#fff',
-        borderRadius:2
-    }
+    icon: {
+        justifyContent: 'center',
+        aspectRatio: 1,
+        padding:5,
+        backgroundColor: '#fff',
+        borderRadius: 8,
+
+    },
+
 })

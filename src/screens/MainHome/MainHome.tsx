@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { View, StyleSheet, ScrollView, RefreshControl, StatusBar } from 'react-native';
+import { View, StyleSheet, ScrollView, RefreshControl, Platform, StatusBar, } from 'react-native';
 import TabActionBar from './TabActionBar'
 import Header from './Header';
 import Background from './Background';
@@ -63,7 +63,15 @@ const MainHome: FunctionComponent = () => {
             setLoading(false);
         }
     }
+    React.useEffect(() => {
+   
+        StatusBar.setBarStyle("dark-content");
 
+        if (Platform.OS === "android") {
+          StatusBar.setBackgroundColor("rgba(0,0,0,0)");
+          StatusBar.setTranslucent(true);
+        }
+      }, []);
     const onRefresh = () => {
         setRefreshing(true);
         setListComic(null)
@@ -74,14 +82,17 @@ const MainHome: FunctionComponent = () => {
     return (
         <View style={styles.container}>
             <StatusBar translucent backgroundColor="transparent" />
+
             <ScrollView
                 scrollEventThrottle={1}
+               
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                 }>
                 <Header></Header>
-                <Background></Background>
+                {/* <Background></Background> */}
                 <TabActionBar></TabActionBar>
+             
                 <ComicHot {...{ listComic: listComic ? listComic.listComicHot : [], loading }}>Top Anime</ComicHot>
                 <ComicHot {...{ listComic: listComic ? listComic.listComicHUpdate : [], loading }}>New Releases</ComicHot>
             </ScrollView>
@@ -92,7 +103,7 @@ export default React.memo(MainHome, isEqual)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5F5F5',
+        backgroundColor: '#fff',
         
     },
     distant: {

@@ -161,7 +161,6 @@
 				8614463C49817678DD548AE4 /* Pods-comic-tvOSTests.debug.xcconfig */,
 				525F227752E2796E59D2A9CC /* Pods-comic-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};

@@ -7,6 +7,8 @@ import {
 } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { SCREEN_WIDTH } from '../../constants/index'
+import Wave from '../../themes/icons/Wave';
+
 const Slide: FunctionComponent = () => {
     return (
         <View style={styles.container}>
@@ -16,7 +18,7 @@ const Slide: FunctionComponent = () => {
                     activeDotColor={'#fff'}
                     autoplay={true}
                     autoplayTimeout={5}
-                    paginationStyle={{ bottom: 5 }}
+                    paginationStyle={{ bottom: 25 }}
                 >
                     <View style={styles.slide1}>
                         <Image style={styles.img} source={{ uri: 'http://cn.e.pic.mangatoon.mobi/homepage-banners/642-034f.jpg' }}></Image>
@@ -29,6 +31,9 @@ const Slide: FunctionComponent = () => {
                     </View>
                 </Swiper>
             </View>
+            <View style={{position:'absolute',top:(SCREEN_WIDTH / 1.5) - 90}}>
+                    <Wave></Wave>
+                </View>
         </View>
     );
 }
@@ -40,8 +45,8 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     wrapper: {
-        height: SCREEN_WIDTH / 2.8,
-        width: SCREEN_WIDTH - 40,
+        height: SCREEN_WIDTH / 1.5,
+        width: SCREEN_WIDTH ,
     },
     slide1: {
         flex: 1,
@@ -60,9 +65,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     img: {
-        width: SCREEN_WIDTH - 40,
+        width: SCREEN_WIDTH ,
         height: "100%",
         resizeMode: 'cover',
-        borderRadius: 10
+   
     }
 })
