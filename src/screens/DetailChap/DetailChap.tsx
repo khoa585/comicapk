@@ -91,7 +91,7 @@ const DetailChap: FunctionComponent = () => {
                     <DetailComic {...{ item }}></DetailComic>
                     <DescriptComic {...{ item }}></DescriptComic>
                     <TitleChapter {...{ data, page, loading, _setPage }}></TitleChapter>
-                    <TabScene {...{ data, loading }}></TabScene>
+                    <TabScene {...{ _id: id, data, loading }}></TabScene>
                 </ScrollView>
             </View>
         </>

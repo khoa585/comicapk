@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         borderBottomWidth: 1,
-        borderColor: '#5bc6ff',
+        borderColor: '#d6d6d6',
         zIndex: 999,
         backgroundColor: '#fff'
     },

@@ -82,8 +82,8 @@ const MainHome: FunctionComponent = () => {
                 <Header></Header>
                 <Background></Background>
                 <TabActionBar></TabActionBar>
-                <ComicHot {...{ listComic: listComic ? listComic.listComicHot : [], loading }}>Truyện đọc nhiều nhất</ComicHot>
-                <ComicHot {...{ listComic: listComic ? listComic.listComicHUpdate : [], loading }}>Truyện mới nhất</ComicHot>
+                <ComicHot {...{ listComic: listComic ? listComic.listComicHot : [], loading }}>Top Anime</ComicHot>
+                <ComicHot {...{ listComic: listComic ? listComic.listComicHUpdate : [], loading }}>New Releases</ComicHot>
             </ScrollView>
         </View>
     )

@@ -21,11 +21,12 @@ type itemProps = {
 }
 
 type TabSceneProps = {
+    _id:string,
     data: DetailChapProps | null,
     loading: boolean,
 }
 
-const TabScene: FunctionComponent<TabSceneProps> = ({ data, loading }) => {
+const TabScene: FunctionComponent<TabSceneProps> = ({ _id, data, loading }) => {
     const navigation = useNavigation();
 
     return (
@@ -39,7 +40,7 @@ const TabScene: FunctionComponent<TabSceneProps> = ({ data, loading }) => {
                     data?.data.map((item: itemProps, _: number) => {
                         return (
                             <RectButton key={item._id}
-                                onPress={() => navigation.navigate(SCREEN.DETIAL_CHAPTER, { id: item._id })}
+                                onPress={() => navigation.navigate(SCREEN.DETIAL_CHAPTER, { id: item._id, idChap: _id })}
                             >
                                 <View style={styles.Chapter_}>
                                     <Text style={styles.name} >Chapter {item.index}</Text>
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 10,
         borderBottomWidth: 1,
-        borderColor: '#5bc6ff',
+        borderColor: '#d6d6d6',
         padding: 20,
     },
     loading: {
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         borderBottomWidth: 1,
-        borderColor: '#5bc6ff',
+        borderColor: '#d6d6d6',
     },
 })
 

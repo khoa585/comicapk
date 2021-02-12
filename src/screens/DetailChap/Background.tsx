@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
     contai: {
         flex: 1,
         backgroundColor: '#fff',
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
+        // borderTopLeftRadius: 40,
+        // borderTopRightRadius: 40,
         top: (SCREEN_HEIGHT / 3) - 40,
         zIndex: -1,
     },

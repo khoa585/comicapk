@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     wrapper: {
-        height: SCREEN_WIDTH / 3,
+        height: SCREEN_WIDTH / 2.8,
         width: SCREEN_WIDTH - 40,
     },
     slide1: {

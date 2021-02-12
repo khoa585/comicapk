@@ -32,7 +32,7 @@ const ComicHot: FunctionComponent<ComicHotProps> = ({ listComic, loading, childr
                 <Text style={styles.title}>{children}</Text>
                 <TouchableOpacity
                 >
-                    <Text style={styles.seenAll}>xem tất cả</Text>
+                    <Text style={styles.seenAll}>see all</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.containerItem}>

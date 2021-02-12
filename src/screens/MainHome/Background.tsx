@@ -8,7 +8,7 @@ const Background: FunctionComponent = () => {
     return (
         <>
             <LinearGradient
-                colors={['#4da7db', '#5bc6ff']}
+                colors={['#D8090D', '#D8090D']}
                 useAngle={true}
                 angle={145}
                 angleCenter={{ x: 0.5, y: 0.5 }}
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: 1000,
         height: 1000,
-        top: -(1000 - STATUS_BAR_HEIGHT - (SCREEN_WIDTH / 2) + (SCREEN_WIDTH / 9) / 3),
+        top: -(1000 - STATUS_BAR_HEIGHT - (SCREEN_WIDTH / 1.8) + (SCREEN_WIDTH / 9) / 3),
         alignSelf: 'center',
         borderRadius: 1000,
         overflow: 'hidden',

@@ -9,7 +9,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import * as SCREEN from './../../constants/ScreenTypes';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Footer({ translateYFooter, beforeChapter, afterChapter, _setModalVisible }) {
+export default function Footer({ idChap, translateYFooter, beforeChapter, afterChapter, _setModalVisible }) {
     const sheetRef = React.useRef<any>();
 
     const navigation = useNavigation<any>();
@@ -27,6 +27,15 @@ export default function Footer({ translateYFooter, beforeChapter, afterChapter, 
                             <FontAwesome5 name={"angle-left"} size={35} color={"#ffffff"} />
                         </TouchableOpacity> : null
                     }
+                </View>
+                <View >
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate(SCREEN.CHAPTER_LIST_SCREEN, { id: idChap })}
+                        style={styles.listchap}
+                    >
+                        <Ionicons name="ios-server-outline" size={25} color={"#ffffff"} />
+                        <Text style={{ color: '#fff' }}> Chapter</Text>
+                    </TouchableOpacity>
                 </View>
                 <View>
                     <TouchableOpacity
@@ -70,5 +79,9 @@ const styles = StyleSheet.create({
     textChapter: {
         fontSize: 14,
         color: "#b8b4b4"
+    },
+    listchap: {
+        flexDirection: 'row',
+        alignItems: 'center'
     }
 })

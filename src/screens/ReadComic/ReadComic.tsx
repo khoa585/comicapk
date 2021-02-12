@@ -13,7 +13,7 @@ import Modals from './Modals';
 import Footer from './Footer';
 import ListImage from './ListImage';
 export type RootStackParamList = {
-    DETIAL_CHAPTER: { id: 'id' };
+    DETIAL_CHAPTER: { id: 'id', idChap: '_idChap' };
 };
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> = RouteProp<
@@ -30,7 +30,7 @@ export type RouterProps = {
 export default function ReadComic() {
 
     const router = useRoute<RootRouteProps<'DETIAL_CHAPTER'>>();
-    const { id } = router.params;
+    const { id, idChap } = router.params;
     const [modalVisible, setModalVisible] = React.useState(false);
     const navigation = useNavigation<any>();
     const [name, setName] = useState<any>(null);
@@ -41,11 +41,15 @@ export default function ReadComic() {
     const scrollY = new Animated.Value(0);
     const scrollYFooter = new Animated.Value(0);
     const diffClamp = Animated.diffClamp(scrollY, 0, height / 9.5)
+    const [isSkew, setisSkew] = useState<boolean>(false)
     const translateY = diffClamp.interpolate({
         inputRange: [0, height / 9.5],
         outputRange: [0, -(height / 9.5)]
     })
-
+    let _setisSkew = (e: boolean) => {
+        setisSkew(e)
+    }
+    
     const [isEnabled, setIsEnabled] = React.useState(false);
     const diffClampFooter = Animated.diffClamp(scrollYFooter, 0, height / 13)
     const [isOffset, setisOffset] = useState(true);
@@ -111,7 +115,7 @@ export default function ReadComic() {
     } else {
         return (
             <View style={styles.container}>
-                {/* <StatusBar translucent backgroundColor="transparent" /> */}
+                <StatusBar translucent backgroundColor="transparent" />
                 <Animated.View style={[styles.Header, {
                     transform: [
                         { translateY: translateY }
@@ -128,9 +132,9 @@ export default function ReadComic() {
                     <Text style={styles.name}>{name}</Text>
                     <View style={{ flexBasis: 20 }}></View>
                 </Animated.View>
-                <ListImage {...{_setIsEnabled, imagesList, scrollY, scrollYFooter, isEnabled, isOffset, _setisOffset }}></ListImage>
-                <Footer {...{ translateYFooter, beforeChapter, afterChapter, _setModalVisible }}></Footer>
-                <Modals {...{ modalVisible, _setModalVisible, isEnabled, _toggleSwitch }}></Modals>
+                <ListImage {...{ isSkew, _setIsEnabled, imagesList, scrollY, scrollYFooter, isEnabled, isOffset, _setisOffset }}></ListImage>
+                <Footer {...{ idChap, translateYFooter, beforeChapter, afterChapter, _setModalVisible }}></Footer>
+                <Modals {...{ _setisSkew,modalVisible, _setModalVisible, isEnabled, _toggleSwitch }}></Modals>
             </View>
         );
     }
@@ -145,7 +149,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'#fff'
+        backgroundColor: '#fff'
     },
     activityIndicator: {
         flex: 1,

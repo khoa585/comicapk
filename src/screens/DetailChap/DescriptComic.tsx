@@ -38,8 +38,9 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#fff',
         borderBottomWidth: 1,
-        borderBottomColor: '#5bc6ff',
+        borderBottomColor: '#d6d6d6',
         paddingVertical:10,
+
     },
     name: {
         fontSize: 16,
