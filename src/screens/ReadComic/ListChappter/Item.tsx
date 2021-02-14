@@ -20,7 +20,7 @@ const Item: FunctionComponent<any> = ({ item }) => {
         >
             <View style={styles.Chapter_}>
                 <Text style={styles.name} >Chapter {item.index}</Text>
-                <Text>{item.createdAt.split(/T.*/)[0]}</Text>
+                <Text style={{ fontFamily: 'Brygada1918-Medium' }}>{item.createdAt.split(/T.*/)[0]}</Text>
             </View>
         </RectButton>
     );
@@ -30,7 +30,8 @@ export default React.memo(Item, isEqual)
 const styles = StyleSheet.create({
     name: {
         fontSize: 16,
-        color: '#5c6b73'
+        color: '#5c6b73',
+        fontFamily: 'Brygada1918-Medium'
     },
     Chapter_: {
         flexDirection: 'row',
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 10,
         borderBottomWidth: 1,
-        borderColor: '#5bc6ff',
+        borderColor: '#d6d6d6',
         padding: 20,
 
     },

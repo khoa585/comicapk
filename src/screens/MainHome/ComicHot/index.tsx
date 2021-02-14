@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, ActivityIndicator, TouchableOpacity, FlatList }
 import Item from './Item';
 import * as SCREEN from '../../../constants/ScreenTypes';
 import { SCREEN_WIDTH } from '../../../constants'
-import {ItemComicProps} from '../MainHome'
+import { ItemComicProps } from '../MainHome'
 
 type ComicHotProps = {
     listComic: ItemComicProps[],
@@ -39,7 +39,7 @@ const ComicHot: FunctionComponent<ComicHotProps> = ({ listComic, loading, childr
                 {
                     loading ?
                         <View style={styles.loading}>
-                            <ActivityIndicator size="large" color="#fff" />
+                            <ActivityIndicator size="small" color="#000" />
                         </View> :
                         (
                             <FlatList
@@ -66,7 +66,7 @@ export default React.memo(ComicHot)
 const styles = StyleSheet.create({
     container: {
         marginLeft: 20,
-        marginBottom: 10,
+        marginBottom:5,
         flex: 1
     },
     containerItem: {
@@ -77,12 +77,11 @@ const styles = StyleSheet.create({
     },
     loading: {
         flex: 1,
-        height: SCREEN_WIDTH,
+        height: SCREEN_WIDTH / 2,
         alignItems: 'center',
         justifyContent: 'center',
     },
     headerTitle: {
-
         marginVertical: 15,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -90,11 +89,15 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        color:'#000'
+        color: '#000',
+        fontFamily: 'Anton-Regular',
+        fontWeight: 'normal'
     },
     seenAll: {
-        fontSize: 13,
+        fontSize: 14,
         marginRight: 20,
-        color:'#000'
+        color: '#000',
+        fontFamily: 'Brygada1918-Regular',
+        fontWeight: 'normal'
     }
 })

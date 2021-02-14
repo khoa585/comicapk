@@ -1,17 +1,17 @@
 import React, { FunctionComponent } from 'react';
 import { Text, View, Image, StyleSheet, Platform } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-import { formatViews } from '../../../../common/stringHelper';
+import { formatViews } from '../../../common/stringHelper';
 import { useNavigation } from '@react-navigation/native';
-import * as SCREEN from '../../../../constants/ScreenTypes';
+import * as SCREEN from '../../../constants/ScreenTypes';
 import isEqual from 'react-fast-compare';
 import { RectButton } from 'react-native-gesture-handler';
-import { SCREEN_WIDTH } from '../../../../constants'
-import { itemProps } from '..'
-const Item: FunctionComponent<itemProps> = ({ item }) => {
-    const navigation = useNavigation();
+import { SCREEN_WIDTH } from '../../../constants'
+
+const Item: FunctionComponent<any> = ({ item }) => {
+    const navigation = useNavigation<any>();
     const goToDetialComic = (id: string) => {
-        navigation.navigate(SCREEN.DETIAL_COMIC_SCREEN, { item: item, id: id })
+        navigation.replace(SCREEN.DETIAL_COMIC_SCREEN, { item: item, id: id })
     }
     return (
         <RectButton style={styles.container} onPress={() => goToDetialComic(item._id)} >
@@ -30,8 +30,8 @@ const Item: FunctionComponent<itemProps> = ({ item }) => {
 export default React.memo(Item, isEqual)
 const styles = StyleSheet.create({
     container: {
-        width: ((SCREEN_WIDTH / 2.8)),
-        height: (SCREEN_WIDTH * 0.5),
+        width: ((SCREEN_WIDTH / 4)),
+        height: (SCREEN_WIDTH * 0.4),
         marginRight: 15,
         backgroundColor: '#fff',
 

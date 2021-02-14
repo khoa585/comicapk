@@ -46,7 +46,7 @@ const TitleChapter: FunctionComponent<TitleChapterProps> = ({ data, page, loadin
     return (
         <View style={[styles.containerTitl]}>
             <Text style={{
-                fontSize: 20, padding: 20, paddingVertical: 10, color: '#5c6b73', fontWeight: 'bold'
+                fontSize: 20, padding: 20, paddingVertical: 10, color: '#5c6b73',fontFamily: 'Brygada1918-Bold'
             }}>Chapter</Text>
             <View style={{
                 width: '50%',
@@ -54,11 +54,12 @@ const TitleChapter: FunctionComponent<TitleChapterProps> = ({ data, page, loadin
                 alignItems: 'center',
                 justifyContent: 'flex-end',
                 position: 'absolute',
-                right: -25
+                right: -35
             }}>
                 <Text style={{
                     fontSize: 15, color: '#5c6b73',
-                }}>Page: </Text>
+                    fontFamily: 'Brygada1918-Bold'
+                }}>Page : </Text>
                 <View style={{ width: '50%' }}>
                     <RNPickerSelect
                         onValueChange={(value: string) => _setPage(value)}
@@ -69,7 +70,7 @@ const TitleChapter: FunctionComponent<TitleChapterProps> = ({ data, page, loadin
                             ...pickerSelectStyles,
                             iconContainer: {
                                 top: Platform.OS === 'android' ? 25 : 14,
-                                right: 45,
+                                right: 55,
                             },
                             placeholder: {
                                 color: '#5bc6ff',

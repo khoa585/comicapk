@@ -13,17 +13,17 @@ const Header: FunctionComponent = () => {
     return (
         <>
             <View style={styles.container}>
-                <View style={styles.wrapperIcon}>
-   
+                {/* <View style={styles.wrapperIcon}>
+
                     <EvilIcons name="search" size={30} color="#000" />
-                    
-                </View>
+
+                </View> */}
                 <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.icon}
                     onPress={() => navigation.navigate(screen.SEARCH_SCREEN)}
                 >
-                    <EvilIcons name="bell" size={35} color="#000" />
+                    <EvilIcons name="search" size={30} color="#fff" />
                 </TouchableOpacity>
             </View>
         </>
@@ -33,23 +33,24 @@ export default React.memo(Header, isEqual)
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         alignItems: 'center',
-        padding: 20,
-        width:'100%',
-        // marginTop: STATUS_BAR_HEIGHT,
-        position:'absolute',
-        top:'0%',
-        zIndex:999
+        paddingVertical: 10,
+        paddingHorizontal:20,
+        width: '100%',
+        marginTop: STATUS_BAR_HEIGHT,
+        position: 'absolute',
+        top: '0%',
+        zIndex: 999
     },
     wrapperIcon: {
         alignContent: "center",
         flexDirection: 'row',
         alignItems: 'center',
 
-        backgroundColor:'#fff',
-        padding:10,
-        borderRadius:8
+        backgroundColor: '#fff',
+        padding: 10,
+        borderRadius: 8
     },
     bgimage: {
         backgroundColor: '#fff',
@@ -94,9 +95,9 @@ const styles = StyleSheet.create({
     icon: {
         justifyContent: 'center',
         aspectRatio: 1,
-        padding:5,
-        backgroundColor: '#fff',
-        borderRadius: 8,
+        padding: 4,
+        backgroundColor: '#999a9e',
+        borderRadius: 50,
 
     },
 

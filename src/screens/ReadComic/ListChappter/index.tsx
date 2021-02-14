@@ -4,7 +4,7 @@ import isEqual from 'react-fast-compare';
 import {
     StyleSheet,
     View,
-    Text,
+    StatusBar,
     ActivityIndicator,
     FlatList
 } from 'react-native';
@@ -103,6 +103,10 @@ const ListChapter: FunctionComponent<any> = () => {
     const keyExtractor = React.useCallback((item: any) => item._id.toString(), [])
     return (
         <View style={[styles.container]}>
+            <StatusBar
+                translucent={false}
+                // backgroundColor="#61dafb"
+            />
             <Header></Header>
             {
                 loading ? (

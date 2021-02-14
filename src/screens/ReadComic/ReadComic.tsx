@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Easing, Image, Dimensions, ActivityIndicator, Animated, FlatList, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, BackHandler, Image, Dimensions, ActivityIndicator, Animated, FlatList, StatusBar } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation } from '@react-navigation/native';
 const { height, width } = Dimensions.get("window");
@@ -49,7 +49,20 @@ export default function ReadComic() {
     let _setisSkew = (e: boolean) => {
         setisSkew(e)
     }
-    
+    React.useEffect(() => {
+        const backAction = () => {
+            Orientation.lockToPortrait()
+            navigation.goBack()
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+
+        return () => backHandler.remove();
+    }, []);
     const [isEnabled, setIsEnabled] = React.useState(false);
     const diffClampFooter = Animated.diffClamp(scrollYFooter, 0, height / 13)
     const [isOffset, setisOffset] = useState(true);
@@ -115,7 +128,7 @@ export default function ReadComic() {
     } else {
         return (
             <View style={styles.container}>
-                <StatusBar translucent backgroundColor="transparent" />
+                <StatusBar hidden={false} translucent backgroundColor="transparent" />
                 <Animated.View style={[styles.Header, {
                     transform: [
                         { translateY: translateY }
@@ -134,7 +147,7 @@ export default function ReadComic() {
                 </Animated.View>
                 <ListImage {...{ isSkew, _setIsEnabled, imagesList, scrollY, scrollYFooter, isEnabled, isOffset, _setisOffset }}></ListImage>
                 <Footer {...{ idChap, translateYFooter, beforeChapter, afterChapter, _setModalVisible }}></Footer>
-                <Modals {...{ _setisSkew,modalVisible, _setModalVisible, isEnabled, _toggleSwitch }}></Modals>
+                <Modals {...{ _setisSkew, modalVisible, _setModalVisible, isEnabled, _toggleSwitch }}></Modals>
             </View>
         );
     }

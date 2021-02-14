@@ -6,7 +6,7 @@ import {
     Image
 } from 'react-native'
 import Swiper from 'react-native-swiper'
-import { SCREEN_WIDTH } from '../../constants/index'
+import { SCREEN_WIDTH,SCREEN_WIDTH_No } from '../../constants/index'
 import Wave from '../../themes/icons/Wave';
 
 const Slide: FunctionComponent = () => {
@@ -29,9 +29,12 @@ const Slide: FunctionComponent = () => {
                     <View style={styles.slide3}>
                         <Image style={styles.img} source={{ uri: 'http://cn.e.pic.mangatoon.mobi/homepage-banners/577-7b9a.jpg' }}></Image>
                     </View>
+                    <View style={styles.slide3}>
+                        <Image style={styles.img} source={{ uri: 'http://cn.e.pic.mangatoon.mobi/homepage-banners/677-e874.jpg' }}></Image>
+                    </View>
                 </Swiper>
             </View>
-            <View style={{position:'absolute',top:(SCREEN_WIDTH / 1.5) - 90}}>
+            <View style={{position:'absolute',top:(SCREEN_WIDTH / 1.4) - 90,zIndex:1}}>
                     <Wave></Wave>
                 </View>
         </View>
@@ -42,10 +45,10 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 10
+ 
     },
     wrapper: {
-        height: SCREEN_WIDTH / 1.5,
+        height: SCREEN_WIDTH / 1.4,
         width: SCREEN_WIDTH ,
     },
     slide1: {
@@ -65,7 +68,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     img: {
-        width: SCREEN_WIDTH ,
+        width: SCREEN_WIDTH_No ,
         height: "100%",
         resizeMode: 'cover',
    

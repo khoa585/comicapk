@@ -160,12 +160,12 @@ const Modals = ({ _setisSkew, modalVisible, _setModalVisible, isEnabled, _toggle
     const [isTurn, setTurn] = React.useState<number>(0);
     const [valueBrightness, setValueBrightness] = React.useState<number>(0)
     const _OnchangeBrightness = async (e) => {
-        // let hasPerm = await ScreenBrightness.hasPermission();
-        // if (!hasPerm) {
-        //     ScreenBrightness.requestPermission();
-        //     return;
-        // }
-        // ScreenBrightness.setBrightness(e * 0.2);
+        let hasPerm = await ScreenBrightness.hasPermission();
+        if (!hasPerm) {
+            ScreenBrightness.requestPermission();
+            return;
+        }
+        ScreenBrightness.setBrightness(e * 0.2);
         // ScreenBrightness.getBrightness().then(brightness => {
 
         //     console.log('brightness', brightness);
@@ -224,7 +224,7 @@ const Modals = ({ _setisSkew, modalVisible, _setModalVisible, isEnabled, _toggle
                             >
                                 <Ionicons style={[styles.icon]} color={isTurn === 0 ? '#e63946' : '#000'} name="phone-portrait-outline" size={30}></Ionicons>
                             </TouchableOpacity>
-                            <Text style={[{ color: isTurn === 0 ? '#e63946' : '#000' }]}>Vertical</Text>
+                            <Text style={[{ color: isTurn === 0 ? '#e63946' : '#000', fontFamily: 'Brygada1918-Regular', }]}>Vertical</Text>
                         </View>
                         <View style={styles.Touchable}>
                             <TouchableOpacity
@@ -237,11 +237,11 @@ const Modals = ({ _setisSkew, modalVisible, _setModalVisible, isEnabled, _toggle
                             >
                                 <Ionicons style={styles.icon} color={isTurn === 1 ? '#e63946' : '#000'} name="phone-landscape-outline" size={30}></Ionicons>
                             </TouchableOpacity>
-                            <Text style={[{ color: isTurn === 1 ? '#e63946' : '#000' }]}>Horizontal</Text>
+                            <Text style={[{ color: isTurn === 1 ? '#e63946' : '#000', fontFamily: 'Brygada1918-Regular', }]}>Horizontal</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: "row", marginVertical: 40 }}>
-                        <Text style={{ marginRight: 20, fontSize: 18 }}>Brightness</Text>
+                        <Text style={{ marginRight: 20, fontSize: 18, fontFamily: 'Brygada1918-Regular', }}>Brightness</Text>
                         <Slider
                             minimumValue={0}
                             maximumValue={5}
@@ -295,10 +295,12 @@ const styles = StyleSheet.create({
     },
     txt: {
         fontSize: 18,
-        paddingRight: 15
+        paddingRight: 15,
+        fontFamily: 'Brygada1918-Regular',
     },
     icon: {
-        paddingHorizontal: 25
+        paddingHorizontal: 25,
+
     },
     Touchable: {
 

@@ -21,7 +21,7 @@ type itemProps = {
 }
 
 type TabSceneProps = {
-    _id:string,
+    _id: string,
     data: DetailChapProps | null,
     loading: boolean,
 }
@@ -37,18 +37,23 @@ const TabScene: FunctionComponent<TabSceneProps> = ({ _id, data, loading }) => {
                         <ActivityIndicator size="small" color="#000" />
                     </View>
                 ) :
-                    data?.data.map((item: itemProps, _: number) => {
+                    data?.data.length === 0 ? <Text style={{
+                        textAlign:'center',
+                        paddingVertical:10,
+                        fontFamily: 'Brygada1918-Regular',
+                    }}>updating...</Text> : data?.data.map((item: itemProps, _: number) => {
                         return (
                             <RectButton key={item._id}
                                 onPress={() => navigation.navigate(SCREEN.DETIAL_CHAPTER, { id: item._id, idChap: _id })}
                             >
                                 <View style={styles.Chapter_}>
                                     <Text style={styles.name} >Chapter {item.index}</Text>
-                                    <Text>{item.createdAt.split(/T.*/)[0]}</Text>
+                                    <Text style={{ fontFamily: 'Brygada1918-Medium' }}>{item.createdAt.split(/T.*/)[0]}</Text>
                                 </View>
                             </RectButton>
                         )
                     })
+
             }
         </View>
     );
@@ -63,7 +68,8 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 16,
-        color: '#5c6b73'
+        color: '#5c6b73',
+        fontFamily: 'Brygada1918-Medium'
     },
     Chapter_: {
         flexDirection: 'row',
@@ -75,7 +81,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     loading: {
-        height: 100,
+        paddingVertical: 20,
         alignItems: 'center',
         justifyContent: 'center'
     },

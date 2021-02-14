@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { View, StyleSheet, Text, StatusBar, Easing, Animated, ScrollView } from 'react-native';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import { useRoute, RouteProp, useFocusEffect } from '@react-navigation/native';
 import { getDetialComic, getListChapter } from './../../api/comic';
 import * as screen from './../../constants/ScreenTypes';
 import { TabView, TabBar } from 'react-native-tab-view';
@@ -19,6 +19,11 @@ import Background from './Background';
 import TitleChapter from './TitleChapter';
 import { ChapterItem } from '../../api/interface/chapter.interface';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import { STATUS_BAR_HEIGHT } from '../../constants';
+import Orientation from 'react-native-orientation';
+import { getListTypeCommic } from '../../api/comic';
+import ComicHot from './../MainHome/ComicHot';
+import ListComic from './ListComic';
 export type RootStackParamList = {
     DETIAL_COMIC_SCREEN: { item: 'item', id: 'id' };
 };
@@ -57,12 +62,14 @@ const DetailChap: FunctionComponent = () => {
     const [loading, setLoading] = React.useState<boolean>(true);
     const [data, setData] = React.useState<DetailChapProps | null>(null);
     const ScaleAnim = React.useRef<any>(new Animated.Value(0)).current;
+
     const _setLoading = (e: boolean) => {
         setLoading(e)
     }
     const _setPage = (e: string) => {
         setPage(e)
     }
+
     const fadeIn = () => {
 
         const a1 = Animated.timing(ScaleAnim, {
@@ -79,6 +86,7 @@ const DetailChap: FunctionComponent = () => {
         })
         Animated.sequence([a1, a13]).start()
     }
+
     React.useEffect(() => {
         (async () => {
             _setLoading(true)
@@ -94,40 +102,38 @@ const DetailChap: FunctionComponent = () => {
         return () => setData(null)
     }, [page])
 
+
     return (
         <>
             <View style={styles.container}>
-                <StatusBar translucent backgroundColor="transparent" />
+                <StatusBar translucent hidden={false} backgroundColor="transparent" />
                 <ScrollView
                     style={{ flex: 1 }}
                     stickyHeaderIndices={[3]}
                 >
                     <Background {...{ item }} ></Background>
-                    <DetailComic {...{fadeIn, item }}></DetailComic>
+
+                    <DetailComic {...{ fadeIn, item }}></DetailComic>
                     <DescriptComic {...{ item }}></DescriptComic>
                     <TitleChapter {...{ data, page, loading, _setPage }}></TitleChapter>
                     <TabScene {...{ _id: id, data, loading }}></TabScene>
+                    <ListComic></ListComic>
                 </ScrollView>
 
-                {/* <View style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor:'red',
-                }}> */}
-                    <Animated.View style={[styles.love, {
-                        transform: [{
-                            scale: ScaleAnim.interpolate({
-                                inputRange: [0, 1],
-                                outputRange: [0, 1],
+                <Animated.View style={[styles.love, {
+                    transform: [{
+                        scale: ScaleAnim.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [0, 1],
 
-                            })
-                        }]
-                    }]}>
+                        })
+                    }]
+                }]}>
 
-                        <Fontisto style={styles.icon_} name="heart" size={80} color="#fff" />
+                    <Fontisto style={styles.icon_} name="heart" size={80} color="#fff" />
 
-                    </Animated.View>
-                {/* </View> */}
+                </Animated.View>
+
 
             </View>
         </>
@@ -139,7 +145,7 @@ export default React.memo(DetailChap);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#080808',
+        backgroundColor: '#fff',
     },
     loading: {
         flex: 1,
@@ -149,9 +155,9 @@ const styles = StyleSheet.create({
     },
 
     love: {
-        position: 'absolute',  
-        top:'20%',
-        left:'40%',
+        position: 'absolute',
+        top: '20%',
+        left: '40%',
     },
     icon_: {
         shadowColor: "#000",

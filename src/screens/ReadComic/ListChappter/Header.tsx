@@ -14,7 +14,7 @@ const Header: FunctionComponent = () => {
                 <AntDesign name="arrowleft" size={25} color="#000" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text>Chapter</Text>
+                <Text style={{ fontSize: 18, fontFamily: 'Anton-Regular', }}>Chapter</Text>
             </TouchableOpacity>
             <TouchableOpacity>
                 <MaterialCommunityIcons name="dots-vertical" size={25} color="#000" />
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         paddingHorizontal: 10,
         paddingVertical: 20,
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        borderBottomColor:'#d6d6d6'
     }
 })

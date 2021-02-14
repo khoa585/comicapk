@@ -6,6 +6,7 @@ import Background from './Background';
 import isEqual from 'react-fast-compare';
 import ComicHot from './ComicHot';
 import { getListTypeCommic } from './../../api/comic';
+import Category from './Category';
 
 
 export type ItemComicProps = {
@@ -81,7 +82,7 @@ const MainHome: FunctionComponent = () => {
 
     return (
         <View style={styles.container}>
-            <StatusBar translucent backgroundColor="transparent" />
+            <StatusBar hidden={false} translucent backgroundColor="transparent" />
 
             <ScrollView
                 scrollEventThrottle={1}
@@ -92,9 +93,10 @@ const MainHome: FunctionComponent = () => {
                 <Header></Header>
                 {/* <Background></Background> */}
                 <TabActionBar></TabActionBar>
-             
-                <ComicHot {...{ listComic: listComic ? listComic.listComicHot : [], loading }}>Top Anime</ComicHot>
-                <ComicHot {...{ listComic: listComic ? listComic.listComicHUpdate : [], loading }}>New Releases</ComicHot>
+                
+                <ComicHot {...{ listComic: listComic ? listComic.listComicHot : [], loading }}>Top Manga</ComicHot>
+                <Category></Category>
+                <ComicHot {...{ listComic: listComic ? listComic.listComicHUpdate : [], loading }}>New Manga</ComicHot>
             </ScrollView>
         </View>
     )

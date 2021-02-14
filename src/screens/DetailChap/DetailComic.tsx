@@ -11,16 +11,16 @@ import { formatViews } from '../../common/stringHelper'
 import { ItemComicProps } from '../MainHome/MainHome'
 
 type DetailComicProps = {
-    fadeIn:any
+    fadeIn: any
     item: ItemComicProps | any
 }
-const DetailComic: FunctionComponent<DetailComicProps> = ({fadeIn,item }) => {
+const DetailComic: FunctionComponent<DetailComicProps> = ({ fadeIn, item }) => {
 
     const navigation = useNavigation();
     const [isDown, setDown] = React.useState<boolean>(false);
 
-    const gradColors = isDown ? ['#4da7db', '#D8090D'] : ['#D8090D', '#e85356'];
-  
+    const gradColors = isDown ? ['#4da7db', '#5bc6ff'] : ['#5bc6ff', '#4da7db'];
+
     return (
         <View style={styles.conatiner}>
             <View style={styles.containerComic}>
@@ -37,10 +37,11 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({fadeIn,item }) => {
                     <View style={styles.action}>
                         <TouchableOpacity
                             onPress={fadeIn}
+                            activeOpacity={0.8}
                         >
                             <View style={styles.icon}>
                                 <LinearGradient
-                                    colors={['#D8090D', '#e85356']}
+                                    colors={['#5bc6ff', '#4da7db']}
                                     useAngle={true}
                                     angle={145}
                                     angleCenter={{ x: 0.5, y: 0.5 }}
@@ -51,7 +52,9 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({fadeIn,item }) => {
                             </View>
                         </TouchableOpacity>
                         <View>
-                            <TouchableOpacity style={[styles.read]}>
+                            <TouchableOpacity
+                                activeOpacity={0.8}
+                                style={[styles.read]}>
                                 <LinearGradient
                                     colors={gradColors}
                                     useAngle={true}
@@ -66,7 +69,7 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({fadeIn,item }) => {
                         </View>
                         <View style={styles.icon}>
                             <LinearGradient
-                                colors={['#D8090D', '#e85356']}
+                                colors={['#5bc6ff', '#4da7db']}
                                 useAngle={true}
                                 angle={145}
                                 angleCenter={{ x: 0.5, y: 0.5 }}
@@ -79,14 +82,14 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({fadeIn,item }) => {
                     <View style={styles.wrap}>
                         <Text style={styles.status}>Status: <Text style={styles.normal}>{item.manga_status === 0 ? 'Continue' : 'Full'}</Text></Text>
                         <View style={styles.wrapViews}>
-                            <EvilIcons name="eye" size={35} color="#D8090D" />
+                            <EvilIcons name="eye" size={35} color="#5bc6ff" />
                             <Text style={styles.normal}>{formatViews(item.views)}</Text>
                         </View>
                     </View>
                 </View>
 
             </View>
-       
+
         </View>
     )
 }
@@ -174,11 +177,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 5,
         textAlign: 'center',
+        fontFamily: 'Brygada1918-Medium'
     },
     status: {
-        color: '#D8090D',
+        color: '#5bc6ff',
         fontSize: 15,
-        fontWeight: 'bold',
+        fontFamily: 'Brygada1918-Bold'
     },
     category: {
         color: '#000',
@@ -188,14 +192,15 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         color: '#000',
         fontSize: 14,
+        fontFamily: 'Brygada1918-Bold'
     },
     nameComic: {
         color: '#000',
-        fontWeight: 'bold',
         fontSize: 20,
         textAlign: 'center',
         marginTop: 80,
-        marginHorizontal: 10
+        marginHorizontal: 10,
+        fontFamily: 'Brygada1918-Bold'
     },
     wrap: {
         flexDirection: 'row',
@@ -227,7 +232,8 @@ const styles = StyleSheet.create({
         elevation: 2
     },
     txtRead: {
-        color: '#fff'
+        color: '#fff',
+        fontFamily: 'Brygada1918-Bold'
     },
     love: {
         position: 'absolute',

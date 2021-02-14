@@ -48,7 +48,7 @@ export default ({
                     {React.cloneElement(children.icon, isFocused && { active: true })}
                 </Animated.View>
             </Animated.View>
-            <Animated.Text style={[ { fontSize: 11 ,marginTop:5,color:'#000'}]}>
+            <Animated.Text style={[ { fontSize: 11 ,marginTop:5,color:'#000',fontFamily: 'Brygada1918-Medium'}]}>
                 {children.name}
             </Animated.Text>
         </RectButton>
