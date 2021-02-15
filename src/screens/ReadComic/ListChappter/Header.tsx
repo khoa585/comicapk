@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: "space-between",
         flexDirection: "row",
-        paddingHorizontal: 10,
-        paddingVertical: 20,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
         borderBottomWidth: 1,
         borderBottomColor:'#d6d6d6'
     }

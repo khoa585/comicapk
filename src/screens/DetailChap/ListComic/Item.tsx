@@ -17,7 +17,11 @@ const Item: FunctionComponent<any> = ({ item }) => {
         <RectButton style={styles.container} onPress={() => goToDetialComic(item._id)} >
             <View style={styles.imageLeft}>
                 <View style={styles.containerImage}>
-                    <Image source={{ uri: item.image }}
+                    <Image source={{
+                        uri: item.image, headers: {
+                            Referer: "https://manganelo.com/"
+                        }
+                    }}
                         resizeMode='cover'
                         style={styles.imageRecommend}></Image></View>
             </View>
@@ -30,8 +34,8 @@ const Item: FunctionComponent<any> = ({ item }) => {
 export default React.memo(Item, isEqual)
 const styles = StyleSheet.create({
     container: {
-        width: ((SCREEN_WIDTH / 4)),
-        height: (SCREEN_WIDTH * 0.4),
+        width: ((SCREEN_WIDTH / 2.8)),
+        height: (SCREEN_WIDTH * 0.5),
         marginRight: 15,
         backgroundColor: '#fff',
 

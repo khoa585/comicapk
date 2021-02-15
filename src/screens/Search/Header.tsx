@@ -18,6 +18,7 @@ export default () => {
                 onPress={() => navigation.goBack()}>
                 <Entypo name="chevron-thin-left" size={20} color="#fff"></Entypo>
             </TouchableOpacity>
+            <Text style={styles.txt}>Search</Text>
         </View>
 
     );
@@ -27,16 +28,19 @@ export default () => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#55b9f3',
-        paddingVertical: 15,
-        paddingHorizontal: 10
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        alignItems: 'center'
     },
     icon: {
-
+        position: 'absolute',
+        top: 20,
+        left: 20
     },
-    title: {
-        textAlign: 'center',
-        color: '#fff',
-        marginHorizontal:30,
-        fontSize:15
+    txt: {
+        fontSize: 25,
+        fontFamily: 'Pacifico-Regular',
+        fontWeight: 'normal',
+        color: '#fff'
     }
 })

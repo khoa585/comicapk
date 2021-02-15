@@ -13,11 +13,6 @@ const Header: FunctionComponent = () => {
     return (
         <>
             <View style={styles.container}>
-                {/* <View style={styles.wrapperIcon}>
-
-                    <EvilIcons name="search" size={30} color="#000" />
-
-                </View> */}
                 <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.icon}

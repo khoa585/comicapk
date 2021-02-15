@@ -17,7 +17,11 @@ const Item: FunctionComponent<itemProps> = ({ item }) => {
         <RectButton style={styles.container} onPress={() => goToDetialComic(item._id)} >
             <View style={styles.imageLeft}>
                 <View style={styles.containerImage}>
-                    <Image source={{ uri: item.image }}
+                    <Image source={{
+                        uri: item.image, headers: {
+                            Referer: "https://manganelo.com/"
+                        }
+                    }}
                         resizeMode='cover'
                         style={styles.imageRecommend}></Image></View>
             </View>

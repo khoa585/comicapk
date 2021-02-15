@@ -5,6 +5,7 @@ import * as screen from '../constants/ScreenTypes'
 
 import NavigationBar from '../components/NavigationBar/index'
 import MainHome from '../screens/MainHome';
+import ListCategory from '../screens/ListCategory';
 
 export type TypeProps = {
   showLabel: boolean
@@ -27,7 +28,7 @@ export default () => {
         component={MainHome} />
       <Tab.Screen
         name={screen.CATEGORY_SCREEN}
-        component={MainHome} />
+        component={ListCategory} />
       <Tab.Screen
         name={screen.FOLLOW_SCREEN}
         component={MainHome} />

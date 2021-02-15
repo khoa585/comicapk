@@ -64,15 +64,7 @@ const MainHome: FunctionComponent = () => {
             setLoading(false);
         }
     }
-    React.useEffect(() => {
-   
-        StatusBar.setBarStyle("dark-content");
 
-        if (Platform.OS === "android") {
-          StatusBar.setBackgroundColor("rgba(0,0,0,0)");
-          StatusBar.setTranslucent(true);
-        }
-      }, []);
     const onRefresh = () => {
         setRefreshing(true);
         setListComic(null)
@@ -82,7 +74,7 @@ const MainHome: FunctionComponent = () => {
 
     return (
         <View style={styles.container}>
-            <StatusBar hidden={false} translucent backgroundColor="transparent" />
+            <StatusBar hidden={false} translucent={true} backgroundColor="transparent" />
 
             <ScrollView
                 scrollEventThrottle={1}

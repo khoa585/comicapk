@@ -59,6 +59,7 @@
 		66B6DFD5D1604B83B3587E11 /* Brygada1918-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FDD1F50C7FE7461097ABFB2F /* Brygada1918-Regular.ttf */; };
 		85B4AF364CDA42D0943648D8 /* Brygada1918-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2895AF170DEB42559CAF4DE4 /* Brygada1918-SemiBold.ttf */; };
 		3EC91D8003F3432C8C8AC52A /* Anton-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 548D70857FCA4EAA8D17AA62 /* Anton-Regular.ttf */; };
+		F0AFE7762002445DA47AA49B /* Pacifico-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A347F808051F47AFB6909456 /* Pacifico-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +146,7 @@
 		FDD1F50C7FE7461097ABFB2F /* Brygada1918-Regular.ttf */ = {isa = PBXFileReference; name = "Brygada1918-Regular.ttf"; path = "../assets/fonts/Brygada1918-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		2895AF170DEB42559CAF4DE4 /* Brygada1918-SemiBold.ttf */ = {isa = PBXFileReference; name = "Brygada1918-SemiBold.ttf"; path = "../assets/fonts/Brygada1918-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		548D70857FCA4EAA8D17AA62 /* Anton-Regular.ttf */ = {isa = PBXFileReference; name = "Anton-Regular.ttf"; path = "../assets/fonts/Anton-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A347F808051F47AFB6909456 /* Pacifico-Regular.ttf */ = {isa = PBXFileReference; name = "Pacifico-Regular.ttf"; path = "../assets/fonts/Pacifico-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -318,6 +320,7 @@
 				FDD1F50C7FE7461097ABFB2F /* Brygada1918-Regular.ttf */,
 				2895AF170DEB42559CAF4DE4 /* Brygada1918-SemiBold.ttf */,
 				548D70857FCA4EAA8D17AA62 /* Anton-Regular.ttf */,
+				A347F808051F47AFB6909456 /* Pacifico-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				66B6DFD5D1604B83B3587E11 /* Brygada1918-Regular.ttf in Resources */,
 				85B4AF364CDA42D0943648D8 /* Brygada1918-SemiBold.ttf in Resources */,
 				3EC91D8003F3432C8C8AC52A /* Anton-Regular.ttf in Resources */,
+				F0AFE7762002445DA47AA49B /* Pacifico-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

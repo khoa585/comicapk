@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { View, StyleSheet, Image, Text, Dimensions } from 'react-native';
+import { View, StyleSheet, Image, Text, StatusBar } from 'react-native';
 import { BlurView } from "@react-native-community/blur";
 import isEqual from 'react-fast-compare';
 import { SCREEN_HEIGHT } from '../../constants'
@@ -16,7 +16,11 @@ const Background: FunctionComponent<BackgroundProps> = ({ item }) => {
             <View style={styles.container}>
                 <Image
                     key={'blurryImage'}
-                    source={{ uri: item.image }}
+                    source={{
+                        uri: item.image, headers: {
+                            Referer: "https://manganelo.com/"
+                        }
+                    }}
                     style={styles.absolute}
                     resizeMode='cover'
                 />

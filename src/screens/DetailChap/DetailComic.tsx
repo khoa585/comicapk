@@ -24,10 +24,14 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ fadeIn, item }) => {
     return (
         <View style={styles.conatiner}>
             <View style={styles.containerComic}>
-                <Header></Header>
+        
                 <View style={styles.container_}>
                     <View style={styles.containerImage}>
-                        <Image source={{ uri: item.image }}
+                        <Image source={{
+                            uri: item.image, headers: {
+                                Referer: "https://manganelo.com/"
+                            }
+                        }}
                             style={styles.img} />
                     </View>
                 </View>

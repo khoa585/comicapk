@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { View, StyleSheet, Text, StatusBar, Easing, Animated, ScrollView } from 'react-native';
+import { View, StyleSheet, Platform, StatusBar, Easing, Animated, ScrollView } from 'react-native';
 import { useRoute, RouteProp, useFocusEffect } from '@react-navigation/native';
 import { getDetialComic, getListChapter } from './../../api/comic';
 import * as screen from './../../constants/ScreenTypes';
@@ -99,20 +99,24 @@ const DetailChap: FunctionComponent = () => {
                 _setLoading(false);
             }
         })()
-        return () => setData(null)
+        return () => {
+            setData(null)
+            _setLoading(false)
+        }
     }, [page])
 
 
     return (
         <>
             <View style={styles.container}>
-                <StatusBar translucent hidden={false} backgroundColor="transparent" />
+                <StatusBar translucent={true} hidden={false} backgroundColor="transparent" />
                 <ScrollView
                     style={{ flex: 1 }}
-                    stickyHeaderIndices={[3]}
+                    stickyHeaderIndices={[4]}
+                    scrollEventThrottle={16}
                 >
                     <Background {...{ item }} ></Background>
-
+                    <Header></Header>
                     <DetailComic {...{ fadeIn, item }}></DetailComic>
                     <DescriptComic {...{ item }}></DescriptComic>
                     <TitleChapter {...{ data, page, loading, _setPage }}></TitleChapter>
@@ -129,12 +133,8 @@ const DetailChap: FunctionComponent = () => {
                         })
                     }]
                 }]}>
-
                     <Fontisto style={styles.icon_} name="heart" size={80} color="#fff" />
-
                 </Animated.View>
-
-
             </View>
         </>
     )

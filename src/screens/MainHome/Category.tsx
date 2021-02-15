@@ -6,7 +6,7 @@ import { Image, StyleSheet, Text, View, TouchableOpacity, FlatList } from "react
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useSelector } from "react-redux";
 import { useNavigation } from '@react-navigation/native';
-// import * as screen from '../../../constants/ScreenTypes'
+import * as screen from '../../constants/ScreenTypes'
 const items = [
     {
         name: 'Action',
@@ -31,21 +31,65 @@ const items = [
     {
         name: 'Comedy',
         icon: require('../../assets/image/Comedy.jpg')
-    }
+    },
+    
+    {
+        name: 'Romance',
+        icon: require('../../assets/image/Romance.jpg')
+    },
+    {
+        name: 'Manhua',
+        icon: require('../../assets/image/Manhua.jpg')
+    },
+    {
+        name: 'Webtoons',
+        icon: require('../../assets/image/Webtoons.jpg')
+    },
+    // {
+    //     name: 'Romance',
+    //     icon: require('../../assets/image/action.jpg')
+    // },
+    // {
+    //     name: 'School life',
+    //     icon: require('../../assets/image/Schoollife.jpg')
+    // },
+    // {
+    //     name: 'Kingdom',
+    //     icon: require('../../assets/image/action.jpg')
+    // },
+    // {
+    //     name: 'Gamer',
+    //     icon: require('../../assets/image/action.jpg')
+    // },
+    // {
+    //     name: 'Hero',
+    //     icon: require('../../assets/image/action.jpg')
+    // },
+    // {
+    //     name: 'Hunter',
+    //     icon: require('../../assets/image/action.jpg')
+    // },
+    // {
+    //     name: 'Dragon',
+    //     icon: require('../../assets/image/action.jpg')
+    // },
+    // {
+    //     name: 'Master',
+    //     icon: require('../../assets/image/action.jpg')
+    // },
 ]
-
 export default React.memo(() => {
 
-    const renderItem = React.useCallback(({ item }) => <Item item={item}></Item>, [])
+    const renderItem = React.useCallback(({ item ,index}) => <Item item={item} index={index}></Item>, [])
     const keyExtractor = React.useCallback((_, index): string => index.toString(), [])
     const navigation = useNavigation();
 
 
-    const Item = ({ item: { icon, name } }): JSX.Element => {
+    const Item = ({ item: { icon, name },index }): JSX.Element => {
         return (
             <TouchableOpacity
-                onPress={() => true}
-                style={{marginRight:20}}
+                onPress={() => navigation.navigate(screen.CATEGORY_SCREEN, { _index: index })}
+                style={{ marginRight: 20 }}
                 activeOpacity={0.7}>
                 <View
                     style={styles.contaiWrapper}>
@@ -86,14 +130,12 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
         marginLeft: 20,
+        marginVertical: 5,
     },
     contaiWrapper: {
         width: 70,
         height: 70,
         alignItems: 'center',
-    
-  
-     
         backgroundColor: '#fff',
         shadowOffset: { width: 12, height: 12 },
         shadowColor: '#489dcf',
@@ -106,7 +148,7 @@ const styles = StyleSheet.create({
     },
     imgIcon: {
         height: '100%',
-        width:'100%',
+        width: '100%',
         resizeMode: 'cover',
         borderRadius: 200
     },
@@ -115,6 +157,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontFamily: 'Anton-Regular',
         fontWeight: 'normal',
-        marginBottom:5
+        marginBottom: 5
     },
 })

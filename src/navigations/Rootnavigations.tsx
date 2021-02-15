@@ -21,6 +21,10 @@ const AllOptionSlideFromRight: StackNavigationOptions = {
     ...TransitionPresets.FadeFromBottomAndroid,
     // cardStyle: { backgroundColor: 'transparent' }
 }
+const SlideFromRightIOS: StackNavigationOptions = {
+    ...TransitionPresets.SlideFromRightIOS  ,
+    // cardStyle: { backgroundColor: 'transparent' }
+}
 
 export default () => {
     return (
@@ -28,9 +32,9 @@ export default () => {
             <Stack.Navigator screenOptions={navigationOptions} initialRouteName={screen.MAIN_HOME_SCREEN} >
                 <Stack.Screen name={screen.MAIN_HOME_SCREEN} component={AuthStack} />
                 <Stack.Screen name={screen.SEARCH_SCREEN} component={Search} />
-                <Stack.Screen name={screen.DETIAL_COMIC_SCREEN} component={DetailChap} />
+                <Stack.Screen options={StyleSheet.flatten(SlideFromRightIOS)} name={screen.DETIAL_COMIC_SCREEN} component={DetailChap} />
                 <Stack.Screen options={StyleSheet.flatten(AllOptionSlideFromRight)} name={screen.DETIAL_CHAPTER} component={ReadComic} />
-                <Stack.Screen name={screen.CHAPTER_LIST_SCREEN} component={ListChappter} />
+                <Stack.Screen options={StyleSheet.flatten(SlideFromRightIOS)} name={screen.CHAPTER_LIST_SCREEN} component={ListChappter} />
             </Stack.Navigator>
         </NavigationContainer>
     )
