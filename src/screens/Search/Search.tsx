@@ -7,8 +7,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Category from './Category'
 import HistorySearch from './HistorySearch';
 import { searchComicByName } from './../../api/comic';
+import { useNavigation } from '@react-navigation/native';
 import SearchItem from './SearchItem'
+import Loading from '../../components/Loading';
+export const iconClose = require('../../assets/image/z1.png');
 const Search = () => {
+    const navigation = useNavigation();
     let [value, onChangeText] = React.useState<String | any>('')
     const [loading, setLoading] = React.useState<any>(false);
     const [listComic, setListComic] = React.useState<any>([]);
@@ -30,11 +34,7 @@ const Search = () => {
     }
     return (
         <View style={styles.container}>
-            <StatusBar
-                translucent={false}
-                backgroundColor="#fff"
-            />
-            {/* <Header></Header> */}
+            <Header></Header>
             <View style={{ paddingHorizontal: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <View style={styles.contaiSearch}>
                     <Ionicons style={{ padding: 5 }} name="search-outline" size={25} color="#000" />
@@ -45,19 +45,23 @@ const Search = () => {
                         multiline
                         blurOnSubmit
                         onSubmitEditing={({ nativeEvent }) => submit(nativeEvent)}
-                        style={{ flex: 1, paddingVertical: 5 }} placeholder="Search"></TextInput>
+                        style={{ flex: 1, paddingVertical: 5, fontFamily: 'Nunito-Bold', }} placeholder="Search"></TextInput>
                     {
                         value !== '' ? (
-                            <MaterialCommunityIcons style={{ padding: 5 }} name="close-outline" size={15} color="#000" />
+                            <TouchableOpacity
+                                onPress={() => onChangeText('')}
+                            >
+                                <MaterialCommunityIcons style={{ padding: 5 }} name="close-outline" size={15} color="#000" />
+                            </TouchableOpacity>
                         ) : null
                     }
 
                 </View>
                 <TouchableOpacity
                     style={{ width: '20%' }}
-                    onPress={() => onChangeText('')}
+                    onPress={() => navigation.goBack()}
                 >
-                    <Text style={{ textAlign: 'center' }}>Cancelar</Text>
+                    <Text style={{ textAlign: 'center', fontFamily: "Nunito-SemiBold", }}>Cancelar</Text>
                 </TouchableOpacity>
             </View>
             {
@@ -70,16 +74,16 @@ const Search = () => {
             }
             {
                 value != "" ?
-                    < View style={{ marginTop: 4, flex: 1, paddingHorizontal: 10, paddingTop: 10 }}>
+                    < View style={{ marginTop: 4, flex: 1, paddingTop: 10 }}>
                         {loading ?
                             <View style={{ flex: 1, paddingTop: 15 }}>
-                                <ActivityIndicator size="small" color="#e84d35" />
+                                <Loading></Loading>
                             </View> :
                             <View style={{ flex: 1 }}>
                                 {
                                     listComic.length === 0 ?
                                         <View>
-                                            <Text style={{ textAlign: "center" }}>Không Có Kết Quả Tìm Kiếm</Text>
+                                            <Text style={{ textAlign: "center", fontFamily: 'Nunito-Bold' }}>Không Có Kết Quả Tìm Kiếm</Text>
                                         </View>
                                         :
                                         <FlatList

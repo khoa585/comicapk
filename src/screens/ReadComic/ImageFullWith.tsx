@@ -8,20 +8,20 @@ const { height, width } = Dimensions.get("window");
 const ImageFullWith = React.memo(({ isSkew, url }: any) => {
 
     const [heightImage, setHeightImage] = useState<any>((width * 3) / 2);
-    // useEffect(() => {
-    //     (() => {
-    //         Image.getSizeWithHeaders(url, {
-    //             Referer: "https://manganelo.com/"
-    //         }, (withdata, heightdata) => {
-    //             if (heightdata) {
-    //                 setHeightImage(width * (heightdata / withdata))
-    //             }
+    useEffect(() => {
+        (() => {
+            Image.getSizeWithHeaders(url, {
+                Referer: "https://manganelo.com/"
+            }, (withdata, heightdata) => {
+                if (heightdata) {
+                    setHeightImage(width * (heightdata / withdata))
+                }
 
-    //         }, (error) => { })
+            }, (error) => { })
 
-    //     })()
-    //     return () => setHeightImage((width * 3) / 2.4)
-    // }, [])
+        })()
+        return () => setHeightImage((width * 3) / 2.4)
+    }, [])
 
     return <Image style={{ width: "100%", height: isSkew ? (width * 3) : heightImage, flex: 1 }}
         source={{

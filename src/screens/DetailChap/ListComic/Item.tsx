@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
 
     },
     nameComic: {
-        fontSize: 14,
-        fontFamily: 'Brygada1918-Regular',
+        fontSize: 13,
+        fontFamily: 'Nunito-Bold',
         fontWeight: 'normal',
         paddingBottom: 5
     },

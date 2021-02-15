@@ -43,12 +43,12 @@ export default ({
                 <Animated.View style={[StyleSheet.absoluteFill]}>{children.icon}</Animated.View>
                 <Animated.View style={[{
                     width: width, overflow: "hidden",
-                    
+
                 }]}>
                     {React.cloneElement(children.icon, isFocused && { active: true })}
                 </Animated.View>
             </Animated.View>
-            <Animated.Text style={[ { fontSize: 11 ,marginTop:5,color:'#000',fontFamily: 'Brygada1918-Medium'}]}>
+            <Animated.Text style={[{ fontSize: 11, color: '#000', fontFamily: 'Nunito-Bold', }]}>
                 {children.name}
             </Animated.Text>
         </RectButton>

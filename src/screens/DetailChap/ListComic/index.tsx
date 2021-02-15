@@ -85,14 +85,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         color: '#000',
-        fontFamily: 'Anton-Regular',
+        fontFamily: 'Nunito-Bold',
         fontWeight: 'normal'
     },
-    seenAll: {
-        fontSize: 14,
-        marginRight: 20,
-        color: '#000',
-        fontFamily: 'Brygada1918-Regular',
-        fontWeight: 'normal'
-    }
 })

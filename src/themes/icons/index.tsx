@@ -6,7 +6,7 @@ import Follow from './Follow';
 import History from './History';
 export const tabs = [
     { icon: <Home />, name: 'Home' },
-    { icon: <Category />, name: 'Category' },
+    // { icon: <Category />, name: 'Search' },
     { icon: <Follow />, name: 'Follow' },
     { icon: <History />, name: 'History' },
     { icon: <User />, name: 'Profile' },

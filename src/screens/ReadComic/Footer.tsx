@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import * as SCREEN from './../../constants/ScreenTypes';
 import { useNavigation } from '@react-navigation/native';
-
+export const iconlist = require('../../assets/image/a7n.png');
 export default function Footer({ idChap, translateYFooter, beforeChapter, afterChapter, _setModalVisible }) {
     const sheetRef = React.useRef<any>();
 
@@ -33,8 +33,11 @@ export default function Footer({ idChap, translateYFooter, beforeChapter, afterC
                         onPress={() => navigation.navigate(SCREEN.CHAPTER_LIST_SCREEN, { id: idChap })}
                         style={styles.listchap}
                     >
-                        <Ionicons name="ios-server-outline" size={25} color={"#ffffff"} />
-                        <Text style={{ color: '#fff' }}> Chapter</Text>
+                        <Image
+                            resizeMode="contain"
+                            style={styles.tinyiconLeft}
+                            source={iconlist}></Image>
+                        <Text style={{ color: '#fff', fontFamily: 'Nunito-Bold', }}> Chapter</Text>
                     </TouchableOpacity>
                 </View>
                 <View>
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         height: height / 13,
-        paddingHorizontal: 10,
+        paddingHorizontal: 20,
         elevation: 6,
         backgroundColor: '#404042',
         justifyContent: "center",
@@ -83,5 +86,9 @@ const styles = StyleSheet.create({
     listchap: {
         flexDirection: 'row',
         alignItems: 'center'
-    }
+    },
+    tinyiconLeft: {
+        width: 30,
+        height: 30,
+    },
 })

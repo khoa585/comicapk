@@ -45,38 +45,6 @@ const items = [
         name: 'Webtoons',
         icon: require('../../assets/image/Webtoons.jpg')
     },
-    // {
-    //     name: 'Romance',
-    //     icon: require('../../assets/image/action.jpg')
-    // },
-    // {
-    //     name: 'School life',
-    //     icon: require('../../assets/image/Schoollife.jpg')
-    // },
-    // {
-    //     name: 'Kingdom',
-    //     icon: require('../../assets/image/action.jpg')
-    // },
-    // {
-    //     name: 'Gamer',
-    //     icon: require('../../assets/image/action.jpg')
-    // },
-    // {
-    //     name: 'Hero',
-    //     icon: require('../../assets/image/action.jpg')
-    // },
-    // {
-    //     name: 'Hunter',
-    //     icon: require('../../assets/image/action.jpg')
-    // },
-    // {
-    //     name: 'Dragon',
-    //     icon: require('../../assets/image/action.jpg')
-    // },
-    // {
-    //     name: 'Master',
-    //     icon: require('../../assets/image/action.jpg')
-    // },
 ]
 export default React.memo(() => {
 
@@ -88,7 +56,7 @@ export default React.memo(() => {
     const Item = ({ item: { icon, name },index }): JSX.Element => {
         return (
             <TouchableOpacity
-                onPress={() => navigation.navigate(screen.CATEGORY_SCREEN, { _index: index })}
+                onPress={() => navigation.navigate(screen.CATEGORY_SCREEN, { key: name })}
                 style={{ marginRight: 20 }}
                 activeOpacity={0.7}>
                 <View
@@ -96,10 +64,10 @@ export default React.memo(() => {
                     <Image source={icon} style={styles.imgIcon}></Image>
                 </View>
                 <Text style={{
-                    paddingTop: 5,
+                    paddingTop: 2,
                     textAlign: 'center',
-                    fontSize: 13,
-                    fontFamily: 'Brygada1918-Bold',
+                    fontSize: 12,
+                    fontFamily: 'Nunito-Bold',
                 }}>{name}</Text>
             </TouchableOpacity>
         )
@@ -141,7 +109,7 @@ const styles = StyleSheet.create({
         shadowColor: '#489dcf',
         shadowOpacity: 1.0,
         shadowRadius: 18,
-        elevation: 3,
+        elevation: 1,
         marginVertical: 5,
         marginLeft: 2,
         borderRadius: 200
@@ -155,7 +123,7 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 18,
-        fontFamily: 'Anton-Regular',
+        fontFamily: 'Nunito-Bold',
         fontWeight: 'normal',
         marginBottom: 5
     },

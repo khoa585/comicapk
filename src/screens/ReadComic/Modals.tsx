@@ -224,7 +224,7 @@ const Modals = ({ _setisSkew, modalVisible, _setModalVisible, isEnabled, _toggle
                             >
                                 <Ionicons style={[styles.icon]} color={isTurn === 0 ? '#e63946' : '#000'} name="phone-portrait-outline" size={30}></Ionicons>
                             </TouchableOpacity>
-                            <Text style={[{ color: isTurn === 0 ? '#e63946' : '#000', fontFamily: 'Brygada1918-Regular', }]}>Vertical</Text>
+                            <Text style={[{ color: isTurn === 0 ? '#e63946' : '#000', fontFamily: 'Nunito-Bold', }]}>Vertical</Text>
                         </View>
                         <View style={styles.Touchable}>
                             <TouchableOpacity
@@ -237,11 +237,11 @@ const Modals = ({ _setisSkew, modalVisible, _setModalVisible, isEnabled, _toggle
                             >
                                 <Ionicons style={styles.icon} color={isTurn === 1 ? '#e63946' : '#000'} name="phone-landscape-outline" size={30}></Ionicons>
                             </TouchableOpacity>
-                            <Text style={[{ color: isTurn === 1 ? '#e63946' : '#000', fontFamily: 'Brygada1918-Regular', }]}>Horizontal</Text>
+                            <Text style={[{ color: isTurn === 1 ? '#e63946' : '#000', fontFamily: 'Nunito-Bold' }]}>Horizontal</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: "row", marginVertical: 40 }}>
-                        <Text style={{ marginRight: 20, fontSize: 18, fontFamily: 'Brygada1918-Regular', }}>Brightness</Text>
+                        <Text style={{ marginRight: 20, fontSize: 15, fontFamily: 'Nunito-Bold' }}>Brightness</Text>
                         <Slider
                             minimumValue={0}
                             maximumValue={5}
@@ -294,9 +294,9 @@ const styles = StyleSheet.create({
 
     },
     txt: {
-        fontSize: 18,
+        fontSize: 15,
         paddingRight: 15,
-        fontFamily: 'Brygada1918-Regular',
+        fontFamily: 'Nunito-Bold'
     },
     icon: {
         paddingHorizontal: 25,

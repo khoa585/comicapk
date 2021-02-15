@@ -9,7 +9,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_WIDTH_No } from '../../constants'
 import { formatViews } from '../../common/stringHelper'
 import { ItemComicProps } from '../MainHome/MainHome'
-
+export const iconView = require('../../assets/image/a96.png');
+export const iconLeft = require('../../assets/image/a4e.png');
+export const iconRight = require('../../assets/image/a4f.png');
+export const iconheart = require('../../assets/image/a2k.png');
 type DetailComicProps = {
     fadeIn: any
     item: ItemComicProps | any
@@ -24,7 +27,7 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ fadeIn, item }) => {
     return (
         <View style={styles.conatiner}>
             <View style={styles.containerComic}>
-        
+
                 <View style={styles.container_}>
                     <View style={styles.containerImage}>
                         <Image source={{
@@ -39,6 +42,10 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ fadeIn, item }) => {
                     <Text style={styles.nameComic}>{item.name}</Text>
                     <Text style={styles.nameAuthor}>{item.author.split(/\n/)}</Text>
                     <View style={styles.action}>
+                        <Image
+                            resizeMode="contain"
+                            style={styles.tinyiconLeft}
+                            source={iconLeft}></Image>
                         <TouchableOpacity
                             onPress={fadeIn}
                             activeOpacity={0.8}
@@ -51,7 +58,11 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ fadeIn, item }) => {
                                     angleCenter={{ x: 0.5, y: 0.5 }}
                                     style={[styles.icon]}
                                 >
-                                    <EvilIcons name="heart" size={30} color="#FFF" />
+                                    {/* <EvilIcons name="heart" size={30} color="#FFF" /> */}
+                                    <Image
+                                        resizeMode="contain"
+                                        style={styles.tinyiconheart}
+                                        source={iconheart}></Image>
                                 </LinearGradient>
                             </View>
                         </TouchableOpacity>
@@ -66,7 +77,6 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ fadeIn, item }) => {
                                     angleCenter={{ x: 0.5, y: 0.5 }}
                                     style={[styles.read]}
                                 >
-
                                     <Text style={styles.txtRead}>READ NOW</Text>
                                 </LinearGradient>
                             </TouchableOpacity>
@@ -82,11 +92,19 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ fadeIn, item }) => {
                                 <EvilIcons name="comment" size={30} color="#FFF" />
                             </LinearGradient>
                         </View>
+                        <Image
+                            resizeMode="contain"
+                            style={styles.tinyiconLeft}
+                            source={iconRight}></Image>
                     </View>
                     <View style={styles.wrap}>
                         <Text style={styles.status}>Status: <Text style={styles.normal}>{item.manga_status === 0 ? 'Continue' : 'Full'}</Text></Text>
                         <View style={styles.wrapViews}>
-                            <EvilIcons name="eye" size={35} color="#5bc6ff" />
+                            <Image
+                                resizeMode="contain"
+                                style={styles.tinyLogo}
+                                source={iconView}></Image>
+                            {/* <EvilIcons name="eye" size={35} color="#5bc6ff" /> */}
                             <Text style={styles.normal}>{formatViews(item.views)}</Text>
                         </View>
                     </View>
@@ -181,12 +199,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 5,
         textAlign: 'center',
-        fontFamily: 'Brygada1918-Medium'
+        fontFamily: 'Nunito-Bold',
     },
     status: {
         color: '#5bc6ff',
         fontSize: 15,
-        fontFamily: 'Brygada1918-Bold'
+        fontFamily: 'Nunito-Bold',
     },
     category: {
         color: '#000',
@@ -194,9 +212,10 @@ const styles = StyleSheet.create({
     },
     normal: {
         fontWeight: 'normal',
-        color: '#000',
-        fontSize: 14,
-        fontFamily: 'Brygada1918-Bold'
+        color: '#5c6b73',
+        fontSize: 13,
+        fontFamily: 'Nunito-Bold',
+        marginLeft: 5
     },
     nameComic: {
         color: '#000',
@@ -204,7 +223,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 80,
         marginHorizontal: 10,
-        fontFamily: 'Brygada1918-Bold'
+        fontFamily: 'Nunito-Bold',
     },
     wrap: {
         flexDirection: 'row',
@@ -237,7 +256,7 @@ const styles = StyleSheet.create({
     },
     txtRead: {
         color: '#fff',
-        fontFamily: 'Brygada1918-Bold'
+        fontFamily: 'Nunito-Bold',
     },
     love: {
         position: 'absolute',
@@ -257,5 +276,17 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 2,
+    },
+    tinyLogo: {
+        width: 16,
+        height: 20,
+    },
+    tinyiconLeft: {
+        width: 40,
+        height: 40,
+    },
+    tinyiconheart:{
+        width: 70,
+        height: 70,
     }
 })

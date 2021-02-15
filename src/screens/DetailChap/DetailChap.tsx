@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { View, StyleSheet, Platform, StatusBar, Easing, Animated, ScrollView } from 'react-native';
+import { View, StyleSheet, Image, StatusBar, Easing, Animated, ScrollView } from 'react-native';
 import { useRoute, RouteProp, useFocusEffect } from '@react-navigation/native';
 import { getDetialComic, getListChapter } from './../../api/comic';
 import * as screen from './../../constants/ScreenTypes';
@@ -133,7 +133,11 @@ const DetailChap: FunctionComponent = () => {
                         })
                     }]
                 }]}>
-                    <Fontisto style={styles.icon_} name="heart" size={80} color="#fff" />
+                    <Fontisto style={styles.icon_} name="heart" size={80} color="#e63946" />
+                    {/* <Image
+                        resizeMode="contain"
+                        style={styles.tinyiconheart}
+                        source={iconheart}></Image> */}
                 </Animated.View>
             </View>
         </>
@@ -168,7 +172,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 2,
-    }
+    },
 })
 
 

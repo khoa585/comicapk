@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
 import { getListByCategorySortViews } from './../../api/comic';
 import ItemComic from '../../components/ItemComic';
+import Loading from '../../components/Loading';
 const NUMBER_ITEM_PAGE = 12;
 const CategoryPage = ({ type }) => {
     const [page, setPage] = useState(1);
@@ -45,25 +46,21 @@ const CategoryPage = ({ type }) => {
     }
     const _renderFooterList = () => {
         if (!footerLoading) return null;
-        return (
-            <View style={{ paddingVertical: 20, backgroundColor: "#CEDOCE" }}>
-                <ActivityIndicator size="small" color="#000" animating />
-            </View>
-        )
+        return <Loading />
     }
     return (
         <View style={styles.container}>
             {
-                loading ?
+                loading ? (
                     <View style={styles.loading}>
-                        <ActivityIndicator size="small" color="#000" />
-                    </View> :
+                        <Loading />
+                    </View>
+                ) :
                     <View style={styles.containerItem}>
                         <FlatList
-                            numColumns={3}
                             data={listComic ? listComic : []}
                             keyExtractor={(item, index) => item._id + index}
-                            renderItem={({ item }) => <ItemComic item={item} />}
+                            renderItem={({ item, index }) => <ItemComic item={item} index={index} type={3} />}
                             onEndReachedThreshold={1}
                             onEndReached={_onLoadMore}
                             onRefresh={_onFreshList}
@@ -83,7 +80,8 @@ const styles = StyleSheet.create({
     },
     loading: {
         flex: 1,
-        justifyContent: "center"
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     containerItem: {
         flexDirection: 'row',

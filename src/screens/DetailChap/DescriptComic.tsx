@@ -14,17 +14,17 @@ const DescriptComic: FunctionComponent<DescriptComicProps> = ({ item }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={{ fontSize: 20, color: '#000', fontFamily: 'Brygada1918-Bold' }}>Description</Text>
+            <Text style={{ fontSize: 20, color: '#000', fontFamily: 'Nunito-Bold', }}>Description</Text>
             <Text numberOfLines={txtdescript ? 1000 : 3} style={styles.name}>{item.description === '' ? 'Đọc sẽ rõ...' : item.description}</Text>
             {
                 !txtdescript ? (<TouchableOpacity
                     onPress={() => setDes(!txtdescript)}
                     style={styles.txt}>
-                    <Text style={{ color: '#3a9ebb',fontFamily: 'Brygada1918-Medium' }}>Read full description</Text>
+                    <Text style={{ color: '#3a9ebb',fontFamily: 'Nunito-Bold', }}>Read full description</Text>
                 </TouchableOpacity>) : (<TouchableOpacity
                     onPress={() => setDes(!txtdescript)}
                     style={styles.txt}>
-                    <Text style={{ color: '#3a9ebb',fontFamily: 'Brygada1918-Medium' }}>Collapse</Text>
+                    <Text style={{ color: '#3a9ebb',fontFamily: 'Nunito-Bold', }}>Collapse</Text>
                 </TouchableOpacity>)
             }
         </View>
@@ -43,9 +43,9 @@ const styles = StyleSheet.create({
 
     },
     name: {
-        fontSize: 16,
+        fontSize: 14,
         color: '#5c6b73',
-        fontFamily: 'Brygada1918-SemiBold'
+        fontFamily: 'Nunito-Bold',
     },
     txt: {
         paddingVertical: 10,

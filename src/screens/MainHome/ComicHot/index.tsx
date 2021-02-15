@@ -4,19 +4,22 @@ import Item from './Item';
 import * as SCREEN from '../../../constants/ScreenTypes';
 import { SCREEN_WIDTH } from '../../../constants'
 import { ItemComicProps } from '../MainHome'
-
+import { useNavigation } from '@react-navigation/native';
+import { iconload } from '../../../constants'
+import Loading from '../../../components/Loading';
 type ComicHotProps = {
     listComic: ItemComicProps[],
     loading: boolean,
-    children: string
+    children: string,
+    type: number
 }
 
 export type itemProps = {
     item: ItemComicProps
 }
 
-const ComicHot: FunctionComponent<ComicHotProps> = ({ listComic, loading, children }) => {
-
+const ComicHot: FunctionComponent<ComicHotProps> = ({ listComic, loading, children, type }) => {
+    const navigation = useNavigation();
     const renderItem = React.useCallback(({ item }: itemProps) => <Item item={item} key={item._id}></Item>, [])
     const keyExtractor = React.useCallback((item: ItemComicProps) => item._id.toString(), [])
 
@@ -31,6 +34,7 @@ const ComicHot: FunctionComponent<ComicHotProps> = ({ listComic, loading, childr
             <View style={styles.headerTitle}>
                 <Text style={styles.title}>{children}</Text>
                 <TouchableOpacity
+                    onPress={() => navigation.navigate(SCREEN.SHOWALL_LIST_SCREEN, { type })}
                 >
                     <Text style={styles.seenAll}>see all</Text>
                 </TouchableOpacity>
@@ -39,7 +43,7 @@ const ComicHot: FunctionComponent<ComicHotProps> = ({ listComic, loading, childr
                 {
                     loading ?
                         <View style={styles.loading}>
-                            <ActivityIndicator size="small" color="#000" />
+                            <Loading></Loading>
                         </View> :
                         (
                             <FlatList
@@ -66,7 +70,7 @@ export default React.memo(ComicHot)
 const styles = StyleSheet.create({
     container: {
         marginLeft: 20,
-        marginBottom:5,
+        marginBottom: 5,
         flex: 1
     },
     containerItem: {
@@ -77,12 +81,12 @@ const styles = StyleSheet.create({
     },
     loading: {
         flex: 1,
-        height: SCREEN_WIDTH / 2,
+    
         alignItems: 'center',
         justifyContent: 'center',
     },
     headerTitle: {
-        marginBottom: 15,
+        marginBottom: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
@@ -90,14 +94,14 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         color: '#000',
-        fontFamily: 'Anton-Regular',
+        fontFamily: 'Nunito-Bold',
         fontWeight: 'normal'
     },
     seenAll: {
         fontSize: 14,
         marginRight: 20,
         color: '#000',
-        fontFamily: 'Brygada1918-Regular',
+        fontFamily: 'Nunito-Bold',
         fontWeight: 'normal'
     }
 })

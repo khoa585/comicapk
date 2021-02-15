@@ -70,7 +70,7 @@ export default React.memo(() => {
                     paddingTop: 5,
                     textAlign: 'center',
                     fontSize: 13,
-                    fontFamily: 'Brygada1918-Bold',
+                    fontFamily: 'Nunito-Bold',
                 }}>{name}</Text>
             </TouchableOpacity>
         )
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 18,
-        // fontFamily: 'Anton-Regular',
+        fontFamily: 'Nunito-Bold',
         fontWeight: 'normal',
 
     },

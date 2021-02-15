@@ -17,6 +17,7 @@ import Header from './Header';
 import { getDetialComic, getListChapter } from '../../../api/comic';
 import Item from './Item'
 import { useRoute, RouteProp } from '@react-navigation/native';
+import Loading from '../../../components/Loading';
 
 export type RootStackParamList = {
     CHAPTER_LIST_SCREEN: { id: 'id' };
@@ -81,7 +82,7 @@ const ListChapter: FunctionComponent<any> = () => {
         if (!refreshing && numberResult >= data.length) return true;
         return (
             <View style={{ paddingVertical: 10, backgroundColor: "#fff" }}>
-                <ActivityIndicator size={20} color="#e84d35" animating />
+                       <Loading></Loading>
             </View>
         )
     }
@@ -111,7 +112,7 @@ const ListChapter: FunctionComponent<any> = () => {
             {
                 loading ? (
                     <View style={styles.loading}>
-                        <ActivityIndicator size="small" color="#000" />
+                        <Loading></Loading>
                     </View>
                 ) :
                     (

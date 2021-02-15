@@ -5,91 +5,96 @@ import Feather from 'react-native-vector-icons/Feather';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigation } from '@react-navigation/native';
 import * as SCREEN from './../../constants/ScreenTypes';
+import { RectButton } from 'react-native-gesture-handler';
 const { width, height } = Dimensions.get("window");
-
+export const iconView = require('../../assets/image/a96.png');
 const SearchItem = ({ data }) => {
+  
     const navigation = useNavigation();
-    const showCategory = () => {
-        return data.category.map((item) => {
+    const goToDetialComic = (id: String) => {
+        navigation.navigate(SCREEN.DETIAL_COMIC_SCREEN, { id: id, item: data })
+    }
+
+    const showCategory = React.useCallback(() => {
+        return data.category.slice(0, 5).map((item, index) => {
             return (
-                <Text style={styles.categoryText} key={uuidv4()}>{item}</Text>
+                <Text key={index} style={styles.normal}>{item}</Text>
             )
         })
-    }
-    const _ClickPage = () => {
-        navigation.navigate(SCREEN.DETIAL_COMIC_SCREEN, { id: data._id })
-    }
+    }, [])
+
     return (
-        <View style={styles.containerItem}>
-            <TouchableOpacity onPress={_ClickPage}>
-                <Image source={{
+        <RectButton style={styles.contaiItem} onPress={() => goToDetialComic(data._id)} >
+        <View style={{ width: '30%', justifyContent: 'flex-start' }}>
+            <Image
+                resizeMode='stretch'
+                source={{
                     uri: data.image, headers: {
                         Referer: "https://manganelo.com/"
                     }
-                }} style={styles.Image} />
-            </TouchableOpacity>
-            <View style={{ paddingHorizontal: 10, justifyContent: "space-around", flex: 1 }}>
-                <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={_ClickPage}>
-                    <View style={{ marginRight: 4, justifyContent: "center", alignItems: "center" }}>
-                        {
-                            data.manga_status == 1 ?
-                                <Text style={styles.textEndComic} >End</Text> :
-                                null
-                        }
-                    </View>
-                    <Text numberOfLines={1} style={styles.nameComic}>{data.name}</Text>
-                </TouchableOpacity>
-                <Text style={{ color: "#a5a5a5" }} numberOfLines={1}>{data.author}</Text>
-                <View>
-                    <ScrollView style={{ flexDirection: "row" }}
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}>
-                        {showCategory()}
-                    </ScrollView>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-                    <Feather name="eye" size={12} style={{ marginRight: 7 }} color={"red"} />
-                    <Text style={{ fontSize: 12, fontStyle: "italic" }}>{formatViews(data.views)}</Text>
-                </View>
+                }} style={styles.imageRecommend}></Image>
+        </View>
+        <View style={{ width:  '70%', paddingHorizontal: 10, paddingVertical: 5 }}>
+            <Text numberOfLines={2} style={styles.nameComic}>{data.name}</Text>
+            <View style={{ flexDirection: 'row', paddingVertical: 5, alignItems: 'center' }}>
+                <Image
+                    resizeMode="contain"
+                    style={styles.tinyLogo}
+                    source={iconView}></Image>
+                <Text style={styles.nameChap}> {formatViews(data.views)}</Text>
+            </View>
+            <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
+                {showCategory()}
             </View>
         </View>
+    </RectButton>
     )
 }
 export default React.memo(SearchItem);
 const styles = StyleSheet.create({
-    containerItem: {
-        flex: 1,
-        flexDirection: "row",
-        marginBottom: 20
+    contaiItem: {
+        height: (width * 0.35),
+        marginBottom: 10,
+        flexDirection: 'row',
+        paddingHorizontal: 20,
+
     },
-    Image: {
-        width: width / 3.5,
-        height: height / 5.5,
-        borderRadius: 8
+    imageRecommend: {
+        width: "100%",
+        height: "100%",
     },
     nameComic: {
-        marginTop: 5,
-        fontFamily: "Nunito-SemiBold",
-        fontSize: 14,
-        fontWeight: "900",
-        flex: 1
+        paddingVertical: 0,
+        fontSize: 16,
+        fontFamily: 'Nunito-Bold',
     },
-    textEndComic: {
+    nameChap: {
         fontSize: 10,
-        backgroundColor: "#ffa202",
-        paddingHorizontal: 7,
-        paddingVertical: 3,
-        borderRadius: 3,
-        fontWeight: "bold",
-        color: "white"
+        fontFamily: 'Nunito-Bold',
+        color: '#5c6b73'
     },
-    categoryText: {
-        fontSize: 9,
-        paddingVertical: 3,
+    tinyiconLeft: {
+        width: 45,
+        height: 45,
+    },
+    category: {
+        color: '#000',
+        fontWeight: 'bold',
+        fontSize: 14,
+    },
+    normal: {
+        fontWeight: 'normal',
+        color: '#5c6b73',
+        backgroundColor: '#f1f4eb',
+        paddingVertical: 5,
+        fontSize: 11,
         paddingHorizontal: 5,
-        backgroundColor: "#f5ccb0",
-        color: "white",
-        marginRight: 3,
+        marginRight: 5,
+        marginBottom: 5,
         borderRadius: 5
-    }
+    },
+    tinyLogo: {
+        width: 16,
+        height: 20,
+    },
 })

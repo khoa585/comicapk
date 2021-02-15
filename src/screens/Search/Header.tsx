@@ -8,16 +8,11 @@ import {
 
 import Entypo from 'react-native-vector-icons/Entypo'
 import { useNavigation } from '@react-navigation/native';
+import { STATUS_BAR_HEIGHT } from '../../constants'
 export default () => {
     const navigation = useNavigation();
     return (
-        <View
-            style={styles.container}>
-            <TouchableOpacity
-                style={styles.icon}
-                onPress={() => navigation.goBack()}>
-                <Entypo name="chevron-thin-left" size={20} color="#fff"></Entypo>
-            </TouchableOpacity>
+        <View style={styles.container}>
             <Text style={styles.txt}>Search</Text>
         </View>
 
@@ -30,12 +25,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#55b9f3',
         paddingVertical: 5,
         paddingHorizontal: 10,
-        alignItems: 'center'
-    },
-    icon: {
-        position: 'absolute',
-        top: 20,
-        left: 20
+        alignItems: 'center',
+        paddingTop: STATUS_BAR_HEIGHT
     },
     txt: {
         fontSize: 25,

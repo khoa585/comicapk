@@ -38,13 +38,18 @@ type listComicProps = {
 }
 
 const MainHome: FunctionComponent = () => {
+
     const [loading, setLoading] = React.useState<boolean>(false);
     const [refreshing, setRefreshing] = React.useState<boolean>(false);
     const [listComic, setListComic] = React.useState<listComicProps | null>(null);
 
     React.useEffect(() => {
         (async () => {
-            fetchData()
+            try {
+                fetchData()
+            } catch (error) {
+                console.log(error)
+            }
         })()
         return () => {
             setListComic(null)
@@ -75,20 +80,18 @@ const MainHome: FunctionComponent = () => {
     return (
         <View style={styles.container}>
             <StatusBar hidden={false} translucent={true} backgroundColor="transparent" />
-
             <ScrollView
                 scrollEventThrottle={1}
-               
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                }>
+                }
+            >
                 <Header></Header>
                 {/* <Background></Background> */}
                 <TabActionBar></TabActionBar>
-                
-                <ComicHot {...{ listComic: listComic ? listComic.listComicHot : [], loading }}>Top Manga</ComicHot>
+                <ComicHot {...{ listComic: listComic ? listComic.listComicHot : [], loading, type: 0 }}>Top Manga</ComicHot>
                 <Category></Category>
-                <ComicHot {...{ listComic: listComic ? listComic.listComicHUpdate : [], loading }}>New Manga</ComicHot>
+                <ComicHot {...{ listComic: listComic ? listComic.listComicHUpdate : [], loading, type: 1 }}>New Manga</ComicHot>
             </ScrollView>
         </View>
     )
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        
+
     },
     distant: {
         height: 10,

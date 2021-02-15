@@ -1,12 +1,10 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native";
 
-// import { items } from './Data'
-// import { ItemType } from '../model'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useSelector } from "react-redux";
 import { useNavigation } from '@react-navigation/native';
-// import * as screen from '../../../constants/ScreenTypes'
+import * as screen from '../../constants/ScreenTypes'
 const items = [
     {
         name: 'Action',
@@ -38,7 +36,7 @@ export default React.memo(() => {
     const Item = ({ item: { icon, name } }: any): JSX.Element => {
         return (
             <TouchableOpacity
-                onPress={() => true}
+                onPress={() => navigation.navigate(screen.CATEGORY_SCREEN, { key: name })}
                 style={{
                     backgroundColor: '#f1f4eb',
                     paddingVertical: 5,
@@ -52,7 +50,7 @@ export default React.memo(() => {
                     paddingTop: 5,
                     textAlign: 'center',
                     fontSize: 13,
-                    fontFamily: 'Brygada1918-Bold',
+                    fontFamily: 'Nunito-Bold',
                 }}>{name}</Text>
             </TouchableOpacity>
         )
@@ -64,7 +62,7 @@ export default React.memo(() => {
                 <View>
                     <Text style={styles.title}>Categories</Text>
                 </View>
-                <View style={{ flexWrap: 'wrap', flexDirection: 'row',marginVertical:10 }}>
+                <View style={{ flexWrap: 'wrap', flexDirection: 'row', marginVertical: 10 }}>
                     {
                         items.map((item, index) => {
                             return <Item item={item} key={index}></Item>
@@ -84,7 +82,7 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 18,
-        // fontFamily: 'Anton-Regular',
+        fontFamily: 'Nunito-Bold',
         fontWeight: 'normal',
 
     },

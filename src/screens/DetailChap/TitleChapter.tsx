@@ -48,18 +48,18 @@ const TitleChapter: FunctionComponent<TitleChapterProps> = ({ data, page, loadin
             <View style={styles.total}>
                 <Text style={{
                     fontSize: 15,
-                    color: '#5c6b73',
-                    fontFamily: 'Brygada1918-Bold'
+                    color: '#000',
+                    fontFamily: 'Nunito-Bold',
                 }}>Total </Text>
                 <Text style={{
                     fontSize: 14,
-                    color: '#5c6b73',
-                    fontFamily: 'Brygada1918-Bold'
+                    color: '#000',
+                    fontFamily: 'Nunito-Bold',
                 }}>{data?.numberResult ? data?.numberResult : '...'} Chapter</Text>
             </View>
             <View style={[styles.containerTitl]}>
                 <Text style={{
-                    fontSize: 20, padding: 20, paddingBottom: 5, paddingTop: 0, color: '#5c6b73', fontFamily: 'Brygada1918-Bold'
+                    fontSize: 20, padding: 20, paddingBottom: 5, paddingTop: 0, color: '#000', fontFamily: 'Nunito-Bold',
                 }}>Chapter</Text>
                 <View style={{
                     width: '50%',
@@ -70,8 +70,8 @@ const TitleChapter: FunctionComponent<TitleChapterProps> = ({ data, page, loadin
                     right: -35
                 }}>
                     <Text style={{
-                        fontSize: 15, color: '#5c6b73',
-                        fontFamily: 'Brygada1918-Bold'
+                        fontSize: 15, color: '#000',
+                        fontFamily: 'Nunito-Bold',
                     }}>Page</Text>
                     <View style={{ width: '50%' }}>
                         <RNPickerSelect
@@ -89,6 +89,7 @@ const TitleChapter: FunctionComponent<TitleChapterProps> = ({ data, page, loadin
                                     color: '#000',
                                     fontSize: 12,
                                     fontWeight: 'bold',
+                                    fontFamily: 'Nunito-Bold',
 
                                 },
                             }}
@@ -98,7 +99,7 @@ const TitleChapter: FunctionComponent<TitleChapterProps> = ({ data, page, loadin
                                         style={{
                                             backgroundColor: 'transparent',
                                             borderTopWidth: 5,
-                                            borderTopColor: 'gray',
+                                            borderTopColor: '#000',
                                             borderRightWidth: 5,
                                             borderRightColor: 'transparent',
                                             borderLeftWidth: 5,

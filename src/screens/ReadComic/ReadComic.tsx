@@ -4,14 +4,14 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation } from '@react-navigation/native';
 const { height, width } = Dimensions.get("window");
 import { getDetailChapter } from './../../api/comic'
-import { makeUserName } from './../../common/stringHelper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Orientation from 'react-native-orientation';
-import * as SCREEN from './../../constants/ScreenTypes';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import Modals from './Modals';
 import Footer from './Footer';
 import ListImage from './ListImage';
+import Loading from '../../components/Loading';
+import {STATUS_BAR_HEIGHT} from '../../constants'
 export type RootStackParamList = {
     DETIAL_CHAPTER: { id: 'id', idChap: '_idChap' };
 };
@@ -118,11 +118,7 @@ export default function ReadComic() {
     if (isLoading) {
         return (
             <View style={styles.containers}>
-                <ActivityIndicator
-                    animating={isLoading}
-                    color='#000'
-                    size="large"
-                    style={styles.activityIndicator} />
+                <Loading></Loading>
             </View>
         )
     } else {
@@ -164,12 +160,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff'
     },
-    activityIndicator: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 80
-    },
     Header: {
         position: "absolute",
         top: 0,
@@ -177,14 +167,14 @@ const styles = StyleSheet.create({
         elevation: 1,
         width: '100%',
         flexDirection: "row",
-        paddingVertical: 10,
+        paddingHorizontal:10,
         justifyContent: "center",
         height: height / 9.5,
         alignItems: 'center',
         borderBottomWidth: 1,
         borderBottomColor: '#404042',
         backgroundColor: '#404042',
-        paddingTop: 30,
+        paddingTop:STATUS_BAR_HEIGHT,
         zIndex: 10,
 
     },
@@ -193,7 +183,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         flex: 1,
         textAlign: "center",
-        fontWeight: 'bold',
+        fontFamily: 'Nunito-Bold',
         color: '#fff',
     },
     content: {
