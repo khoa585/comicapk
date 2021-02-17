@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, BackHandler, Image, Dimensions, ActivityIndicator, Animated, FlatList, StatusBar } from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 const { height, width } = Dimensions.get("window");
 import { getDetailChapter } from './../../api/comic'
@@ -160,7 +160,7 @@ export default function ReadComic() {
                                             navigation.goBack()
                                         }}
                                     >
-                                        <Entypo name="chevron-thin-left" color="#fff" size={20} style={{ paddingLeft: 5 }} />
+                                        <AntDesign name="arrowleft" color="#fff" size={20} style={{ paddingLeft: 5 }} />
                                     </TouchableOpacity>
                                     <Text style={styles.name}>{name}</Text>
                                     <View style={{ flexBasis: 20 }}></View>

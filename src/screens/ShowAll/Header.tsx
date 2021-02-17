@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#d6d6d6',
+        borderBottomColor: '#e3342f',
         paddingTop: STATUS_BAR_HEIGHT + 10,
-        backgroundColor: '#55b9f3',
+        backgroundColor: '#e3342f',
         justifyContent: 'center',
     },
     iconback: {
         position: 'absolute',
-        top: 45,
+        top: 35,
         left: 20
     },
     txt: {

@@ -26,7 +26,7 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ idcomic, _id, fadeIn
     const navigation = useNavigation();
     const [isDown, setDown] = React.useState<boolean>(false);
 
-    const gradColors = isDown ? ['#4da7db', '#5bc6ff'] : ['#5bc6ff', '#4da7db'];
+    const gradColors = isDown ? ['#4da7db', '#e3342f'] : ['#e3342f', '#e3342f'];
 
     const showFollow = (): any => (
         isFollow ? (
@@ -65,17 +65,17 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ idcomic, _id, fadeIn
                             activeOpacity={0.8}
 
                         >
-                            <View style={styles.icon}>
-                                <LinearGradient
-                                    colors={['#5bc6ff', '#4da7db']}
+                            <View style={[styles.icon, { backgroundColor:isFollow ? '#fff': "#e3342f" , borderColor: '#e3342f', borderWidth: 1 }]}>
+                                {/* <LinearGradient
+                                    colors={['#e3342f', '#e3342f']}
                                     useAngle={true}
                                     angle={145}
                                     angleCenter={{ x: 0.5, y: 0.5 }}
                                     style={[styles.icon]}
-                                >
-                                    {showFollow()}
-
-                                </LinearGradient>
+                                > */}
+                                {showFollow()}
+                                {/* 
+                                </LinearGradient> */}
                             </View>
                         </TouchableOpacity>
                         <View>
@@ -96,7 +96,7 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ idcomic, _id, fadeIn
                         </View>
                         <View style={styles.icon}>
                             <LinearGradient
-                                colors={['#5bc6ff', '#4da7db']}
+                                colors={['#e3342f', '#e3342f']}
                                 useAngle={true}
                                 angle={145}
                                 angleCenter={{ x: 0.5, y: 0.5 }}
@@ -117,7 +117,7 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ idcomic, _id, fadeIn
                                 resizeMode="contain"
                                 style={styles.tinyLogo}
                                 source={iconView}></Image>
-                            {/* <EvilIcons name="eye" size={35} color="#5bc6ff" /> */}
+                            {/* <EvilIcons name="eye" size={35} color="#e3342f" /> */}
                             <Text style={styles.normal}>{formatViews(item.views)}</Text>
                         </View>
                     </View>
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito-Bold',
     },
     status: {
-        color: '#5bc6ff',
+        color: '#e3342f',
         fontSize: 15,
         fontFamily: 'Nunito-Bold',
     },

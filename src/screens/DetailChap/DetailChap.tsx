@@ -18,17 +18,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import SqlHelper from './../../common/SQLHelper';
 import { FetchPostListRequest } from '../../redux/action/InterAction'
 import NetWork from '../../components/NetWork';
+import LottieView from 'lottie-react-native';
+export const iconLove = require('../../assets/image/lf30_editor_ilhncfag.json');
 export type RootStackParamList = {
-    DETIAL_COMIC_SCREEN: { item: 'item', id: 'id' };
+    DETIAL_COMIC_SCREEN: { item: any, id: string };
 };
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> = RouteProp<
     RootStackParamList,
     RouteName
 >
-
-
-
 
 export type DetailChapProps = {
     data: ChapterItem[],
@@ -44,6 +43,7 @@ const DetailChap: FunctionComponent = () => {
     const [data, setData] = React.useState<DetailChapProps | null>(null);
     const ScaleAnim = React.useRef<any>(new Animated.Value(0)).current;
     const [isFollow, setIsFollow] = React.useState(false);
+    const [isactive, setisactive] = React.useState(false);
     const [refreshing, setRefreshing] = React.useState<boolean>(false);
     const network = useSelector(state => state.internetReducer.isInternet)
     // console.log(network)
@@ -59,26 +59,14 @@ const DetailChap: FunctionComponent = () => {
     }
 
     const _OnUnFollowComic = async () => {
-        SqlHelper.unFollowManga(item);
+        SqlHelper.unFollowManga(item._id);
         setIsFollow(false)
     }
 
     const _OnFollowComic = async () => {
         SqlHelper.addFollowManga(item);
         setIsFollow(true)
-        const a1 = Animated.timing(ScaleAnim, {
-            toValue: 1,
-            duration: 1000,
-            useNativeDriver: false,
-            easing: Easing.bounce
-        })
-        const a13 = Animated.timing(ScaleAnim, {
-            toValue: 0,
-            duration: 100,
-            useNativeDriver: false,
-            easing: Easing.bounce
-        })
-        Animated.sequence([a1, a13]).start()
+        setisactive(true)
     }
 
     const fadeIn = () => {
@@ -145,7 +133,7 @@ const DetailChap: FunctionComponent = () => {
                 >
                     <Background {...{ item }} ></Background>
                     <Header></Header>
-                    <DetailComic {...{idcomic:data?.data[0]._id, _id: id,fadeIn, item, isFollow }}></DetailComic>
+                    <DetailComic {...{ idcomic: data?.data[0]._id, _id: id, fadeIn, item, isFollow }}></DetailComic>
                     <DescriptComic {...{ item }}></DescriptComic>
                     <TitleChapter {...{ data, page, loading, _setPage }}></TitleChapter>
                     {
@@ -160,8 +148,24 @@ const DetailChap: FunctionComponent = () => {
                     }
 
                 </ScrollView>
+                {
+                    isactive ? (
+                        <View style={styles.love}>
+                            <LottieView
+                                source={iconLove}
+                                autoPlay={true}
+                                loop={false}
+                                style={styles.tinyicon}
+                                speed={1}
+                                onAnimationFinish={() => {
+                                    setisactive(false)
+                                }}
+                            />
+                        </View>
+                    ) : null
+                }
 
-                <Animated.View style={[styles.love, {
+                {/* <Animated.View style={[styles.love, {
                     transform: [{
                         scale: ScaleAnim.interpolate({
                             inputRange: [0, 1],
@@ -171,11 +175,8 @@ const DetailChap: FunctionComponent = () => {
                     }]
                 }]}>
                     <Fontisto style={styles.icon_} name="heart" size={80} color="#e63946" />
-                    {/* <Image
-                        resizeMode="contain"
-                        style={styles.tinyiconheart}
-                        source={iconheart}></Image> */}
-                </Animated.View>
+                
+                </Animated.View> */}
             </View>
         </>
     )
@@ -197,8 +198,8 @@ const styles = StyleSheet.create({
 
     love: {
         position: 'absolute',
-        top: '20%',
-        left: '40%',
+        top: '15%',
+        left: '28%',
     },
     icon_: {
         shadowColor: "#000",
@@ -210,6 +211,10 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 2,
     },
+    tinyicon: {
+        width: 200,
+        height: 200
+    }
 })
 
 

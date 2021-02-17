@@ -6,15 +6,24 @@ import {
     Image
 } from 'react-native';
 import { iconload } from '../../constants'
+import LottieView from 'lottie-react-native';
 
 
 const Loading: FunctionComponent = () => {
     return (
         <View style={styles.loading}>
-            <Image
+            <LottieView
+                source={iconload}
+                autoPlay
+                loop={true}
+                style={styles.tinyiconLeft}
+                speed={1.5}
+            
+            />
+            {/* <Image
                 resizeMode="contain"
                 style={styles.tinyiconLeft}
-                source={iconload}></Image>
+                source={iconload}></Image> */}
         </View>
     );
 };
@@ -22,12 +31,11 @@ export default React.memo(Loading, isEqual)
 
 const styles = StyleSheet.create({
     loading: {
-        paddingVertical: 20,
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems:'center',
+        justifyContent:'center',
     },
     tinyiconLeft: {
-        width: 25,
-        height: 25,
+        width: 40,
+        height: 40,
     },
 })

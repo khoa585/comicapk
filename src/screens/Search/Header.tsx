@@ -22,7 +22,7 @@ export default () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#55b9f3',
+        backgroundColor: '#e3342f',
         paddingVertical: 10,
         paddingHorizontal: 10,
         alignItems: 'center',

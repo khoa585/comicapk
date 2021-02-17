@@ -46,13 +46,14 @@ const ComicHot: FunctionComponent<ComicHotProps> = ({ listComic, loading, childr
                             <Loading></Loading>
                         </View> :
                         (
+                        
                             <FlatList
                                 horizontal
                                 onEndReachedThreshold={1}
                                 showsHorizontalScrollIndicator={false}
                                 data={listComic}
-                                maxToRenderPerBatch={5}
-                                windowSize={5}
+                                // maxToRenderPerBatch={5}
+                                // windowSize={5}
                                 renderItem={renderItem}
                                 keyExtractor={keyExtractor}
                                 getItemLayout={getItemLayout}

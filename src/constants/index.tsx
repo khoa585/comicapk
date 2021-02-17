@@ -5,7 +5,7 @@ const { width } = Dimensions.get("window");
 export interface IconProps {
   active?: boolean;
 }
-export const iconload = require('../assets/image/a9t.gif');
+export const iconload = require('../assets/image/lf30_editor_yjuwloqc.json');
 export const STATUS_BAR_HEIGHT: number = getStatusBarHeight()
 const numberOfIcons = 4.5;
 const horizontalPadding = 60;

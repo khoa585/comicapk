@@ -2,7 +2,7 @@ import React from "react";
 import {
     Animated,
     StyleSheet,
-    Text
+    Image
 } from "react-native";
 import { ICON_SIZE } from "../../constants";
 import { RectButton } from 'react-native-gesture-handler';
@@ -23,9 +23,8 @@ export default ({
     return (
         <RectButton
             style={{
-                paddingTop: 5,
                 width: SCREEN_WIDTH / 3,
-                height: 55,
+                height: 50,
                 alignItems: 'center',
                 justifyContent: 'center',
             }}
@@ -33,7 +32,23 @@ export default ({
                 onPress_()
             }}
         >
-            <Animated.View
+            {
+                isFocused ? (
+                    <Image
+                    source={children.focus}
+                    resizeMode="contain"
+                    style={{ width: 50, height: 50 }}
+                ></Image>
+                ):(
+                    <Image
+                    source={children.icon}
+                    resizeMode="contain"
+                    style={{ width: 50, height: 50 }}
+                ></Image>
+                )
+            }
+          
+            {/* <Animated.View
                 style={{
                     width: ICON_SIZE,
                     height: ICON_SIZE,
@@ -47,10 +62,10 @@ export default ({
                 }]}>
                     {React.cloneElement(children.icon, isFocused && { active: true })}
                 </Animated.View>
-            </Animated.View>
-            <Animated.Text style={[{ fontSize: 11, color: '#000', fontFamily: 'Nunito-Bold', }]}>
+            </Animated.View> */}
+            {/* <Animated.Text style={[{ fontSize: 11, color: '#000', fontFamily: 'Nunito-Bold', }]}>
                 {children.name}
-            </Animated.Text>
+            </Animated.Text> */}
         </RectButton>
     );
 };

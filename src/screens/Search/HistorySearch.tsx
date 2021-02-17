@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import SqlHelper from './../../common/SQLHelper';
 import { useFocusEffect } from '@react-navigation/native';
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 export default React.memo(({ _submit }: any) => {
 
 
@@ -60,7 +60,7 @@ export default React.memo(({ _submit }: any) => {
                     <TouchableOpacity
                         onPress={() => deleteSearch()}
                     >
-                        <EvilIcons name="trash" size={20}/>
+                        <Ionicons name="trash-outline" size={20}/>
                   
                     </TouchableOpacity>
                 </View>

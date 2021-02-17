@@ -29,6 +29,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 10,
         paddingTop:STATUS_BAR_HEIGHT,
-        backgroundColor: '#55b9f3',
+        backgroundColor: '#e3342f',
     }
 })

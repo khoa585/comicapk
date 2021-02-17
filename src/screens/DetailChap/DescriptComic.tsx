@@ -20,11 +20,11 @@ const DescriptComic: FunctionComponent<DescriptComicProps> = ({ item }) => {
                 !txtdescript ? (<TouchableOpacity
                     onPress={() => setDes(!txtdescript)}
                     style={styles.txt}>
-                    <Text style={{ color: '#3a9ebb',fontFamily: 'Nunito-Bold', }}>Read full description</Text>
+                    <Text style={{ color: '#e3342f',fontFamily: 'Nunito-Bold', }}>Read full description</Text>
                 </TouchableOpacity>) : (<TouchableOpacity
                     onPress={() => setDes(!txtdescript)}
                     style={styles.txt}>
-                    <Text style={{ color: '#3a9ebb',fontFamily: 'Nunito-Bold', }}>Collapse</Text>
+                    <Text style={{ color: '#e3342f',fontFamily: 'Nunito-Bold', }}>Collapse</Text>
                 </TouchableOpacity>)
             }
         </View>

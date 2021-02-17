@@ -9,20 +9,8 @@ class SqlHelper {
     }
     db;
 
-
-
     async addHistoryManga(item) {
-
         this.db.transaction((tx) => {
-            // tx.executeSql(
-            //     'INSERT INTO history(_id,category, date_time) VALUES (?,?,?)',
-            //     [item._id, JSON.stringify(item), Date.now()],
-            //     (tx, results) => {
-            //         if (results.rowsAffected > 0) {
-            //             console.log('Registration Successfully')
-            //         } else console.log('Registration Failed');
-            //     }
-            // );
             tx.executeSql("SELECT * FROM history where _id=?", [item._id], (txt, result) => {
                 if (result.rows.length > 0) {
                     txt.executeSql("UPDATE history SET date_time= ? where _id = ?", [Date.now(), item._id])

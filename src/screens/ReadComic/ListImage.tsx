@@ -380,7 +380,7 @@ export default React.memo(ListImage, isEqual)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
+        backgroundColor:'#fff'
 
     },
     containers: {

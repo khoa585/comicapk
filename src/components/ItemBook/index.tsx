@@ -11,7 +11,7 @@ export const icontop2 = require('../../assets/image/a4g.png');
 export const icontop3 = require('../../assets/image/a4h.png');
 export const iconView = require('../../assets/image/a96.png');
 import SqlHelper from './../../common/SQLHelper';
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 const ItemComic = ({deleteComic, item }:any) => {
 
     const navigation = useNavigation();
@@ -60,7 +60,7 @@ const ItemComic = ({deleteComic, item }:any) => {
                 <TouchableOpacity
                     onPress={() => deleteComic(item._id)}
                 >
-                    <EvilIcons name="trash" size={20} />
+                     <Ionicons name="trash-outline" size={20}/>
 
                 </TouchableOpacity>
             </View>
