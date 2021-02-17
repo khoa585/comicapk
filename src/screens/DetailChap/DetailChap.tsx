@@ -24,6 +24,7 @@ import Orientation from 'react-native-orientation';
 import { getListTypeCommic } from '../../api/comic';
 import ComicHot from './../MainHome/ComicHot';
 import ListComic from './ListComic';
+import SqlHelper from './../../common/SQLHelper';
 export type RootStackParamList = {
     DETIAL_COMIC_SCREEN: { item: 'item', id: 'id' };
 };
@@ -33,12 +34,6 @@ export type RootRouteProps<RouteName extends keyof RootStackParamList> = RoutePr
     RouteName
 >
 
-export type RouterProps = {
-    route: {
-        key: string,
-        title: string
-    }
-}
 
 // export type ItemProps = {
 //     commentCount: number,
@@ -55,23 +50,30 @@ export type DetailChapProps = {
 }
 
 const DetailChap: FunctionComponent = () => {
-
     const router = useRoute<RootRouteProps<'DETIAL_COMIC_SCREEN'>>();
     const { item, id } = router.params;
     const [page, setPage] = React.useState<string>('1');
     const [loading, setLoading] = React.useState<boolean>(true);
     const [data, setData] = React.useState<DetailChapProps | null>(null);
     const ScaleAnim = React.useRef<any>(new Animated.Value(0)).current;
+    const [isFollow, setIsFollow] = React.useState(false);
 
     const _setLoading = (e: boolean) => {
         setLoading(e)
     }
+
     const _setPage = (e: string) => {
         setPage(e)
     }
 
-    const fadeIn = () => {
+    const _OnUnFollowComic = async () => {
+        SqlHelper.unFollowManga(item);
+        setIsFollow(false)
+    }
 
+    const _OnFollowComic = async () => {
+        SqlHelper.addFollowManga(item);
+        setIsFollow(true)
         const a1 = Animated.timing(ScaleAnim, {
             toValue: 1,
             duration: 1000,
@@ -87,11 +89,17 @@ const DetailChap: FunctionComponent = () => {
         Animated.sequence([a1, a13]).start()
     }
 
+    const fadeIn = () => {
+        if (isFollow) _OnUnFollowComic()
+        else _OnFollowComic()
+    }
+
     React.useEffect(() => {
         (async () => {
             _setLoading(true)
             const result = await getListChapter(parseInt(page), id, 20)
             if (result?.data?.status == "success") {
+
                 setData({
                     data: result?.data?.data,
                     numberResult: result?.data?.numberResult
@@ -105,7 +113,15 @@ const DetailChap: FunctionComponent = () => {
         }
     }, [page])
 
-
+    React.useEffect(() => {
+        SqlHelper.addHistoryManga(item);
+        SqlHelper.getFollowManga(item).then((resultFollow: any) => {
+            if (resultFollow.length > 0) {
+                setIsFollow(true)
+            }
+        })
+        return () => setIsFollow(false)
+    }, [])
     return (
         <>
             <View style={styles.container}>
@@ -117,7 +133,7 @@ const DetailChap: FunctionComponent = () => {
                 >
                     <Background {...{ item }} ></Background>
                     <Header></Header>
-                    <DetailComic {...{ fadeIn, item }}></DetailComic>
+                    <DetailComic {...{ fadeIn, item, isFollow }}></DetailComic>
                     <DescriptComic {...{ item }}></DescriptComic>
                     <TitleChapter {...{ data, page, loading, _setPage }}></TitleChapter>
                     <TabScene {...{ _id: id, data, loading }}></TabScene>

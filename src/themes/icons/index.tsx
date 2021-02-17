@@ -7,7 +7,7 @@ import History from './History';
 export const tabs = [
     { icon: <Home />, name: 'Home' },
     // { icon: <Category />, name: 'Search' },
-    { icon: <Follow />, name: 'Follow' },
-    { icon: <History />, name: 'History' },
-    { icon: <User />, name: 'Profile' },
+    { icon: <Follow />, name: 'Bookcase' },
+    // { icon: <History />, name: 'History' },
+    { icon: <User />, name: 'Setting' },
 ];

@@ -24,7 +24,7 @@ export default ({
         <RectButton
             style={{
                 paddingTop: 5,
-                width: SCREEN_WIDTH / 5,
+                width: SCREEN_WIDTH / 3,
                 height: 55,
                 alignItems: 'center',
                 justifyContent: 'center',

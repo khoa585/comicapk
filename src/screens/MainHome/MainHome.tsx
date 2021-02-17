@@ -7,6 +7,7 @@ import isEqual from 'react-fast-compare';
 import ComicHot from './ComicHot';
 import { getListTypeCommic } from './../../api/comic';
 import Category from './Category';
+import FocusAwareStatusBar from '../../components/FocusAwareStatusBar';
 
 
 export type ItemComicProps = {
@@ -79,7 +80,7 @@ const MainHome: FunctionComponent = () => {
 
     return (
         <View style={styles.container}>
-            <StatusBar hidden={false} translucent={true} backgroundColor="transparent" />
+            <FocusAwareStatusBar hidden={false} translucent={true} backgroundColor="transparent" ></FocusAwareStatusBar>
             <ScrollView
                 scrollEventThrottle={1}
                 refreshControl={

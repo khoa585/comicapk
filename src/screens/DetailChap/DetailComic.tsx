@@ -12,18 +12,29 @@ import { ItemComicProps } from '../MainHome/MainHome'
 export const iconView = require('../../assets/image/a96.png');
 export const iconLeft = require('../../assets/image/a4e.png');
 export const iconRight = require('../../assets/image/a4f.png');
-export const iconheart = require('../../assets/image/a2k.png');
+export const iconheartFollow = require('../../assets/image/a2k.png');
 type DetailComicProps = {
     fadeIn: any
-    item: ItemComicProps | any
+    item: ItemComicProps | any,
+    isFollow: boolean
 }
-const DetailComic: FunctionComponent<DetailComicProps> = ({ fadeIn, item }) => {
+const DetailComic: FunctionComponent<DetailComicProps> = ({ fadeIn, item, isFollow }) => {
 
     const navigation = useNavigation();
     const [isDown, setDown] = React.useState<boolean>(false);
 
     const gradColors = isDown ? ['#4da7db', '#5bc6ff'] : ['#5bc6ff', '#4da7db'];
 
+    const showFollow = (): any => (
+        isFollow ? (
+            <Image
+                resizeMode="contain"
+                style={styles.tinyiconheart}
+                source={iconheartFollow}></Image>
+        ) : (
+                <EvilIcons name="heart" size={30} color="#FFF" />
+            )
+    )
     return (
         <View style={styles.conatiner}>
             <View style={styles.containerComic}>
@@ -49,6 +60,7 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ fadeIn, item }) => {
                         <TouchableOpacity
                             onPress={fadeIn}
                             activeOpacity={0.8}
+
                         >
                             <View style={styles.icon}>
                                 <LinearGradient
@@ -58,11 +70,8 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ fadeIn, item }) => {
                                     angleCenter={{ x: 0.5, y: 0.5 }}
                                     style={[styles.icon]}
                                 >
-                                    {/* <EvilIcons name="heart" size={30} color="#FFF" /> */}
-                                    <Image
-                                        resizeMode="contain"
-                                        style={styles.tinyiconheart}
-                                        source={iconheart}></Image>
+                                    {showFollow()}
+
                                 </LinearGradient>
                             </View>
                         </TouchableOpacity>
@@ -285,7 +294,7 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
     },
-    tinyiconheart:{
+    tinyiconheart: {
         width: 70,
         height: 70,
     }

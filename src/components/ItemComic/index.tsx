@@ -18,7 +18,7 @@ const ItemComic = ({ item, index, type }) => {
     }
 
     const showCategory = React.useCallback(() => {
-        return item.category.slice(0, 5).map((item, index) => {
+        return  item.category.slice(0, 5).map((item, index) => {
             return (
                 <Text key={index} style={styles.normal}>{item}</Text>
             )
@@ -36,7 +36,7 @@ const ItemComic = ({ item, index, type }) => {
                         }
                     }} style={styles.imageRecommend}></Image>
             </View>
-            <View style={{ width:  parseInt(type) === 0 ?  '60%' : '70%', paddingHorizontal: 10, paddingVertical: 5 }}>
+            <View style={{ width: parseInt(type) === 0 ? '60%' : '70%', paddingHorizontal: 10, paddingVertical: 5 }}>
                 <Text numberOfLines={2} style={styles.nameComic}>{item.name}</Text>
                 <View style={{ flexDirection: 'row', paddingVertical: 5, alignItems: 'center' }}>
                     <Image
