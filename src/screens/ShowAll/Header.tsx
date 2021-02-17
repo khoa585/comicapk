@@ -27,21 +27,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: "row",
         paddingHorizontal: 20,
-        paddingVertical: 5,
+        paddingVertical: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#d6d6d6',
-        paddingTop: STATUS_BAR_HEIGHT,
+        paddingTop: STATUS_BAR_HEIGHT + 10,
         backgroundColor: '#55b9f3',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     iconback: {
         position: 'absolute',
         top: 45,
-        left: 10
+        left: 20
     },
     txt: {
-        fontSize: 25,
-        fontFamily: 'Pacifico-Regular',
+        fontSize: 18,
+        fontFamily: 'Nunito-Bold',
         fontWeight: 'normal',
         color: '#fff'
     }

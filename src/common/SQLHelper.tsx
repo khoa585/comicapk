@@ -8,6 +8,9 @@ class SqlHelper {
         }, () => { console.log("Open DB Success") }, (error) => { console.log(error) })
     }
     db;
+
+
+
     async addHistoryManga(item) {
 
         this.db.transaction((tx) => {
@@ -28,8 +31,8 @@ class SqlHelper {
                     txt.executeSql('INSERT INTO history(_id,category, date_time) VALUES (?,?,?)',
                         [item._id, JSON.stringify(item), Date.now()], (tx, results) => {
                             if (results.rowsAffected > 0) {
-                                console.log('Registration Successfully')
-                            } else console.log('Registration Failed');
+                                console.log('addHistoryManga Successfully')
+                            } else console.log('addHistoryManga Failed');
                         })
                 }
             }, (error) => console.log(error))
@@ -55,15 +58,15 @@ class SqlHelper {
                     txt.executeSql("UPDATE manga_follow SET date_time= ? where manga_id = ?",
                         [item._id, JSON.stringify(item), Date.now()], (tx, results) => {
                             if (results.rowsAffected > 0) {
-                                console.log('UPDATE Successfully')
-                            } else console.log('UPDATE Failed');
+                                console.log('addFollowManga Successfully')
+                            } else console.log('addFollowManga Failed');
                         })
                 }
                 else {
                     txt.executeSql(`INSERT INTO manga_follow (_id,category, date_time) VALUES (?,?,?)`, [item._id, JSON.stringify(item), Date.now()], (tx, results) => {
                         if (results.rowsAffected > 0) {
-                            console.log('INSERT Successfully')
-                        } else console.log('INSERT Failed');
+                            console.log('addFollowManga Successfully')
+                        } else console.log('addFollowManga Failed');
                     })
                 }
             }, (error) => console.log(error))
@@ -95,6 +98,37 @@ class SqlHelper {
                     reslove(result.rows.raw());
                 }, (error) => { reject(error) })
             })
+        })
+    }
+
+
+
+    async addSearchManga(txt_) {
+        this.db.transaction((tx) => {
+            tx.executeSql(
+                'INSERT INTO search(text, date_time) VALUES (?,?)',
+                [txt_, Date.now()],
+                (tx, results) => {
+                    if (results.rowsAffected > 0) {
+                        console.log('addSearchManga Successfully')
+                    } else console.log('addSearchManga Failed');
+                }
+            );
+        }, (error) => { console.log(error) });
+    }
+
+    GetListSearch() {
+
+        return new Promise((reslove, reject) => {
+            this.db.transaction((txn) => {
+                txn.executeSql(
+                    'SELECT * FROM search ORDER  BY date_time DESC',
+                    [],
+                    (_, results) => {
+                        reslove(results.rows.raw())
+                    }
+                );
+            }, (error) => { reject(error) })
         })
     }
 }

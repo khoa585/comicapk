@@ -1,30 +1,23 @@
 import React, { FunctionComponent } from 'react';
-import { View, StyleSheet, Image, StatusBar, Easing, Animated, ScrollView } from 'react-native';
-import { useRoute, RouteProp, useFocusEffect } from '@react-navigation/native';
-import { getDetialComic, getListChapter } from './../../api/comic';
-import * as screen from './../../constants/ScreenTypes';
-import { TabView, TabBar } from 'react-native-tab-view';
+import { View, StyleSheet, StatusBar, Easing, Animated, ScrollView, RefreshControl } from 'react-native';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { getListChapter } from './../../api/comic';
 import Header from './Header';
 import DetailComic from './DetailComic'
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_WIDTH_No } from '../../constants'
 import DescriptComic from './DescriptComic'
 import TabScene from './TabScene'
-import { TouchableOpacity } from 'react-native-gesture-handler';
 const BACKDROP_HEIGHT = SCREEN_HEIGHT * 0.65;
 export const HeaderHeight = SCREEN_HEIGHT / 3
-import LinearGradient from 'react-native-linear-gradient';
 import Background from './Background';
 import TitleChapter from './TitleChapter';
 import { ChapterItem } from '../../api/interface/chapter.interface';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import { STATUS_BAR_HEIGHT } from '../../constants';
-import Orientation from 'react-native-orientation';
-import { getListTypeCommic } from '../../api/comic';
-import ComicHot from './../MainHome/ComicHot';
 import ListComic from './ListComic';
+import { useDispatch, useSelector } from 'react-redux'
 import SqlHelper from './../../common/SQLHelper';
+import { FetchPostListRequest } from '../../redux/action/InterAction'
+import NetWork from '../../components/NetWork';
 export type RootStackParamList = {
     DETIAL_COMIC_SCREEN: { item: 'item', id: 'id' };
 };
@@ -35,14 +28,7 @@ export type RootRouteProps<RouteName extends keyof RootStackParamList> = RoutePr
 >
 
 
-// export type ItemProps = {
-//     commentCount: number,
-//     createdAt: string,
-//     index: number,
-//     name: string,
-//     __v: number,
-//     _id: string,
-// }
+
 
 export type DetailChapProps = {
     data: ChapterItem[],
@@ -50,6 +36,7 @@ export type DetailChapProps = {
 }
 
 const DetailChap: FunctionComponent = () => {
+    const dispatch = useDispatch()
     const router = useRoute<RootRouteProps<'DETIAL_COMIC_SCREEN'>>();
     const { item, id } = router.params;
     const [page, setPage] = React.useState<string>('1');
@@ -57,7 +44,12 @@ const DetailChap: FunctionComponent = () => {
     const [data, setData] = React.useState<DetailChapProps | null>(null);
     const ScaleAnim = React.useRef<any>(new Animated.Value(0)).current;
     const [isFollow, setIsFollow] = React.useState(false);
-
+    const [refreshing, setRefreshing] = React.useState<boolean>(false);
+    const network = useSelector(state => state.internetReducer.isInternet)
+    // console.log(network)
+    React.useEffect(() => {
+        dispatch(FetchPostListRequest())
+    }, [])
     const _setLoading = (e: boolean) => {
         setLoading(e)
     }
@@ -96,22 +88,13 @@ const DetailChap: FunctionComponent = () => {
 
     React.useEffect(() => {
         (async () => {
-            _setLoading(true)
-            const result = await getListChapter(parseInt(page), id, 20)
-            if (result?.data?.status == "success") {
-
-                setData({
-                    data: result?.data?.data,
-                    numberResult: result?.data?.numberResult
-                });
-                _setLoading(false);
-            }
+            fetchData(page)
         })()
         return () => {
             setData(null)
             _setLoading(false)
         }
-    }, [page])
+    }, [page, network])
 
     React.useEffect(() => {
         SqlHelper.addHistoryManga(item);
@@ -122,6 +105,30 @@ const DetailChap: FunctionComponent = () => {
         })
         return () => setIsFollow(false)
     }, [])
+
+
+    const fetchData = async (_page) => {
+        _setLoading(true)
+        if (network) {
+            const result = await getListChapter(parseInt(_page), id, 20)
+            if (result?.data?.status == "success") {
+                setData({
+                    data: result?.data?.data,
+                    numberResult: result?.data?.numberResult
+                });
+                _setLoading(false);
+            }
+        }
+    }
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        setData(null)
+        fetchData(1)
+        setPage('1')
+        setRefreshing(false)
+    }
+
     return (
         <>
             <View style={styles.container}>
@@ -130,14 +137,28 @@ const DetailChap: FunctionComponent = () => {
                     style={{ flex: 1 }}
                     stickyHeaderIndices={[4]}
                     scrollEventThrottle={16}
+                    refreshControl={
+                        <RefreshControl
+                            colors={["gray", "orange"]}
+                            refreshing={refreshing} onRefresh={onRefresh} />
+                    }
                 >
                     <Background {...{ item }} ></Background>
                     <Header></Header>
-                    <DetailComic {...{ fadeIn, item, isFollow }}></DetailComic>
+                    <DetailComic {...{idcomic:data?.data[0]._id, _id: id,fadeIn, item, isFollow }}></DetailComic>
                     <DescriptComic {...{ item }}></DescriptComic>
                     <TitleChapter {...{ data, page, loading, _setPage }}></TitleChapter>
-                    <TabScene {...{ _id: id, data, loading }}></TabScene>
-                    <ListComic></ListComic>
+                    {
+                        !network ? (
+                            <NetWork></NetWork>
+                        ) : (
+                                <>
+                                    <TabScene {...{ _id: id, data, loading }}></TabScene>
+                                    <ListComic {...{ network }}></ListComic>
+                                </>
+                            )
+                    }
+
                 </ScrollView>
 
                 <Animated.View style={[styles.love, {

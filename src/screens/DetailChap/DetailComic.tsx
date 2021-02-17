@@ -8,17 +8,20 @@ import Header from './Header';
 import LinearGradient from 'react-native-linear-gradient';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_WIDTH_No } from '../../constants'
 import { formatViews } from '../../common/stringHelper'
+import * as SCREEN from '../../constants/ScreenTypes'
 import { ItemComicProps } from '../MainHome/MainHome'
 export const iconView = require('../../assets/image/a96.png');
 export const iconLeft = require('../../assets/image/a4e.png');
 export const iconRight = require('../../assets/image/a4f.png');
 export const iconheartFollow = require('../../assets/image/a2k.png');
 type DetailComicProps = {
+    idcomic: any,
+    _id: string,
     fadeIn: any
     item: ItemComicProps | any,
     isFollow: boolean
 }
-const DetailComic: FunctionComponent<DetailComicProps> = ({ fadeIn, item, isFollow }) => {
+const DetailComic: FunctionComponent<DetailComicProps> = ({ idcomic, _id, fadeIn, item, isFollow }) => {
 
     const navigation = useNavigation();
     const [isDown, setDown] = React.useState<boolean>(false);
@@ -78,6 +81,7 @@ const DetailComic: FunctionComponent<DetailComicProps> = ({ fadeIn, item, isFoll
                         <View>
                             <TouchableOpacity
                                 activeOpacity={0.8}
+                                onPress={() => navigation.navigate(SCREEN.DETIAL_CHAPTER, { id: idcomic, idChap: _id })}
                                 style={[styles.read]}>
                                 <LinearGradient
                                     colors={gradColors}

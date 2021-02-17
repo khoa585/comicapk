@@ -11,13 +11,13 @@ const Header = ({ type }: any) => {
     return (
         <View style={styles.headerContainer}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-                <AntDesign name="arrowleft" size={25} color="#000" />
+                <AntDesign name="arrowleft" size={25} color="#fff" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={{ fontSize: 18, fontFamily: 'Anton-Regular', }}>{type}</Text>
+                <Text style={{ fontSize: 18, fontFamily: 'Nunito-Bold', color: "#fff" }}>{type}</Text>
             </TouchableOpacity>
             <TouchableOpacity>
-                <MaterialCommunityIcons name="dots-vertical" size={25} color="#000" />
+                <MaterialCommunityIcons name="dots-vertical" size={25} color="#fff" />
             </TouchableOpacity>
         </View>
     )
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#d6d6d6',
-        marginTop:STATUS_BAR_HEIGHT
+        paddingTop: STATUS_BAR_HEIGHT + 10,
+        backgroundColor: '#55b9f3',
     }
 })

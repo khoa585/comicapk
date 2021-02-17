@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { View, StyleSheet, ScrollView, RefreshControl, Platform, StatusBar, } from 'react-native';
+import { View, StyleSheet, ScrollView, RefreshControl, Platform, Image, } from 'react-native';
 import TabActionBar from './TabActionBar'
 import Header from './Header';
 import Background from './Background';
@@ -8,7 +8,9 @@ import ComicHot from './ComicHot';
 import { getListTypeCommic } from './../../api/comic';
 import Category from './Category';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar';
-
+import { useDispatch, useSelector } from 'react-redux'
+import { FetchPostListRequest } from '../../redux/action/InterAction'
+import NetWork from '../../components/NetWork';
 
 export type ItemComicProps = {
     author: string,
@@ -39,15 +41,20 @@ type listComicProps = {
 }
 
 const MainHome: FunctionComponent = () => {
-
+    const dispatch = useDispatch()
     const [loading, setLoading] = React.useState<boolean>(false);
     const [refreshing, setRefreshing] = React.useState<boolean>(false);
     const [listComic, setListComic] = React.useState<listComicProps | null>(null);
-
+    const network = useSelector(state => state.internetReducer.isInternet)
+    // console.log(network)
     React.useEffect(() => {
         (async () => {
             try {
-                fetchData()
+                dispatch(FetchPostListRequest())
+                if (network) {
+                    fetchData()
+                }
+
             } catch (error) {
                 console.log(error)
             }
@@ -57,7 +64,7 @@ const MainHome: FunctionComponent = () => {
             setRefreshing(false)
             setLoading(false)
         }
-    }, [])
+    }, [network])
 
     const fetchData = async () => {
         setLoading(true);
@@ -74,26 +81,40 @@ const MainHome: FunctionComponent = () => {
     const onRefresh = () => {
         setRefreshing(true);
         setListComic(null)
-        fetchData()
+        if (network) {
+            fetchData()
+        }
         setRefreshing(false)
     }
 
     return (
         <View style={styles.container}>
             <FocusAwareStatusBar hidden={false} translucent={true} backgroundColor="transparent" ></FocusAwareStatusBar>
+
             <ScrollView
                 scrollEventThrottle={1}
                 refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    <RefreshControl
+                        colors={["gray", "orange"]}
+                        refreshing={refreshing} onRefresh={onRefresh} />
                 }
             >
                 <Header></Header>
-                {/* <Background></Background> */}
                 <TabActionBar></TabActionBar>
-                <ComicHot {...{ listComic: listComic ? listComic.listComicHot : [], loading, type: 0 }}>Top Manga</ComicHot>
-                <Category></Category>
-                <ComicHot {...{ listComic: listComic ? listComic.listComicHUpdate : [], loading, type: 1 }}>New Manga</ComicHot>
+                {
+                    !network ? (
+                        <NetWork></NetWork>
+                    ) : (
+                            <View>
+                                <ComicHot {...{ listComic: listComic ? listComic.listComicHot : [], loading, type: 0 }}>Top Manga</ComicHot>
+                                <Category></Category>
+                                <ComicHot {...{ listComic: listComic ? listComic.listComicHUpdate : [], loading, type: 1 }}>New Manga</ComicHot>
+                            </View>
+                        )
+                        }
             </ScrollView>
+
+
         </View>
     )
 }
@@ -116,4 +137,8 @@ const styles = StyleSheet.create({
         bottom: 0,
         right: 0,
     },
+    tinyiconheart: {
+        width: 300,
+        height: 300,
+    }
 })

@@ -18,9 +18,11 @@ import { getDetialComic, getListChapter } from '../../../api/comic';
 import Item from './Item'
 import { useRoute, RouteProp } from '@react-navigation/native';
 import Loading from '../../../components/Loading';
-
+import { useDispatch, useSelector } from 'react-redux'
+import { FetchPostListRequest } from '../../../redux/action/InterAction'
+import NetWork from '../../../components/NetWork';
 export type RootStackParamList = {
-    CHAPTER_LIST_SCREEN: { id: 'id' };
+    CHAPTER_LIST_SCREEN: { id: 'id',idcomic:'idcomic' };
 };
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> = RouteProp<
@@ -36,10 +38,10 @@ export type RouterProps = {
 }
 
 const ListChapter: FunctionComponent<any> = () => {
-
+    const dispatch = useDispatch()
     const router = useRoute<RootRouteProps<'CHAPTER_LIST_SCREEN'>>();
-    const { id } = router.params;
-
+    const { id ,idcomic} = router.params;
+    const network = useSelector(state => state.internetReducer.isInternet)
     const navigation = useNavigation();
     const [refreshing, setRefreshing] = React.useState<boolean>(false);
     let [page, setPage] = React.useState<number>(1);
@@ -82,7 +84,7 @@ const ListChapter: FunctionComponent<any> = () => {
         if (!refreshing && numberResult >= data.length) return true;
         return (
             <View style={{ paddingVertical: 10, backgroundColor: "#fff" }}>
-                       <Loading></Loading>
+                <Loading></Loading>
             </View>
         )
     }
@@ -100,38 +102,39 @@ const ListChapter: FunctionComponent<any> = () => {
         return;
     }
 
-    const renderItem = React.useCallback(({ item }: any) => <Item item={item} key={item._id}></Item>, [])
+    const renderItem = React.useCallback(({ item }: any) => <Item item={item} key={item._id} id={id}></Item>, [])
     const keyExtractor = React.useCallback((item: any) => item._id.toString(), [])
     return (
         <View style={[styles.container]}>
-            <StatusBar
-                translucent={false}
-                // backgroundColor="#61dafb"
-            />
+           
             <Header></Header>
             {
-                loading ? (
-                    <View style={styles.loading}>
-                        <Loading></Loading>
-                    </View>
-                ) :
-                    (
-                        <FlatList
-                            onEndReachedThreshold={1}
-                            showsVerticalScrollIndicator={false}
-                            data={data}
-                            // maxToRenderPerBatch={5}
-                            // windowSize={5}
-                            bounces={false}
-                            refreshing={false}
-                            renderItem={renderItem}
-                            keyExtractor={keyExtractor}
-                            onEndReached={_onLoadMore}
-                            onRefresh={onFreshList}
-                            getItemLayout={getItemLayout}
-                            ListFooterComponent={_renderFooterList}
-                        >
-                        </FlatList>
+                !network ? (
+                    <NetWork></NetWork>
+                ) : (
+                        loading ? (
+                            <View style={styles.loading}>
+                                <Loading></Loading>
+                            </View>
+                        ) :
+                            (
+                                <FlatList
+                                    onEndReachedThreshold={1}
+                                    showsVerticalScrollIndicator={false}
+                                    data={data}
+                                    // maxToRenderPerBatch={5}
+                                    // windowSize={5}
+                                    bounces={false}
+                                    refreshing={false}
+                                    renderItem={renderItem}
+                                    keyExtractor={keyExtractor}
+                                    onEndReached={_onLoadMore}
+                                    onRefresh={onFreshList}
+                                    getItemLayout={getItemLayout}
+                                    ListFooterComponent={_renderFooterList}
+                                >
+                                </FlatList>
+                            )
                     )
             }
         </View>

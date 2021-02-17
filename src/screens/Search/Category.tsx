@@ -47,7 +47,7 @@ export default React.memo(() => {
                 }}
                 activeOpacity={0.5}>
                 <Text style={{
-                    paddingTop: 5,
+           
                     textAlign: 'center',
                     fontSize: 13,
                     fontFamily: 'Nunito-Bold',
@@ -77,7 +77,7 @@ export default React.memo(() => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        marginLeft: 20,
+        marginHorizontal: 20,
     },
 
     title: {

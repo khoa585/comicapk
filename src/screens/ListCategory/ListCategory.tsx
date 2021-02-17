@@ -7,7 +7,9 @@ import { getListCategory } from './../../api/category';
 import { STATUS_BAR_HEIGHT } from '../../constants'
 import { useRoute, RouteProp, useFocusEffect } from '@react-navigation/native';
 import Header from './Header';
-
+import { useDispatch, useSelector } from 'react-redux'
+import { FetchPostListRequest } from '../../redux/action/InterAction'
+import NetWork from '../../components/NetWork';
 export type RootStackParamList = {
     CATEGORY_SCREEN: { key: 'key' };
 };
@@ -25,11 +27,23 @@ export type RouterProps = {
 }
 const ListCategory = () => {
     const router = useRoute<RootRouteProps<'CATEGORY_SCREEN'>>();
+    const dispatch = useDispatch()
+    const network = useSelector(state => state.internetReducer.isInternet)
+    React.useEffect(() => {
+        dispatch(FetchPostListRequest())
+    }, [])
     return (
         <View style={styles.container}>
             <StatusBar hidden={false} translucent={true} backgroundColor="transparent" />
             <Header {...{ type: router.params?.key }}></Header>
-            <CategoryPage type={router.params?.key} />
+            {
+                !network ? (
+                    <NetWork></NetWork>
+                ) : (
+                        <CategoryPage type={router.params?.key} />
+                    )
+            }
+
         </View>
     )
 }

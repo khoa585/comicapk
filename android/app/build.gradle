@@ -191,7 +191,7 @@ dependencies {
     compile project(':react-native-vector-icons')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation project(':react-native-svg')
-
+   implementation project(':react-native-community-netinfo')
 
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

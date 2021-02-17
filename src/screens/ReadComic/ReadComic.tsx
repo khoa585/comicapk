@@ -4,14 +4,17 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation } from '@react-navigation/native';
 const { height, width } = Dimensions.get("window");
 import { getDetailChapter } from './../../api/comic'
-
 import Orientation from 'react-native-orientation';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import Modals from './Modals';
 import Footer from './Footer';
 import ListImage from './ListImage';
 import Loading from '../../components/Loading';
-import {STATUS_BAR_HEIGHT} from '../../constants'
+import { STATUS_BAR_HEIGHT } from '../../constants'
+import { useDispatch, useSelector } from 'react-redux'
+import { FetchPostListRequest } from '../../redux/action/InterAction'
+import * as SCREEN from '../../constants/ScreenTypes'
+import NetWork from '../../components/NetWork';
 export type RootStackParamList = {
     DETIAL_CHAPTER: { id: 'id', idChap: '_idChap' };
 };
@@ -28,9 +31,11 @@ export type RouterProps = {
 }
 
 export default function ReadComic() {
-
+    const dispatch = useDispatch()
     const router = useRoute<RootRouteProps<'DETIAL_CHAPTER'>>();
     const { id, idChap } = router.params;
+
+    const network = useSelector(state => state.internetReducer.isInternet)
     const [modalVisible, setModalVisible] = React.useState(false);
     const navigation = useNavigation<any>();
     const [name, setName] = useState<any>(null);
@@ -42,6 +47,7 @@ export default function ReadComic() {
     const scrollYFooter = new Animated.Value(0);
     const diffClamp = Animated.diffClamp(scrollY, 0, height / 9.5)
     const [isSkew, setisSkew] = useState<boolean>(false)
+
     const translateY = diffClamp.interpolate({
         inputRange: [0, height / 9.5],
         outputRange: [0, -(height / 9.5)]
@@ -88,17 +94,15 @@ export default function ReadComic() {
     }
 
 
+    // console.log(network)
+    React.useEffect(() => {
+        dispatch(FetchPostListRequest())
+    }, [])
+
     useEffect(() => {
         (async () => {
             try {
-                let resultData = await getDetailChapter(id)
-                if (resultData?.data?.status == "success") {
-                    setName("Chapter : " + resultData.data.data.index);
-                    setAfterChapter(resultData.data?.data?.after);
-                    setBeforeChapter(resultData.data?.data?.before);
-                    setImagesList(resultData.data?.data?.images);
-                    setIsLoading(false)
-                }
+                fetchData()
 
             } catch (error) {
                 console.log(error)
@@ -112,8 +116,23 @@ export default function ReadComic() {
             setIsLoading(true)
 
         }
-    }, [])
-
+    }, [id, idChap ])
+    const fetchData = async () => {
+        if (network) {
+            let resultData = await getDetailChapter(id)
+            if (resultData?.data?.status == "success") {
+                setName("Chapter : " + resultData.data.data.index);
+                setAfterChapter(resultData.data?.data?.after);
+                setBeforeChapter(resultData.data?.data?.before);
+                setImagesList(resultData.data?.data?.images);
+                setIsLoading(false)
+            }
+        }
+    }
+    const _onFreshList = () => {
+        setIsLoading(true);
+        fetchData()
+    }
 
     if (isLoading) {
         return (
@@ -125,25 +144,34 @@ export default function ReadComic() {
         return (
             <View style={styles.container}>
                 <StatusBar hidden={false} translucent backgroundColor="transparent" />
-                <Animated.View style={[styles.Header, {
-                    transform: [
-                        { translateY: translateY }
-                    ]
-                }]}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            Orientation.lockToPortrait()
-                            navigation.goBack()
-                        }}
-                    >
-                        <Entypo name="chevron-thin-left" color="#fff" size={20} style={{ paddingLeft: 5 }} />
-                    </TouchableOpacity>
-                    <Text style={styles.name}>{name}</Text>
-                    <View style={{ flexBasis: 20 }}></View>
-                </Animated.View>
-                <ListImage {...{ isSkew, _setIsEnabled, imagesList, scrollY, scrollYFooter, isEnabled, isOffset, _setisOffset }}></ListImage>
-                <Footer {...{ idChap, translateYFooter, beforeChapter, afterChapter, _setModalVisible }}></Footer>
-                <Modals {...{ _setisSkew, modalVisible, _setModalVisible, isEnabled, _toggleSwitch }}></Modals>
+                {
+                    !network ? (
+                        <NetWork></NetWork>
+                    ) : (
+                            <>
+                                <Animated.View style={[styles.Header, {
+                                    transform: [
+                                        { translateY: translateY }
+                                    ]
+                                }]}>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            Orientation.lockToPortrait()
+                                            navigation.goBack()
+                                        }}
+                                    >
+                                        <Entypo name="chevron-thin-left" color="#fff" size={20} style={{ paddingLeft: 5 }} />
+                                    </TouchableOpacity>
+                                    <Text style={styles.name}>{name}</Text>
+                                    <View style={{ flexBasis: 20 }}></View>
+                                </Animated.View>
+                                <ListImage {...{ _onFreshList, isSkew, _setIsEnabled, imagesList, scrollY, scrollYFooter, isEnabled, isOffset, _setisOffset }}></ListImage>
+                                <Footer {...{id, idChap, translateYFooter, beforeChapter, afterChapter, _setModalVisible }}></Footer>
+                                <Modals {...{ _setisSkew, modalVisible, _setModalVisible, isEnabled, _toggleSwitch }}></Modals>
+                            </>
+                        )
+                }
+
             </View>
         );
     }
@@ -167,14 +195,14 @@ const styles = StyleSheet.create({
         elevation: 1,
         width: '100%',
         flexDirection: "row",
-        paddingHorizontal:10,
+        paddingHorizontal: 10,
         justifyContent: "center",
         height: height / 9.5,
         alignItems: 'center',
         borderBottomWidth: 1,
         borderBottomColor: '#404042',
         backgroundColor: '#404042',
-        paddingTop:STATUS_BAR_HEIGHT,
+        paddingTop: STATUS_BAR_HEIGHT,
         zIndex: 10,
 
     },

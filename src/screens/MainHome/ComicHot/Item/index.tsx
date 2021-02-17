@@ -34,8 +34,8 @@ const Item: FunctionComponent<itemProps> = ({ item }) => {
 export default React.memo(Item, isEqual)
 const styles = StyleSheet.create({
     container: {
-        width: ((SCREEN_WIDTH / 2.8)),
-        height: (SCREEN_WIDTH * 0.5),
+        width: ((SCREEN_WIDTH / 4)),
+        height: (SCREEN_WIDTH * 0.45),
         marginRight: 15,
         backgroundColor: '#fff',
 

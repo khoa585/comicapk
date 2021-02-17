@@ -5,6 +5,9 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import Item from './Item';
 import { getListCategory } from './../../api/category';
 import { STATUS_BAR_HEIGHT } from '../../constants'
+import { useDispatch, useSelector } from 'react-redux'
+import { FetchPostListRequest } from '../../redux/action/InterAction'
+import NetWork from '../../components/NetWork';
 import { useRoute, RouteProp, useFocusEffect } from '@react-navigation/native';
 import Header from './Header';
 
@@ -23,12 +26,24 @@ export type RouterProps = {
     }
 }
 const ShowAll = () => {
+    const dispatch = useDispatch()
+    const network = useSelector(state => state.internetReducer.isInternet)
     const router = useRoute<RootRouteProps<'CATEGORY_SCREEN'>>();
+    React.useEffect(() => {
+        dispatch(FetchPostListRequest())
+    }, [])
     return (
         <View style={styles.container}>
             <StatusBar hidden={false} translucent={true} backgroundColor="transparent" />
             <Header {...{ _type: router.params?.type }}></Header>
-            <Item type={router.params?.type} />
+            {
+                !network ? (
+                    <NetWork></NetWork>
+                ) : (
+                        <Item type={router.params?.type} />
+                    )
+            }
+
         </View>
     )
 }

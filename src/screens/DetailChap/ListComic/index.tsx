@@ -5,11 +5,13 @@ import * as SCREEN from '../../../constants/ScreenTypes';
 import { SCREEN_WIDTH } from '../../../constants'
 import { getListTypeCommic } from '../../../api/comic';
 
-const ListComic: FunctionComponent = () => {
+const ListComic: FunctionComponent<any> = ({network}) => {
     const [listComic, setListComic] = React.useState<any | null>(null);
     React.useEffect(() => {
         (async () => {
+            if (network) {
             fetchData()
+            }
         })()
         return () => {
             setListComic(null)

@@ -23,14 +23,14 @@ export default () => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#55b9f3',
-        paddingVertical: 5,
+        paddingVertical: 10,
         paddingHorizontal: 10,
         alignItems: 'center',
-        paddingTop: STATUS_BAR_HEIGHT
+        paddingTop: STATUS_BAR_HEIGHT + 10,
     },
     txt: {
         fontSize: 25,
-        fontFamily: 'Pacifico-Regular',
+        fontFamily: 'Nunito-Bold',
         fontWeight: 'normal',
         color: '#fff'
     }

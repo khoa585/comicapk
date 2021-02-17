@@ -10,17 +10,26 @@ import { searchComicByName } from './../../api/comic';
 import { useNavigation } from '@react-navigation/native';
 import SearchItem from './SearchItem'
 import Loading from '../../components/Loading';
+import { useDispatch, useSelector } from 'react-redux'
+import { FetchPostListRequest } from '../../redux/action/InterAction'
+import NetWork from '../../components/NetWork';
+import SqlHelper from './../../common/SQLHelper';
+import FocusAwareStatusBar from '../../components/FocusAwareStatusBar'
 export const iconClose = require('../../assets/image/z1.png');
 const Search = () => {
+    const dispatch = useDispatch()
+    const network = useSelector(state => state.internetReducer.isInternet)
     const navigation = useNavigation();
     let [value, onChangeText] = React.useState<String | any>('')
     const [loading, setLoading] = React.useState<any>(false);
     const [listComic, setListComic] = React.useState<any>([]);
     let submit = (nativeEvent) => {
-        if (value === "") {
+        if (nativeEvent === "") {
             return null;
         }
+        onChangeText(nativeEvent.text)
         setLoading(true);
+        SqlHelper.addSearchManga(nativeEvent.text)
         searchComicByName(1, 10, nativeEvent.text)
             .then((result) => {
                 if (result.data.code == 200 || result.data.status == "success") {
@@ -32,8 +41,29 @@ const Search = () => {
                 console.log(error);
             })
     }
+
+    let _submit = (e) => {
+        setLoading(true);
+        onChangeText(e)
+        searchComicByName(1, 10, e)
+            .then((result) => {
+                console.log(result)
+                if (result.data.code == 200 || result.data.status == "success") {
+                    setListComic([...result.data.data]);
+                    setLoading(false);
+
+                }
+            }).catch(error => {
+                console.log(error);
+            })
+    }
+    React.useEffect(() => {
+        dispatch(FetchPostListRequest())
+    }, [])
+
     return (
         <View style={styles.container}>
+            <FocusAwareStatusBar hidden={false} translucent={true} backgroundColor="transparent" ></FocusAwareStatusBar>
             <Header></Header>
             <View style={{ paddingHorizontal: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <View style={styles.contaiSearch}>
@@ -68,7 +98,7 @@ const Search = () => {
                 value === "" ? (
                     <View>
                         <Category></Category>
-                        <HistorySearch></HistorySearch>
+                        <HistorySearch {...{ _submit }}></HistorySearch>
                     </View>
                 ) : null
             }
@@ -81,21 +111,24 @@ const Search = () => {
                             </View> :
                             <View style={{ flex: 1 }}>
                                 {
-                                    listComic.length === 0 ?
-                                        <View>
-                                            <Text style={{ textAlign: "center", fontFamily: 'Nunito-Bold' }}>Không Có Kết Quả Tìm Kiếm</Text>
-                                        </View>
-                                        :
-                                        <FlatList
-                                            showsHorizontalScrollIndicator={false}
-                                            showsVerticalScrollIndicator={false}
-                                            data={listComic}
-                                            keyExtractor={(item, index) => item._id + index}
-                                            renderItem={({ item }) => <SearchItem data={item} />}
-                                            onEndReachedThreshold={1}
-                                        // onEndReached={_onLoadMore}
-                                        // ListFooterComponent={_renderFooterList}
-                                        />
+                                    !network ? (
+                                        <NetWork></NetWork>
+                                    ) : (
+                                            listComic.length === 0 ?
+                                                <View>
+                                                    <Text style={{ textAlign: "center", fontFamily: 'Nunito-Bold' }}>Không Có Kết Quả Tìm Kiếm</Text>
+                                                </View>
+                                                :
+                                                <FlatList
+                                                    showsHorizontalScrollIndicator={false}
+                                                    showsVerticalScrollIndicator={false}
+                                                    data={listComic}
+                                                    keyExtractor={(item, index) => item._id + index}
+                                                    renderItem={({ item }) => <SearchItem data={item} />}
+                                                    onEndReachedThreshold={1}
+                                                // onEndReached={_onLoadMore}
+                                                // ListFooterComponent={_renderFooterList}
+                                                />)
                                 }
                             </View>
                         }

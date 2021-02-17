@@ -9,7 +9,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
 import * as SCREEN from './../../constants/ScreenTypes';
 import { useNavigation } from '@react-navigation/native';
 export const iconlist = require('../../assets/image/a7n.png');
-export default function Footer({ idChap, translateYFooter, beforeChapter, afterChapter, _setModalVisible }) {
+export default function Footer({ id, idChap, translateYFooter, beforeChapter, afterChapter, _setModalVisible }) {
     const sheetRef = React.useRef<any>();
 
     const navigation = useNavigation<any>();
@@ -30,7 +30,7 @@ export default function Footer({ idChap, translateYFooter, beforeChapter, afterC
                 </View>
                 <View >
                     <TouchableOpacity
-                        onPress={() => navigation.navigate(SCREEN.CHAPTER_LIST_SCREEN, { id: idChap })}
+                        onPress={() => navigation.navigate(SCREEN.CHAPTER_LIST_SCREEN, { id: idChap, idcomic: id })}
                         style={styles.listchap}
                     >
                         <Image

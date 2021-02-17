@@ -248,7 +248,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Easing, Image, Dimensions, Ac
 const { height, width } = Dimensions.get("window");
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import ImageFullWith from './ImageFullWith'
-function ListImage({ isSkew, _setIsEnabled, imagesList, scrollY, scrollYFooter, isEnabled, isOffset, _setisOffset }: any) {
+function ListImage({_onFreshList, isSkew, _setIsEnabled, imagesList, scrollY, scrollYFooter, isEnabled, isOffset, _setisOffset }: any) {
 
     let [speed, setSpeed] = React.useState<number>(1)
     let carousel = React.useRef<any>(null);
@@ -324,6 +324,8 @@ function ListImage({ isSkew, _setIsEnabled, imagesList, scrollY, scrollYFooter, 
                 style={{ paddingTop: height / 12 }}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
+                refreshing={false}
+                onRefresh={_onFreshList}
                 data={imagesList ? imagesList : []}
                 maxToRenderPerBatch={5}
                 windowSize={5}

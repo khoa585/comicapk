@@ -11,36 +11,39 @@ import { RectButton } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native';
 import * as SCREEN from '../../../constants/ScreenTypes'
 import { SCREEN_WIDTH } from '../../../constants'
-const Item: FunctionComponent<any> = ({ item }) => {
-    const navigation = useNavigation();
+const Item: FunctionComponent<any> = ({ item, id }) => {
+    const navigation = useNavigation<any>();
     return (
-        <RectButton key={item._id}
-            onPress={() => navigation.navigate(SCREEN.DETIAL_CHAPTER, { id: item._id })}
-            style={{ height: SCREEN_WIDTH / 10 }}
-        >
-            <View style={styles.Chapter_}>
-                <Text style={styles.name} >Chapter {item.index}</Text>
-                <Text style={{ fontFamily: 'Brygada1918-Medium' }}>{item.createdAt.split(/T.*/)[0]}</Text>
-            </View>
-        </RectButton>
+        <View style={{
+            borderBottomWidth: 1,
+            borderColor: '#d6d6d6',
+        }}>
+            <RectButton key={item._id}
+                onPress={() => navigation.navigate(SCREEN.DETIAL_CHAPTER, { id: item._id, idChap: id })}
+                style={{ paddingVertical: 10, paddingHorizontal: 20 }}
+            >
+                <View style={styles.Chapter_}>
+                    <Text style={styles.name} >Chapter {item.index}</Text>
+                    <Text style={{ fontSize: 13, fontFamily: 'Nunito-Bold', color: '#5c6b73', }}>{item.createdAt.split(/T.*/)[0]}</Text>
+                </View>
+            </RectButton>
+        </View>
     );
 };
 export default React.memo(Item, isEqual)
 
 const styles = StyleSheet.create({
     name: {
-        fontSize: 16,
+        fontSize: 14,
         color: '#5c6b73',
-        fontFamily: 'Brygada1918-Medium'
+        fontFamily: 'Nunito-Bold',
     },
     Chapter_: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 10,
-        borderBottomWidth: 1,
-        borderColor: '#d6d6d6',
-        padding: 20,
+
+
 
     },
     loading: {

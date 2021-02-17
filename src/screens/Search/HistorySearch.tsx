@@ -1,12 +1,11 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native";
-
-// import { items } from './Data'
-// import { ItemType } from '../model'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useSelector } from "react-redux";
 import { useNavigation } from '@react-navigation/native';
 // import * as screen from '../../../constants/ScreenTypes'
+import SqlHelper from './../../common/SQLHelper';
+import { useFocusEffect } from '@react-navigation/native';
 const items = [
     {
         name: 'Action',
@@ -46,17 +45,24 @@ const items = [
     }
 ]
 
-export default React.memo(() => {
-
-    const renderItem = React.useCallback(({ item }) => <Item item={item}></Item>, [])
-    const keyExtractor = React.useCallback((_, index): string => index.toString(), [])
-    const navigation = useNavigation();
+export default React.memo(({ _submit }: any) => {
 
 
-    const Item = ({ item: { icon, name } }: any): JSX.Element => {
+    const [listComic, setListComic] = React.useState([]);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            SqlHelper.GetListSearch()
+                .then((result: any) => {
+                    setListComic(result)
+                })
+            return () => setListComic([])
+        }, [])
+    )
+    const Item = ({ item: { text } }: any): JSX.Element => {
         return (
             <TouchableOpacity
-                onPress={() => true}
+                onPress={() => _submit(text)}
                 style={{
                     backgroundColor: '#f1f4eb',
                     paddingVertical: 5,
@@ -67,24 +73,34 @@ export default React.memo(() => {
                 }}
                 activeOpacity={0.7}>
                 <Text style={{
-                    paddingTop: 5,
                     textAlign: 'center',
                     fontSize: 13,
                     fontFamily: 'Nunito-Bold',
-                }}>{name}</Text>
+                }}>{text}</Text>
             </TouchableOpacity>
         )
     }
-
+    const deleteSearch = () =>{
+        console.log('s')
+    }
     return (
         <>
             <View style={styles.container}>
-                <View>
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                }}>
                     <Text style={styles.title}>History</Text>
+                    <TouchableOpacity
+                          onPress={() => deleteSearch()}
+                    >
+                        <Text style={styles.title}>History</Text>
+                    </TouchableOpacity>
                 </View>
-                <View style={{ flexWrap: 'wrap', flexDirection: 'row',marginVertical:10 }}>
+                <View style={{ flexWrap: 'wrap', flexDirection: 'row', marginVertical: 10 }}>
                     {
-                        items.map((item, index) => {
+                        listComic.map((item, index) => {
                             return <Item item={item} key={index}></Item>
                         })
                     }
@@ -97,7 +113,7 @@ export default React.memo(() => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        marginLeft: 20,
+        marginHorizontal: 20,
     },
 
     title: {
