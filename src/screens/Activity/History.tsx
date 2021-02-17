@@ -1,39 +1,39 @@
 import React, { useRef, useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import ItemComic from '../../components/ItemComic';
+import ItemBook from '../../components/ItemBook';
 import SqlHelper from './../../common/SQLHelper';
 import { useFocusEffect } from '@react-navigation/native';
 const History = () => {
-    const [listComic, setListComic] = useState([]);
+    const [listComic, setListComic] = useState<any>([]);
     const [page, setPage] = useState(1);
-    const [footerLoading, setFooterLoading] = useState(false);
     useFocusEffect(
         React.useCallback(() => {
-            SqlHelper.GetListHistory(1, 12)
-                .then(result => {
-                    if(result.length != 0){
-                        setListComic([...result]);
-                        setPage(1);
-                    }
-                })
+            fecth()
         }, [])
     )
-    const _OnLoadMore = () => {
-        SqlHelper.GetListHistory(page + 1, 12)
-            .then(result => {
-                setPage(page => page + 1);
-                setListComic([...listComic, ...result]);
+    const fecth = () => {
+        SqlHelper.GetListHistory(1, 12)
+            .then((result: any) => {
+                setListComic([...result]);
             })
     }
+    // const _OnLoadMore = () => {
+    //     SqlHelper.GetListHistory(page + 1, 12)
+    //         .then((result:any) => {
+    //             setListComic([...listComic, ...result]);
+    //         })
+    // }
     const _OnFreshList = () => {
         SqlHelper.GetListHistory(1, 12)
-            .then(result => {
+            .then((result: any) => {
                 setListComic([...result]);
-                setPage(1);
             })
     }
- 
+    const deleteComic = (i: string) => {
+        SqlHelper.DeleteMangaHistory(i)
+        fecth()
+    }
     return (
         <View style={styles.container}>
             {
@@ -45,13 +45,13 @@ const History = () => {
                         <FlatList
                             data={listComic}
                             keyExtractor={(_, index) => index.toString()}
-                            renderItem={({ item, index }) =>  <ItemComic item={JSON.parse(item.category)} index={index} type={3} />
-                           
-                        }
+                            renderItem={({ item, index }: any) => <ItemBook deleteComic={deleteComic} item={JSON.parse(item.category)} index={index} type={3} />
+
+                            }
                             contentContainerStyle={{ justifyContent: "space-between", alignItems: "center" }}
                             onEndReachedThreshold={0.5}
                             refreshing={false}
-                            onEndReached={_OnLoadMore}
+                            // onEndReached={_OnLoadMore}
                             onRefresh={_OnFreshList}
 
                         />
@@ -66,7 +66,7 @@ export default History;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:'#fff'
+        backgroundColor: '#fff'
     },
     header: {
         height: 50,

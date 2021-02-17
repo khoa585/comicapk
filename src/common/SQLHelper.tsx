@@ -51,6 +51,16 @@ class SqlHelper {
             }, (error) => { reject(error) })
         })
     }
+    DeleteMangaHistory(id) {
+        return new Promise((reslove, reject) => {
+            this.db.transaction((tx) => {
+                tx.executeSql("DELETE FROM history WHERE _id= ?", [id], (txs, result) => {
+                    reslove(result.rows.raw());
+                    console.log('DELETE Successfully ')
+                }, (error) => { reject(error) })
+            })
+        })
+    }
     addFollowManga(item) {
         this.db.transaction((tx) => {
             tx.executeSql("SELECT * FROM manga_follow where _id=?", [item._id], (txt, result) => {
@@ -72,16 +82,17 @@ class SqlHelper {
             }, (error) => console.log(error))
         });
     }
-    unFollowManga(item) {
+    unFollowManga(id) {
         return new Promise((reslove, reject) => {
             this.db.transaction((tx) => {
-                tx.executeSql("DELETE FROM manga_follow WHERE _id= ?", [item._id], (txs, result) => {
+                tx.executeSql("DELETE FROM manga_follow WHERE _id= ?", [id], (txs, result) => {
                     reslove(result.rows.raw());
                     console.log('DELETE Successfully ')
                 }, (error) => { reject(error) })
             })
         })
     }
+
     GetListFollower() {
         return new Promise((reslove, reject) => {
             this.db.transaction((tx) => {
@@ -129,6 +140,17 @@ class SqlHelper {
                     }
                 );
             }, (error) => { reject(error) })
+        })
+    }
+
+    DeleteManga() {
+        return new Promise((reslove, reject) => {
+            this.db.transaction((tx) => {
+                tx.executeSql("DELETE FROM search", [], (txs, result) => {
+                    // reslove(result.rows.raw());
+                    console.log('DELETE Successfully ')
+                }, (error) => { reject(error) })
+            })
         })
     }
 }

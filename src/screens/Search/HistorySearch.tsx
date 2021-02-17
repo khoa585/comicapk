@@ -1,50 +1,10 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { useSelector } from "react-redux";
 import { useNavigation } from '@react-navigation/native';
-// import * as screen from '../../../constants/ScreenTypes'
 import SqlHelper from './../../common/SQLHelper';
 import { useFocusEffect } from '@react-navigation/native';
-const items = [
-    {
-        name: 'Action',
-    },
-    {
-        name: 'Fantasy',
-    },
-    {
-        name: 'Adventure',
-    },
-    {
-        name: 'Drama',
-    },
-    {
-        name: 'Adult',
-    },
-    {
-        name: 'Comedy',
-    },
-    {
-        name: 'Action',
-    },
-    {
-        name: 'Fantasy',
-    },
-    {
-        name: 'Adventure',
-    },
-    {
-        name: 'Drama',
-    },
-    {
-        name: 'Adult',
-    },
-    {
-        name: 'Comedy',
-    }
-]
-
+import EvilIcons from 'react-native-vector-icons/EvilIcons'
 export default React.memo(({ _submit }: any) => {
 
 
@@ -52,13 +12,17 @@ export default React.memo(({ _submit }: any) => {
 
     useFocusEffect(
         React.useCallback(() => {
-            SqlHelper.GetListSearch()
-                .then((result: any) => {
-                    setListComic(result)
-                })
+            fetchall()
             return () => setListComic([])
         }, [])
     )
+
+    const fetchall = () => {
+        SqlHelper.GetListSearch()
+            .then((result: any) => {
+                setListComic(result)
+            })
+    }
     const Item = ({ item: { text } }: any): JSX.Element => {
         return (
             <TouchableOpacity
@@ -80,8 +44,9 @@ export default React.memo(({ _submit }: any) => {
             </TouchableOpacity>
         )
     }
-    const deleteSearch = () =>{
-        console.log('s')
+    const deleteSearch = () => {
+        SqlHelper.DeleteManga()
+        fetchall()
     }
     return (
         <>
@@ -93,9 +58,10 @@ export default React.memo(({ _submit }: any) => {
                 }}>
                     <Text style={styles.title}>History</Text>
                     <TouchableOpacity
-                          onPress={() => deleteSearch()}
+                        onPress={() => deleteSearch()}
                     >
-                        <Text style={styles.title}>History</Text>
+                        <EvilIcons name="trash" size={20}/>
+                  
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexWrap: 'wrap', flexDirection: 'row', marginVertical: 10 }}>
@@ -120,6 +86,9 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontFamily: 'Nunito-Bold',
         fontWeight: 'normal',
-
     },
+    tinyicon:{
+        width:44,
+        height:44
+    }
 })

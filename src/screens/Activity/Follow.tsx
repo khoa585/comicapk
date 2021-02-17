@@ -1,18 +1,17 @@
 import React, { useRef, useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import ItemComic from '../../components/ItemComic';
+import ItemBook from '../../components/ItemBook';
 import SqlHelper from './../../common/SQLHelper';
 import { useFocusEffect } from '@react-navigation/native';
 const Follow = () => {
-    const [listComic, setListComic] = useState([]);
-    const [page, setPage] = useState(1);
-    const [footerLoading, setFooterLoading] = useState(false);
-    const [Loading, setLoading] = useState(false);
+    const [listComic, setListComic] = useState<any>([]);
+    const [page, setPage] = useState<number>(1);
+
     useFocusEffect(
         React.useCallback(() => {
             SqlHelper.GetListFollower(1, 12)
-                .then(result => {
+                .then((result: any) => {
                     setListComic([...result]);
                 })
             return () => setListComic([])
@@ -25,14 +24,21 @@ const Follow = () => {
     //             setListComic([...listComic, ...result]);
     //         })
     // }
-    // const _OnFreshList = () => {
-    //     SqlHelper.GetListFollower(1, 12)
-    //         .then(result => {
-    //             setListComic([...result]);
-    //             setPage(1);
-    //         })
-    // }
-    // console.log(listComic)
+    const _OnFreshList = () => {
+        SqlHelper.GetListFollower(1, 12)
+            .then((result: any) => {
+                setListComic([...result]);
+                setPage(1);
+            })
+    }
+    const deleteComic = (i:string) => {
+  
+        SqlHelper.unFollowManga(i)
+        SqlHelper.GetListFollower(1, 12)
+        .then((result: any) => {
+            setListComic([...result]);
+        })
+    }
     return (
         <View style={styles.container}>
             {
@@ -44,14 +50,14 @@ const Follow = () => {
                         <FlatList
                             data={listComic}
                             keyExtractor={(_, index) => index.toString()}
-                            renderItem={({ item, index }) => <ItemComic item={JSON.parse(item.category)} index={index} type={3} />
+                            renderItem={({ item, index }:any) => <ItemBook deleteComic={deleteComic} item={JSON.parse(item.category)} index={index} type={3} />
 
                             }
                             contentContainerStyle={{ justifyContent: "space-between", alignItems: "center" }}
                             onEndReachedThreshold={0.5}
                             refreshing={false}
-                        // onEndReached={_OnLoadMore}
-                        // onRefresh={_OnFreshList}
+                            // onEndReached={_OnLoadMore}
+                            onRefresh={_OnFreshList}
 
                         />
                     </View>
