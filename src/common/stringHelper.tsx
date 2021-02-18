@@ -1,7 +1,7 @@
 export const formatViews = (views)=>{
     return views.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 }
-export const  makeUserName = (length) =>{
+export const  makeUserName = (length:number):string =>{
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;

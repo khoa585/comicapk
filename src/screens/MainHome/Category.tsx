@@ -1,12 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native";
-
-// import { items } from './Data'
-// import { ItemType } from '../model'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { useSelector } from "react-redux";
 import { useNavigation } from '@react-navigation/native';
-import * as screen from '../../constants/ScreenTypes'
+import * as screen from '../../constants/ScreenTypes';
+import {getListCategory} from './../../api/category';
+import { CategoryItem } from '../../api/interface/category.interface';
 const items = [
     {
         name: 'Action',
@@ -50,10 +47,18 @@ export default React.memo(() => {
 
     const renderItem = React.useCallback(({ item ,index}) => <Item item={item} index={index}></Item>, [])
     const keyExtractor = React.useCallback((_, index): string => index.toString(), [])
+    const [listCategory,setListCategory] = useState<CategoryItem[]>([]);
     const navigation = useNavigation();
+    useEffect(()=>{
+        getListCategory().then(result=>{
+            if(result.status==200){
+                setListCategory(result.data.data);
+            }
+        })
+        return()=>{}
+    })
 
-
-    const Item = ({ item: { icon, name },index }): JSX.Element => {
+    const Item = ({ item: { image, name },index }): JSX.Element => {
         return (
             <TouchableOpacity
                 onPress={() => navigation.navigate(screen.CATEGORY_SCREEN, { key: name })}
@@ -61,7 +66,9 @@ export default React.memo(() => {
                 activeOpacity={0.7}>
                 <View
                     style={styles.contaiWrapper}>
-                    <Image source={icon} style={styles.imgIcon}></Image>
+                    <Image source={{
+                        uri:image
+                    }} style={styles.imgIcon}></Image>
                 </View>
                 <Text style={{
                     paddingTop: 2,
@@ -84,7 +91,7 @@ export default React.memo(() => {
                     horizontal
                     maxToRenderPerBatch={5}
                     windowSize={5}
-                    data={items}
+                    data={listCategory}
                     renderItem={renderItem}
                     keyExtractor={keyExtractor}
                 >
