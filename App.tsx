@@ -6,7 +6,7 @@ import {
   View,
   BackHandler,
   ToastAndroid,
-  Alert
+  Platform
 } from 'react-native';
 import Navigation from './src/navigations';
 import { Provider } from 'react-redux';
@@ -20,29 +20,34 @@ const App = () => {
   const _setSplash = (e) => {
     setSplash(e)
   }
-  React.useEffect(() => {
-    const backAction = () => {
-      backClickCount === 1 ? BackHandler.exitApp() : (
-        setbackClickCount(() => {
-          ToastAndroid.show('Press back again to exit', ToastAndroid.SHORT)
-          return 1
-        })
-
-      )
+  let currentCount = 0;
+  const useDoubleBackPressExit = (
+    exitHandler: () => void
+  ) => {
+    if (Platform.OS === "ios") return;
+    const subscription = BackHandler.addEventListener("hardwareBackPress", () => {
+      if (currentCount === 1) {
+        exitHandler();
+        subscription.remove();
+        return true;
+      }
+      backPressHandler();
       return true;
-    };
+    });
+  };
 
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-
-    return () => {
-      backHandler.remove()
-      setbackClickCount(1)
-    };
-  }, [backClickCount]);
-  console.log(backClickCount)
+  const backPressHandler = () => {
+    if (currentCount < 1) {
+      currentCount += 1;
+      ToastAndroid.show("Press again to close!", ToastAndroid.SHORT);
+    }
+    setTimeout(() => {
+      currentCount = 0;
+    }, 2000);
+  };
+  React.useEffect(() => {
+    useDoubleBackPressExit(BackHandler.exitApp)
+  }, [])
   if (isSplash) {
     return (
       <SplashScreen {...{ _setSplash }}></SplashScreen>
