@@ -98,13 +98,17 @@ const DetailChap: FunctionComponent = () => {
     const fetchData = async (_page) => {
         _setLoading(true)
         if (network) {
-            const result = await getListChapter(parseInt(_page), id, 20)
-            if (result?.data?.status == "success") {
-                setData({
-                    data: result?.data?.data,
-                    numberResult: result?.data?.numberResult
-                });
-                _setLoading(false);
+            try {
+                const result = await getListChapter(parseInt(_page), id, 20)
+                if (result?.data?.status == "success") {
+                    setData({
+                        data: result?.data?.data,
+                        numberResult: result?.data?.numberResult
+                    });
+                    _setLoading(false);
+                }
+            } catch (error) {
+                setData(null)
             }
         }
     }

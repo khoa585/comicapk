@@ -21,13 +21,13 @@ const History = () => {
             })
     }
     const _OnLoadMore = () => {
-        setFooterLoading(true);
         if (listComic.length >= 12) {
+            setFooterLoading(true);
             SqlHelper.GetListHistory(page + 1, 12)
                 .then((result: any) => {
                     console.log(result)
                     setListComic([...listComic, ...result]);
-                    setPage(page=>page+1);
+                    setPage(page => page + 1);
                     setFooterLoading(false);
                 })
         }

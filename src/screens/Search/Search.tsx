@@ -23,39 +23,38 @@ const Search = () => {
     let [value, onChangeText] = React.useState<String | any>('')
     const [loading, setLoading] = React.useState<any>(false);
     const [listComic, setListComic] = React.useState<any>([]);
-    let submit = (nativeEvent) => {
+    let submit = async (nativeEvent) => {
         if (nativeEvent === "") {
             return null;
         }
         onChangeText(nativeEvent.text)
         setLoading(true);
-        SqlHelper.addSearchManga(nativeEvent.text)
-        searchComicByName(1, 10, nativeEvent.text)
-            .then((result) => {
-                if (result.data.code == 200 || result.data.status == "success") {
-                    setListComic([...result.data.data]);
-                    setLoading(false);
+        try {
+            SqlHelper.addSearchManga(nativeEvent.text)
+            const result = await searchComicByName(1, 10, nativeEvent.text)
+            if (result.data.code == 200 || result.data.status == "success") {
+                setListComic([...result.data.data]);
+                setLoading(false);
 
-                }
-            }).catch(error => {
-                console.log(error);
-            })
+            }
+        } catch (error) {
+            setListComic([])
+        }
     }
 
-    let _submit = (e) => {
+    let _submit = async (e) => {
         setLoading(true);
         onChangeText(e)
-        searchComicByName(1, 10, e)
-            .then((result) => {
-                console.log(result)
-                if (result.data.code == 200 || result.data.status == "success") {
-                    setListComic([...result.data.data]);
-                    setLoading(false);
+        const result = await searchComicByName(1, 10, e)
+        try {
+            if (result.data.code == 200 || result.data.status == "success") {
+                setListComic([...result.data.data]);
+                setLoading(false);
 
-                }
-            }).catch(error => {
-                console.log(error);
-            })
+            }
+        } catch (error) {
+            setListComic([])
+        }
     }
     React.useEffect(() => {
         dispatch(FetchPostListRequest())

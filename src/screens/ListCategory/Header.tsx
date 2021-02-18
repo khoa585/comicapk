@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#e3342f',
         paddingTop: STATUS_BAR_HEIGHT + 10,
-        backgroundColor: '#55b9f3',
+        backgroundColor: '#e3342f',
     }
 })

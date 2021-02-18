@@ -1,6 +1,6 @@
 import * as types from '../constants/Internet';
 const initialState = {
-    isInternet: false
+    isInternet: true
 };
 const reducer = (state = initialState, action: any) => {
     switch (action.type) {

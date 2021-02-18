@@ -116,16 +116,23 @@ export default function ReadComic() {
             setIsLoading(true)
 
         }
-    }, [id, idChap ])
+    }, [id, idChap])
     const fetchData = async () => {
         if (network) {
-            let resultData = await getDetailChapter(id)
-            if (resultData?.data?.status == "success") {
-                setName("Chapter : " + resultData.data.data.index);
-                setAfterChapter(resultData.data?.data?.after);
-                setBeforeChapter(resultData.data?.data?.before);
-                setImagesList(resultData.data?.data?.images);
-                setIsLoading(false)
+            try {
+                let resultData = await getDetailChapter(id)
+                if (resultData?.data?.status == "success") {
+                    setName("Chapter : " + resultData.data.data.index);
+                    setAfterChapter(resultData.data?.data?.after);
+                    setBeforeChapter(resultData.data?.data?.before);
+                    setImagesList(resultData.data?.data?.images);
+                    setIsLoading(false)
+                }
+            } catch (error) {
+                setName(null)
+                setAfterChapter(null)
+                setBeforeChapter(null)
+                setImagesList(null)
             }
         }
     }
@@ -166,7 +173,7 @@ export default function ReadComic() {
                                     <View style={{ flexBasis: 20 }}></View>
                                 </Animated.View>
                                 <ListImage {...{ _onFreshList, isSkew, _setIsEnabled, imagesList, scrollY, scrollYFooter, isEnabled, isOffset, _setisOffset }}></ListImage>
-                                <Footer {...{id, idChap, translateYFooter, beforeChapter, afterChapter, _setModalVisible }}></Footer>
+                                <Footer {...{ id, idChap, translateYFooter, beforeChapter, afterChapter, _setModalVisible }}></Footer>
                                 <Modals {...{ _setisSkew, modalVisible, _setModalVisible, isEnabled, _toggleSwitch }}></Modals>
                             </>
                         )

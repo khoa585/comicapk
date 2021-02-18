@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FetchPostListRequest } from '../../../redux/action/InterAction'
 import NetWork from '../../../components/NetWork';
 export type RootStackParamList = {
-    CHAPTER_LIST_SCREEN: { id: 'id',idcomic:'idcomic' };
+    CHAPTER_LIST_SCREEN: { id: 'id', idcomic: 'idcomic' };
 };
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> = RouteProp<
@@ -40,7 +40,7 @@ export type RouterProps = {
 const ListChapter: FunctionComponent<any> = () => {
     const dispatch = useDispatch()
     const router = useRoute<RootRouteProps<'CHAPTER_LIST_SCREEN'>>();
-    const { id ,idcomic} = router.params;
+    const { id, idcomic } = router.params;
     const network = useSelector(state => state.internetReducer.isInternet)
     const navigation = useNavigation();
     const [refreshing, setRefreshing] = React.useState<boolean>(false);
@@ -58,11 +58,15 @@ const ListChapter: FunctionComponent<any> = () => {
 
     const fetch = async (i: number) => {
         setLoading(true)
-        const result = await getListChapter(i, id, 20)
-        if (result?.data?.status == "success") {
-            setData(result?.data?.data);
-            setnumberResult(result?.data?.numberResult)
-            setLoading(false);
+        try {
+            const result = await getListChapter(i, id, 20)
+            if (result?.data?.status == "success") {
+                setData(result?.data?.data);
+                setnumberResult(result?.data?.numberResult)
+                setLoading(false);
+            }
+        } catch (error) {
+            setData([])
         }
     }
 
@@ -106,7 +110,7 @@ const ListChapter: FunctionComponent<any> = () => {
     const keyExtractor = React.useCallback((item: any) => item._id.toString(), [])
     return (
         <View style={[styles.container]}>
-           
+
             <Header></Header>
             {
                 !network ? (

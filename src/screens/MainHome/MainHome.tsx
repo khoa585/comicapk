@@ -68,13 +68,17 @@ const MainHome: FunctionComponent = () => {
 
     const fetchData = async () => {
         setLoading(true);
-        const [resultListHot, resultListUpdate] = await Promise.all([getListTypeCommic(1, 10, 0), getListTypeCommic(1, 10, 1)])
-        if (resultListHot.data.status === "success" && resultListHot.data.code === 200) {
-            setListComic({
-                listComicHot: resultListHot.data?.data,
-                listComicHUpdate: resultListUpdate.data?.data
-            })
-            setLoading(false);
+        try {
+            const [resultListHot, resultListUpdate] = await Promise.all([getListTypeCommic(1, 10, 0), getListTypeCommic(1, 10, 1)])
+            if (resultListHot.data.status === "success" && resultListHot.data.code === 200) {
+                setListComic({
+                    listComicHot: resultListHot.data?.data,
+                    listComicHUpdate: resultListUpdate.data?.data
+                })
+                setLoading(false);
+            }
+        } catch (error) {
+            setListComic(null)
         }
     }
 

@@ -19,8 +19,8 @@ const Follow = () => {
         }, [])
     )
     const _OnLoadMore = () => {
-        setFooterLoading(true);
         if (listComic.length >= 12) {
+            setFooterLoading(true);
             SqlHelper.GetListFollower(page + 1, 12)
                 .then((result: any) => {
                     console.log(result)

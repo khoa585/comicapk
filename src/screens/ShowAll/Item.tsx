@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import { getListTypeCommic } from './../../api/comic';
 import ItemComic from '../../components/ItemComic';
 import Loading from '../../components/Loading';
@@ -10,39 +10,48 @@ const Item = ({ type }: any) => {
     const [loading, setLoading] = useState(true);
     const [footerLoading, setFooterLoading] = useState(false);
     useEffect(() => {
-        getListTypeCommic(page, NUMBER_ITEM_PAGE, type)
-            .then(result => {
+        (async () => {
+            try {
+                let result = await getListTypeCommic(page, NUMBER_ITEM_PAGE, type)
                 if (result.data.code == 200) {
                     setLoading(false);
                     setListComic(result.data.data);
                 }
-            })
+            } catch (error) {
+                setListComic(null)
+            }
+        })()
         return () => {
             setLoading(true);
             setListComic(null)
         }
     }, [])
-    const _onLoadMore = () => {
+    const _onLoadMore = async () => {
         setFooterLoading(true);
-        getListTypeCommic(page + 1, NUMBER_ITEM_PAGE, type)
-            .then(result => {
-                if (result.data.code == 200) {
-                    setPage(page => page + 1);
-                    setListComic([...listComic, ...result.data.data]);
-                    setFooterLoading(false);
-                }
-            })
+        try {
+            const result = await getListTypeCommic(page + 1, NUMBER_ITEM_PAGE, type)
+            if (result.data.code == 200) {
+                setPage(page => page + 1);
+                setListComic([...listComic, ...result.data.data]);
+                setFooterLoading(false);
+            }
+        } catch (error) {
+            setListComic(null)
+        }
+
     }
-    const _onFreshList = () => {
+    const _onFreshList = async () => {
         setLoading(true);
-        getListTypeCommic(1, NUMBER_ITEM_PAGE, type)
-            .then(result => {
-                if (result.data.code == 200) {
-                    setPage(1);
-                    setListComic([...result.data.data]);
-                    setLoading(false);
-                }
-            })
+        try {
+            const result = await getListTypeCommic(1, NUMBER_ITEM_PAGE, type)
+            if (result.data.code == 200) {
+                setPage(1);
+                setListComic([...result.data.data]);
+                setLoading(false);
+            }
+        } catch (error) {
+            setListComic(null)
+        }
     }
     const _renderFooterList = () => {
         if (!footerLoading) return null;

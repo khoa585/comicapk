@@ -10,28 +10,34 @@ const CategoryPage = ({ type }) => {
     const [loading, setLoading] = useState(true);
     const [footerLoading, setFooterLoading] = useState(false);
     useEffect(() => {
-        getListByCategorySortViews(page, NUMBER_ITEM_PAGE, type)
-            .then(result => {
+        (async () => {
+            try {
+                const result = await getListByCategorySortViews(page, NUMBER_ITEM_PAGE, type)
                 if (result.data.code == 200) {
                     setLoading(false);
                     setListComic(result.data.data);
                 }
-            })
+            } catch (error) {
+                setListComic(null)
+            }
+        })()
         return () => {
             setLoading(true);
             setListComic(null)
         }
     }, [])
-    const _onLoadMore = () => {
+    const _onLoadMore = async () => {
         setFooterLoading(true);
-        getListByCategorySortViews(page + 1, NUMBER_ITEM_PAGE, type)
-            .then(result => {
-                if (result.data.code == 200) {
-                    setPage(page => page + 1);
-                    setListComic([...listComic, ...result.data.data]);
-                    setFooterLoading(false);
-                }
-            })
+        try {
+            const result =await getListByCategorySortViews(page + 1, NUMBER_ITEM_PAGE, type)
+            if (result.data.code == 200) {
+                setPage(page => page + 1);
+                setListComic([...listComic, ...result.data.data]);
+                setFooterLoading(false);
+            }
+        } catch (error) {
+            setListComic(null)
+        }
     }
     const _onFreshList = () => {
         setLoading(true);

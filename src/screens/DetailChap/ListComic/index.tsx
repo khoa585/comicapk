@@ -5,12 +5,12 @@ import * as SCREEN from '../../../constants/ScreenTypes';
 import { SCREEN_WIDTH } from '../../../constants'
 import { getListTypeCommic } from '../../../api/comic';
 
-const ListComic: FunctionComponent<any> = ({network}) => {
+const ListComic: FunctionComponent<any> = ({ network }) => {
     const [listComic, setListComic] = React.useState<any | null>(null);
     React.useEffect(() => {
         (async () => {
             if (network) {
-            fetchData()
+                fetchData()
             }
         })()
         return () => {
@@ -20,11 +20,14 @@ const ListComic: FunctionComponent<any> = ({network}) => {
 
 
     const fetchData = async () => {
+        try {
+            const resultListHot = await getListTypeCommic(1, 10, 0)
+            if (resultListHot.data.status === "success" && resultListHot.data.code === 200) {
+                setListComic(resultListHot.data?.data)
 
-        const resultListHot = await getListTypeCommic(1, 10, 0)
-        if (resultListHot.data.status === "success" && resultListHot.data.code === 200) {
-            setListComic(resultListHot.data?.data)
-
+            }
+        } catch (error) {
+            setListComic(null)
         }
     }
 
