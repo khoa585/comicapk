@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Text, View, StyleSheet, ActivityIndicator, TouchableOpacity, FlatList } from 'react-native';
 import Item from './Item';
 import * as SCREEN from '../../../constants/ScreenTypes';
-import { SCREEN_WIDTH } from '../../../constants'
+import { SCREEN_WIDTH, SCREEN_WIDTH_No } from '../../../constants'
 import { ItemComicProps } from '../MainHome'
 import { useNavigation } from '@react-navigation/native';
 import { iconload } from '../../../constants'
@@ -24,8 +24,8 @@ const ComicHot: FunctionComponent<ComicHotProps> = ({ listComic, loading, childr
     const keyExtractor = React.useCallback((item: ItemComicProps) => item._id.toString(), [])
 
     const getItemLayout = React.useCallback((_, index: number) => ({
-        length: SCREEN_WIDTH * 0.6,
-        offset: (SCREEN_WIDTH * 0.6) * index,
+        length: Math.round(SCREEN_WIDTH_No * 0.35),
+        offset: (Math.round(SCREEN_WIDTH_No * 0.35)) * index,
         index
     }), [])
 
@@ -46,7 +46,7 @@ const ComicHot: FunctionComponent<ComicHotProps> = ({ listComic, loading, childr
                             <Loading></Loading>
                         </View> :
                         (
-                        
+
                             <FlatList
                                 horizontal
                                 onEndReachedThreshold={1}
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     },
     loading: {
         flex: 1,
-    
+        height: Math.round(SCREEN_WIDTH_No * 0.35) + 40,
         alignItems: 'center',
         justifyContent: 'center',
     },

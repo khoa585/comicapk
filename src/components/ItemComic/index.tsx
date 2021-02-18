@@ -5,6 +5,7 @@ import { formatViews } from '../../common/stringHelper';
 import { useNavigation } from '@react-navigation/native';
 import * as SCREEN from './../../constants/ScreenTypes';
 import { RectButton } from 'react-native-gesture-handler';
+import { SCREEN_WIDTH, SCREEN_WIDTH_No } from '../../constants'
 const { width } = Dimensions.get('window');
 export const icontop1 = require('../../assets/image/a4d.png');
 export const icontop2 = require('../../assets/image/a4g.png');
@@ -80,7 +81,7 @@ const ItemComic = ({ item, index, type }) => {
 export default React.memo(ItemComic)
 const styles = StyleSheet.create({
     contaiItem: {
-        height: (width * 0.35),
+        height: Math.round(SCREEN_WIDTH_No * 0.35),
         marginBottom: 10,
         flexDirection: 'row',
         paddingHorizontal: 20,

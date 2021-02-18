@@ -2,7 +2,7 @@ import { ItemComicProps } from '../screens/MainHome/MainHome';
 import axios from './axios';
 import { ChapterItem } from './interface/chapter.interface';
 import { ResponseApiFull } from './responsive.interface';
-export const getListTypeCommic = (page = 1, numberItem = 10, type = 0):Promise<ResponseApiFull<ItemComicProps[]>> => {
+export const getListTypeCommic = (page = 1, numberItem = 20, type = 0):Promise<ResponseApiFull<ItemComicProps[]>> => {
     return axios.post('/manga/get-list', {
         page: page,
         numberItem: numberItem,
@@ -38,7 +38,7 @@ export const searchComicByName = (page = 1, numberItem = 10, name: any):Promise<
     })
 }
 
-export const getListChapter = (page: number = 1, id: string, numberItem: number = 100):Promise<ResponseApiFull<ChapterItem[]>> => {
+export const getListChapter = (page: number = 1, id: string, numberItem: number = 20):Promise<ResponseApiFull<ChapterItem[]>> => {
     return axios.post("/chapter/list-chapter", {
         manga_id: id,
         page: page,

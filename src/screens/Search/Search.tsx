@@ -23,11 +23,13 @@ const Search = () => {
     let [value, onChangeText] = React.useState<String | any>('')
     const [loading, setLoading] = React.useState<any>(false);
     const [listComic, setListComic] = React.useState<any>([]);
+    const [istoggle, setistoggle] = React.useState<boolean>(true);
     let submit = async (nativeEvent) => {
         if (nativeEvent === "") {
             return null;
         }
         onChangeText(nativeEvent.text)
+        setistoggle(false)
         setLoading(true);
         try {
             SqlHelper.addSearchManga(nativeEvent.text)
@@ -43,6 +45,7 @@ const Search = () => {
     }
 
     let _submit = async (e) => {
+        setistoggle(false)
         setLoading(true);
         onChangeText(e)
         const result = await searchComicByName(1, 10, e)
@@ -78,7 +81,10 @@ const Search = () => {
                     {
                         value !== '' ? (
                             <TouchableOpacity
-                                onPress={() => onChangeText('')}
+                                onPress={() => {
+                                    onChangeText('')
+                                    setistoggle(true)
+                                }}
                             >
                                 <MaterialCommunityIcons style={{ padding: 5 }} name="close-outline" size={15} color="#000" />
                             </TouchableOpacity>
@@ -94,7 +100,7 @@ const Search = () => {
                 </TouchableOpacity>
             </View>
             {
-                value === "" ? (
+                istoggle ? (
                     <View>
                         <Category></Category>
                         <HistorySearch {...{ _submit }}></HistorySearch>
@@ -102,7 +108,7 @@ const Search = () => {
                 ) : null
             }
             {
-                value != "" ?
+                !istoggle ?
                     < View style={{ marginTop: 4, flex: 1, paddingTop: 10 }}>
                         {loading ?
                             <View style={{ flex: 1, paddingTop: 15 }}>

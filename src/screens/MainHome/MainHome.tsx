@@ -46,11 +46,15 @@ const MainHome: FunctionComponent = () => {
     const [refreshing, setRefreshing] = React.useState<boolean>(false);
     const [listComic, setListComic] = React.useState<listComicProps | null>(null);
     const network = useSelector(state => state.internetReducer.isInternet)
-    // console.log(network)
+   
+
+    React.useEffect(() => {
+        dispatch(FetchPostListRequest())
+    }, [])
     React.useEffect(() => {
         (async () => {
             try {
-                dispatch(FetchPostListRequest())
+
                 if (network) {
                     fetchData()
                 }
@@ -111,11 +115,11 @@ const MainHome: FunctionComponent = () => {
                     ) : (
                             <View>
                                 <ComicHot {...{ listComic: listComic ? listComic.listComicHot : [], loading, type: 0 }}>Top Manga</ComicHot>
-                                <Category></Category>
+                                <Category {...{network,loading}}></Category>
                                 <ComicHot {...{ listComic: listComic ? listComic.listComicHUpdate : [], loading, type: 1 }}>New Manga</ComicHot>
                             </View>
                         )
-                        }
+                }
             </ScrollView>
 
 

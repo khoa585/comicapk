@@ -9,11 +9,13 @@ const Follow = () => {
     const [listComic, setListComic] = useState<any>([]);
     const [page, setPage] = useState<number>(1);
     const [footerLoading, setFooterLoading] = useState(false);
+    const [loading, setLoading] = useState(true)
     useFocusEffect(
         React.useCallback(() => {
             SqlHelper.GetListFollower(1, 12)
                 .then((result: any) => {
                     setListComic([...result]);
+                    setLoading(false)
                 })
             return () => setListComic([])
         }, [])
@@ -51,7 +53,7 @@ const Follow = () => {
     }
     return (
         <View style={styles.container}>
-            {
+            { loading ? <Loading></Loading> :
                 listComic.length == 0 ?
                     <View style={{ justifyContent: "center", alignItems: 'center', flex: 1 }}>
                         <Image
@@ -86,7 +88,9 @@ export default Follow;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     header: {
         height: 50,

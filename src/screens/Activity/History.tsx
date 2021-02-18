@@ -9,6 +9,7 @@ const History = () => {
     const [listComic, setListComic] = useState<any>([]);
     const [page, setPage] = useState(1);
     const [footerLoading, setFooterLoading] = useState(false);
+    const [loading, setLoading] = useState(true)
     useFocusEffect(
         React.useCallback(() => {
             fecth()
@@ -18,6 +19,7 @@ const History = () => {
         SqlHelper.GetListHistory(1, 12)
             .then((result: any) => {
                 setListComic([...result]);
+                setLoading(false)
             })
     }
     const _OnLoadMore = () => {
@@ -51,28 +53,29 @@ const History = () => {
     return (
         <View style={styles.container}>
             {
-                listComic.length === 0 ?
-                    <View style={{ justifyContent: "center", alignItems: 'center', flex: 1 }}>
-                        <Image
-                            resizeMode="contain"
-                            style={styles.tinyicon}
-                            source={icon}></Image>
-                        <Text style={{ textAlign: "center", color: '#5c6b73', fontFamily: 'Nunito-Bold' }}>You are not have history to view</Text>
-                    </View> :
-                    <View style={styles.containerList}>
-                        <FlatList
-                            data={listComic}
-                            keyExtractor={(_, index) => index.toString()}
-                            renderItem={({ item, index }: any) => <ItemBook deleteComic={deleteComic} item={JSON.parse(item.category)} index={index} type={3} />}
-                            onEndReachedThreshold={1}
-                            // contentContainerStyle={{ marginTop: 10 }}
-                            ListFooterComponent={_renderFooterList}
-                            refreshing={false}
-                            onEndReached={_OnLoadMore}
-                            onRefresh={_OnFreshList}
+                loading ? <Loading></Loading> :
+                    listComic.length === 0 ?
+                        <View style={{ justifyContent: "center", alignItems: 'center', flex: 1 }}>
+                            <Image
+                                resizeMode="contain"
+                                style={styles.tinyicon}
+                                source={icon}></Image>
+                            <Text style={{ textAlign: "center", color: '#5c6b73', fontFamily: 'Nunito-Bold' }}>You are not have history to view</Text>
+                        </View> :
+                        <View style={styles.containerList}>
+                            <FlatList
+                                data={listComic}
+                                keyExtractor={(_, index) => index.toString()}
+                                renderItem={({ item, index }: any) => <ItemBook deleteComic={deleteComic} item={JSON.parse(item.category)} index={index} type={3} />}
+                                onEndReachedThreshold={1}
+                                // contentContainerStyle={{ marginTop: 10 }}
+                                ListFooterComponent={_renderFooterList}
+                                refreshing={false}
+                                onEndReached={_OnLoadMore}
+                                onRefresh={_OnFreshList}
 
-                        />
-                    </View>
+                            />
+                        </View>
             }
         </View>
     )
@@ -83,7 +86,9 @@ export default History;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     containerList: {
         flex: 1

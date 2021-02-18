@@ -14,6 +14,7 @@ import ListChappter from '../screens/ReadComic/ListChappter';
 import ShowAll from '../screens/ShowAll';
 import Category from '../screens/MainHome/Category';
 import ListCategory from '../screens/ListCategory';
+import SplashScreen from '../screens/SplashScreen/SplashScreen';
 
 
 const navigationOptions: StackNavigationOptions = {
@@ -40,6 +41,7 @@ export default () => {
                 <Stack.Screen options={StyleSheet.flatten(AllOptionSlideFromRight)} name={screen.DETIAL_CHAPTER} component={ReadComic} />
                 <Stack.Screen options={StyleSheet.flatten(SlideFromRightIOS)} name={screen.CHAPTER_LIST_SCREEN} component={ListChappter} />
                 <Stack.Screen options={StyleSheet.flatten(SlideFromRightIOS)} name={screen.CATEGORY_SCREEN} component={ListCategory} />
+                {/* <Stack.Screen options={StyleSheet.flatten(SlideFromRightIOS)} name={screen.SPLASH_SCREEN} component={SplashScreen} /> */}
             </Stack.Navigator>
         </NavigationContainer>
     )

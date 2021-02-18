@@ -1,39 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import isEqual from 'react-fast-compare';
 import { Dimensions, ActivityIndicator, Animated, FlatList, StatusBar } from 'react-native';
-
+import { Image as ImageRN } from 'react-native';
 const { height, width } = Dimensions.get("window");
 import Image from 'react-native-image-progress';
 import ProgressBar from 'react-native-progress/Bar';
 
 const ImageFullWith = React.memo(({ isSkew, url }: any) => {
 
-    const [heightImage, setHeightImage] = useState<any>((width * 3) / 2);
-    // useEffect(() => {
-    //     (() => {
-    //         Image.getSizeWithHeaders(url, {
-    //             Referer: "https://manganelo.com/"
-    //         }, (withdata, heightdata) => {
-    //             if (heightdata) {
-    //                 setHeightImage(width * (heightdata / withdata))
-    //             }
+    const [heightImage, setHeightImage] = useState<any>(null);
+    useEffect(() => {
+        (() => {
+            ImageRN.getSizeWithHeaders(url, {
+                Referer: "https://manganelo.com/"
+            }, (withdata, heightdata) => {
+                if (heightdata) {
+                    setHeightImage(width * (heightdata / withdata))
+                }
 
-    //         }, (error) => { })
+            }, (error) => { })
 
-    //     })()
-    //     return () => setHeightImage((width * 3) / 2.4)
-    // }, [])
+        })()
+        return () => setHeightImage(null)
+    }, [])
 
     return <Image
         indicator={ProgressBar}
-        style={{ width: "100%",   backgroundColor:'#fff', height: isSkew ? (width * 3) : heightImage, flex: 1 }}
+        indicatorProps={{
+            size: 80,
+            borderWidth: 0,
+            color: '#e3342f',
+            unfilledColor: 'rgba(200, 200, 200, 0.2)',
+
+        }}
+        style={{ width: "100%", backgroundColor: '#fff', height: isSkew ? (width * 3) : !heightImage ? (width * 3) / 2 : heightImage, flex: 1, zIndex: 999 }}
         source={{
             uri: url,
             headers: {
                 Referer: "https://manganelo.com/"
             }
         }}
-        resizeMode='contain'
         onError={({ nativeEvent: { error } }) => { console.log(error) }}
     />
 })

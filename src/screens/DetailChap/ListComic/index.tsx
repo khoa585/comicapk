@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     headerTitle: {
-        marginVertical: 10,
+        marginBottom: 10,
 
     },
     title: {

@@ -61,8 +61,8 @@ const ListChapter: FunctionComponent<any> = () => {
         try {
             const result = await getListChapter(i, id, 20)
             if (result?.data?.status == "success") {
-                setData(result?.data?.data);
                 setnumberResult(result?.data?.numberResult)
+                setData(result?.data?.data);
                 setLoading(false);
             }
         } catch (error) {

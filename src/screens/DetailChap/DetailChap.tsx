@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
 
     love: {
         position: 'absolute',
-        top: '15%',
+        top: '10%',
         left: '28%',
     },
     icon_: {

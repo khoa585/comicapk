@@ -421,7 +421,9 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     content: {
-        flex: 1
+        flex: 1,
+        marginVertical:20,
+        backgroundColor:'#fff'
     },
     Img: {
         width: "100%",

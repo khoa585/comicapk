@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import * as screen from '../../constants/ScreenTypes';
-import {getListCategory} from './../../api/category';
+import { getListCategory } from './../../api/category';
 import { CategoryItem } from '../../api/interface/category.interface';
+import Loading from '../../components/Loading';
 const items = [
     {
         name: 'Action',
@@ -29,7 +30,7 @@ const items = [
         name: 'Comedy',
         icon: require('../../assets/image/Comedy.jpg')
     },
-    
+
     {
         name: 'Romance',
         icon: require('../../assets/image/Romance.jpg')
@@ -43,22 +44,33 @@ const items = [
         icon: require('../../assets/image/Webtoons.jpg')
     },
 ]
-export default React.memo(() => {
+export default React.memo(({ network,loading }: any) => {
 
-    const renderItem = React.useCallback(({ item ,index}) => <Item item={item} index={index}></Item>, [])
+    const renderItem = React.useCallback(({ item, index }) => <Item item={item} index={index}></Item>, [])
+  
     const keyExtractor = React.useCallback((_, index): string => index.toString(), [])
-    const [listCategory,setListCategory] = useState<CategoryItem[]>([]);
+    const [listCategory, setListCategory] = useState<CategoryItem[]>([]);
     const navigation = useNavigation();
-    useEffect(()=>{
-        getListCategory().then(result=>{
-            if(result.status==200){
-                setListCategory(result.data.data);
+    React.useEffect(() => {
+        (async () => {
+            try {
+    
+                if (network) {
+                    let result = await getListCategory()
+                    if (result.status == 200) {
+                        setListCategory(result.data.data);
+                 
+                    }
+                }
+            } catch (error) {
+                setListCategory([])
             }
-        })
-        return()=>{}
-    })
+        })()
 
-    const Item = ({ item: { image, name },index }): JSX.Element => {
+        return () => setListCategory([])
+    }, [])
+
+    const Item = ({ item: { image, name }, index }): JSX.Element => {
         return (
             <TouchableOpacity
                 onPress={() => navigation.navigate(screen.CATEGORY_SCREEN, { key: name })}
@@ -67,7 +79,7 @@ export default React.memo(() => {
                 <View
                     style={styles.contaiWrapper}>
                     <Image source={{
-                        uri:image
+                        uri: image
                     }} style={styles.imgIcon}></Image>
                 </View>
                 <Text style={{
@@ -86,16 +98,22 @@ export default React.memo(() => {
                 <View>
                     <Text style={styles.title}>Categories</Text>
                 </View>
-                <FlatList
-                    showsHorizontalScrollIndicator={false}
-                    horizontal
-                    maxToRenderPerBatch={5}
-                    windowSize={5}
-                    data={listCategory}
-                    renderItem={renderItem}
-                    keyExtractor={keyExtractor}
-                >
-                </FlatList>
+                {
+                    loading ?
+                        <Loading></Loading> : (
+                            <FlatList
+                                showsHorizontalScrollIndicator={false}
+                                horizontal
+                                maxToRenderPerBatch={5}
+                                windowSize={5}
+                                data={listCategory}
+                                renderItem={renderItem}
+                                keyExtractor={keyExtractor}
+                            >
+                            </FlatList>
+                        )
+                }
+
             </View>
         </>
     );
