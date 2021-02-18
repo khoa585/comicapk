@@ -1,4 +1,4 @@
-package com.comic;
+package com.duy.khoa;
 
 import android.app.Application;
 import android.content.Context;

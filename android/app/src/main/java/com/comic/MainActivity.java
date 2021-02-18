@@ -1,4 +1,4 @@
-package com.comic;
+package com.duy.khoa;
 
 import android.os.Bundle;
 

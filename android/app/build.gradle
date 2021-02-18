@@ -130,7 +130,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.comic"
+        applicationId "com.duy.khoa"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
